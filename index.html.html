@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>24시간 카운트다운 타이머</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0d0d;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .timer-wrapper {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 36px 48px;
+      text-align: center;
+      max-width: 520px;
+      width: 90%;
+    }
+
+    .timer-label {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .timer-label span {
+      margin-right: 6px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-number {
+      font-size: 52px;
+      font-weight: 700;
+      color: #00e676;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      min-width: 70px;
+      text-align: center;
+      letter-spacing: -1px;
+    }
+
+    .time-unit {
+      font-size: 11px;
+      color: #666;
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    .separator {
+      font-size: 48px;
+      font-weight: 700;
+      color: #00e676;
+      line-height: 1;
+      padding: 0 2px;
+      margin-top: 2px;
+    }
+
+    /* 만료 화면 */
+    .expired-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .expired-icon {
+      font-size: 40px;
+    }
+
+    .expired-title {
+      color: #ff4444;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .expired-desc {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 타이머 화면 -->
+  <div class="timer-wrapper" id="timerBox">
+    <div class="timer-label">
+      <span>🔒</span> 이 기회는 <strong style="color:#fff;">24시간</strong> 후에 영원히 사라집니다
+    </div>
+    <div class="countdown">
+      <div class="time-block">
+        <div class="time-number" id="days">00</div>
+        <div class="time-unit">일</div>
+      </div>
+      <div class="separator">:</div>
+      <div class="time-block">
+        <div class="time-number" id="hours">00</div>
+        <div class="time-unit">시간</div>
+      </div>
+      <div class="separator">:</div>
+      <div class="time-block">
+        <div class="time-number" id="minutes">00</div>
+        <div class="time-unit">분</div>
+      </div>
+      <div class="separator">:</div>
+      <div class="time-block">
+        <div class="time-number" id="seconds">00</div>
+        <div class="time-unit">초</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 만료 화면 -->
+  <div class="timer-wrapper" id="expiredBox" style="display:none;">
+    <div class="expired-screen" style="display:flex;">
+      <div class="expired-icon">🔒</div>
+      <div class="expired-title">접근 기간이 만료되었습니다</div>
+      <div class="expired-desc">
+        이 페이지의 열람 기간 24시간이 지났습니다.<br>
+        더 이상 이 콘텐츠를 열람하실 수 없습니다.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DURATION_MS = 24 * 60 * 60 * 1000; // 24시간
+    const STORAGE_KEY = 'eokmado_visit_start';
+
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function showExpired() {
+      document.getElementById('timerBox').style.display = 'none';
+      document.getElementById('expiredBox').style.display = 'flex';
+    }
+
+    function tick() {
+      const start = parseInt(localStorage.getItem(STORAGE_KEY));
+      const now = Date.now();
+      const elapsed = now - start;
+      const remaining = DURATION_MS - elapsed;
+
+      if (remaining <= 0) {
+        showExpired();
+        return;
+      }
+
+      const totalSeconds = Math.floor(remaining / 1000);
+      const days    = Math.floor(totalSeconds / 86400);
+      const hours   = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById('days').textContent    = pad(days);
+      document.getElementById('hours').textContent   = pad(hours);
+      document.getElementById('minutes').textContent = pad(minutes);
+      document.getElementById('seconds').textContent = pad(seconds);
+    }
+
+    // 첫 방문 시간 기록
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      localStorage.setItem(STORAGE_KEY, Date.now().toString());
+    }
+
+    // 이미 만료됐는지 즉시 확인
+    const start = parseInt(localStorage.getItem(STORAGE_KEY));
+    if (Date.now() - start >= DURATION_MS) {
+      showExpired();
+    } else {
+      tick();
+      setInterval(tick, 1000);
+    }
+  </script>
+
+</body>
+</html>
