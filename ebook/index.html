@@ -362,30 +362,128 @@ body::before {
   font-weight: 500;
 }
 
-/* 진행률 바 */
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: rgba(244,185,66,0.1);
-  border-radius: 4px;
-  margin-bottom: 40px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #F4B942, #f0c95c);
-  border-radius: 4px;
-  transition: width 0.6s ease;
-  width: 0%;
-}
-
-.progress-label {
+/* 스텝 인디케이터 */
+.step-indicator {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.step-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(244,185,66,0.08);
+  border: 2px solid rgba(244,185,66,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  color: rgba(244,185,66,0.4);
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+.step-node.active .step-dot {
+  background: rgba(244,185,66,0.15);
+  border-color: #F4B942;
+  color: #F4B942;
+  box-shadow: 0 0 20px rgba(244,185,66,0.2);
+}
+
+.step-node.done .step-dot {
+  background: rgba(52,211,153,0.15);
+  border-color: #34d399;
+  color: #34d399;
+  box-shadow: 0 0 16px rgba(52,211,153,0.15);
+}
+
+.step-label {
+  margin-top: 10px;
   font-size: 11px;
-  color: #6b7280;
-  margin-bottom: 8px;
+  color: rgba(244,185,66,0.3);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: center;
+  transition: all 0.5s ease;
+  white-space: nowrap;
+}
+
+.step-node.active .step-label {
+  color: #F4B942;
+}
+
+.step-node.done .step-label {
+  color: #34d399;
+}
+
+.step-sublabel {
+  font-size: 9px;
+  color: rgba(107,114,128,0.5);
+  margin-top: 2px;
+  transition: all 0.5s ease;
+}
+
+.step-node.active .step-sublabel {
+  color: rgba(244,185,66,0.5);
+}
+
+.step-node.done .step-sublabel {
+  color: rgba(52,211,153,0.5);
+}
+
+/* 스텝 사이 연결선 */
+.step-line {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 2px;
+  background: rgba(244,185,66,0.1);
+  margin: 0 -4px;
+  margin-bottom: 28px;
+  transition: all 0.5s ease;
+  z-index: 1;
+}
+
+.step-line.filled {
+  background: linear-gradient(90deg, #34d399, rgba(52,211,153,0.3));
+}
+
+/* 시크릿 글로우 */
+.step-node.secret .step-dot {
+  border-color: rgba(244,185,66,0.15);
+  background: rgba(244,185,66,0.04);
+}
+
+.step-node.secret.active .step-dot {
+  background: rgba(244,185,66,0.12);
+  border-color: #F4B942;
+  box-shadow: 0 0 24px rgba(244,185,66,0.25), 0 0 48px rgba(244,185,66,0.1);
+}
+
+.step-node.secret.done .step-dot {
+  background: rgba(52,211,153,0.15);
+  border-color: #34d399;
+  box-shadow: 0 0 24px rgba(52,211,153,0.2), 0 0 48px rgba(52,211,153,0.08);
+}
+
+@keyframes secretPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(244,185,66,0.15); }
+  50% { box-shadow: 0 0 32px rgba(244,185,66,0.3), 0 0 60px rgba(244,185,66,0.1); }
+}
+
+.step-node.secret .step-dot {
+  animation: secretPulse 2.5s ease infinite;
 }
 </style>
 </head>
@@ -403,13 +501,25 @@ body::before {
     <p>총 3권으로 구성된 기밀 시리즈입니다.<br>각 권의 키워드를 찾아 다음 권을 잠금 해제하세요.</p>
   </div>
 
-  <!-- 진행률 -->
-  <div class="progress-label">
-    <span>진행률</span>
-    <span id="progressText">0 / 3권</span>
-  </div>
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
+  <!-- 스텝 인디케이터 -->
+  <div class="step-indicator" id="stepIndicator">
+    <div class="step-node active" id="stepNode1">
+      <div class="step-dot">1</div>
+      <div class="step-label">DAY 1</div>
+      <div class="step-sublabel">전자책</div>
+    </div>
+    <div class="step-line" id="stepLine1"></div>
+    <div class="step-node" id="stepNode2">
+      <div class="step-dot">2</div>
+      <div class="step-label">DAY 2</div>
+      <div class="step-sublabel">전자책</div>
+    </div>
+    <div class="step-line" id="stepLine2"></div>
+    <div class="step-node secret" id="stepNode3">
+      <div class="step-dot">🎁</div>
+      <div class="step-label">시크릿 혜택</div>
+      <div class="step-sublabel">SECRET</div>
+    </div>
   </div>
 
   <!-- ===== STAGE 1 ===== -->
@@ -609,12 +719,28 @@ function unlockStage(num, instant) {
 }
 
 function updateProgress() {
-  let count = 1; // 1권은 항상 열림
-  if (unlocked[2]) count = 2;
-  if (unlocked[3]) count = 3;
+  const node1 = document.getElementById('stepNode1');
+  const node2 = document.getElementById('stepNode2');
+  const node3 = document.getElementById('stepNode3');
+  const line1 = document.getElementById('stepLine1');
+  const line2 = document.getElementById('stepLine2');
 
-  document.getElementById('progressText').textContent = count + ' / 3권';
-  document.getElementById('progressFill').style.width = (count / 3 * 100) + '%';
+  // 1단계는 항상 active
+  node1.className = 'step-node active';
+
+  if (unlocked[2]) {
+    node1.className = 'step-node done';
+    node1.querySelector('.step-dot').textContent = '✓';
+    line1.className = 'step-line filled';
+    node2.className = 'step-node active';
+  }
+
+  if (unlocked[3]) {
+    node2.className = 'step-node done';
+    node2.querySelector('.step-dot').textContent = '✓';
+    line2.className = 'step-line filled';
+    node3.className = 'step-node secret active';
+  }
 }
 
 function shakeInput(el) {
