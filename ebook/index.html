@@ -412,7 +412,7 @@ body::before {
 .step-label {
   margin-top: 10px;
   font-size: 11px;
-  color: rgba(244,185,66,0.3);
+  color: #e8e8e8;
   font-weight: 500;
   letter-spacing: 0.5px;
   text-align: center;
@@ -421,26 +421,26 @@ body::before {
 }
 
 .step-node.active .step-label {
-  color: #F4B942;
+  color: #ffffff;
 }
 
 .step-node.done .step-label {
-  color: #34d399;
+  color: #ffffff;
 }
 
 .step-sublabel {
   font-size: 9px;
-  color: rgba(107,114,128,0.5);
+  color: rgba(255,255,255,0.4);
   margin-top: 2px;
   transition: all 0.5s ease;
 }
 
 .step-node.active .step-sublabel {
-  color: rgba(244,185,66,0.5);
+  color: rgba(255,255,255,0.6);
 }
 
 .step-node.done .step-sublabel {
-  color: rgba(52,211,153,0.5);
+  color: rgba(52,211,153,0.7);
 }
 
 /* 스텝 사이 연결선 */
@@ -484,6 +484,19 @@ body::before {
 
 .step-node.secret .step-dot {
   animation: secretPulse 2.5s ease infinite;
+}
+
+/* 시크릿 혜택 움찔움찔 */
+@keyframes secretBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  15% { transform: translateY(-6px) scale(1.08); }
+  30% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-4px) scale(1.05); }
+  60% { transform: translateY(0) scale(1); }
+}
+
+.step-node.secret {
+  animation: secretBounce 2s ease infinite;
 }
 </style>
 </head>
