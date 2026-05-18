@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>억마도 — 기밀 전자책</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J22R9YDV0W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J22R9YDV0W');
+</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -622,7 +630,7 @@ body::before {
     </div>
     <div class="stage-desc">마케팅 업계의 구조적 문제를 폭로합니다. 여러분의 돈이 어디로 사라지는지, 대행사와 실행사의 차이, 대대행의 실체를 낱낱이 공개합니다.</div>
 
-    <a href="#" class="download-btn" id="download1" onclick="return false;">
+    <a href="#" class="download-btn" id="download1" onclick="trackDownload(1); return false;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       1권 무료 다운로드
     </a>
@@ -660,7 +668,7 @@ body::before {
     </div>
     <div class="stage-desc">실행사를 직접 찾으면 생기는 문제, 유튜브 정보의 함정, 혼자 공부하면 93%가 포기하는 이유, 그리고 중간 유통을 걷어내는 방법을 알려드립니다.</div>
 
-    <a href="#" class="download-btn" id="download2" onclick="return false;">
+    <a href="#" class="download-btn" id="download2" onclick="trackDownload(2); return false;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       2권 다운로드
     </a>
@@ -703,7 +711,7 @@ body::before {
       <p style="font-size:13px;color:#9ca3af;">의 혜택이 들어있습니다.</p>
     </div>
 
-    <a href="#" class="download-btn" id="download3" onclick="return false;" style="background:rgba(244,185,66,0.15);border-color:rgba(244,185,66,0.6);">
+    <a href="#" class="download-btn" id="download3" onclick="trackDownload(3); return false;" style="background:rgba(244,185,66,0.15);border-color:rgba(244,185,66,0.6);">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       🎁 시크릿 혜택 다운로드
     </a>
@@ -733,6 +741,30 @@ const CONFIG = {
 // ============================
 
 let unlocked = { 2: false, 3: false };
+
+// GA 이벤트 추적
+function trackDownload(num) {
+  const labels = { 1: '1권_전자책', 2: '2권_전자책', 3: '시크릿_혜택' };
+  gtag('event', 'download', {
+    event_category: 'ebook',
+    event_label: labels[num],
+    value: num
+  });
+  // 실제 다운로드
+  const url = CONFIG.downloads[num];
+  if (url && url !== '#') {
+    window.open(url, '_blank');
+  }
+}
+
+function trackUnlock(num) {
+  const labels = { 2: '2권_잠금해제', 3: '시크릿_잠금해제' };
+  gtag('event', 'unlock', {
+    event_category: 'ebook',
+    event_label: labels[num],
+    value: num
+  });
+}
 
 // 로컬스토리지에서 상태 복원
 function loadState() {
@@ -777,6 +809,7 @@ function checkAnswer(stage) {
     input.style.borderColor = 'rgba(52,211,153,0.4)';
     input.style.color = '#34d399';
     unlockStage(nextStage, false);
+    trackUnlock(nextStage);
     saveState();
   } else {
     msg.className = 'message error';
