@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>억마도 — 기밀 전자책</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #07090f;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #b8b8b8;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 배경 파티클 효과 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(1px 1px at 10% 20%, rgba(244,185,66,0.3), transparent),
+    radial-gradient(1px 1px at 30% 60%, rgba(244,185,66,0.2), transparent),
+    radial-gradient(1px 1px at 50% 10%, rgba(244,185,66,0.15), transparent),
+    radial-gradient(1px 1px at 70% 80%, rgba(244,185,66,0.25), transparent),
+    radial-gradient(1px 1px at 90% 40%, rgba(244,185,66,0.2), transparent),
+    radial-gradient(1px 1px at 20% 90%, rgba(244,185,66,0.15), transparent),
+    radial-gradient(1px 1px at 80% 15%, rgba(244,185,66,0.2), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 헤더 */
+.header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.seal {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(244,185,66,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.header-badge {
+  display: inline-block;
+  border: 1px solid rgba(244,185,66,0.4);
+  padding: 6px 20px;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: #F4B942;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #e8e8e8;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.header p {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.8;
+}
+
+/* 스테이지 카드 */
+.stage {
+  background: rgba(244,185,66,0.03);
+  border: 1px solid rgba(244,185,66,0.12);
+  border-radius: 20px;
+  padding: 32px 28px;
+  margin-bottom: 24px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stage::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(244,185,66,0.3), transparent);
+}
+
+.stage.locked {
+  opacity: 0.35;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.stage.unlocked {
+  border-color: rgba(52,211,153,0.3);
+  background: rgba(52,211,153,0.03);
+}
+
+.stage.unlocked::before {
+  background: linear-gradient(90deg, transparent, rgba(52,211,153,0.4), transparent);
+}
+
+.stage-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stage-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(244,185,66,0.1);
+  border: 1.5px solid rgba(244,185,66,0.3);
+  color: #F4B942;
+  font-size: 16px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stage.unlocked .stage-num {
+  background: rgba(52,211,153,0.1);
+  border-color: rgba(52,211,153,0.3);
+  color: #34d399;
+}
+
+.stage-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #e8e8e8;
+  line-height: 1.5;
+}
+
+.stage-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.stage-desc {
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* 다운로드 버튼 */
+.download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  background: rgba(244,185,66,0.1);
+  border: 1.5px solid rgba(244,185,66,0.4);
+  color: #F4B942;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: 1px;
+}
+
+.download-btn:hover {
+  background: rgba(244,185,66,0.18);
+  box-shadow: 0 0 24px rgba(244,185,66,0.15);
+}
+
+.download-btn svg {
+  flex-shrink: 0;
+}
+
+/* 잠금 해제 영역 */
+.unlock-area {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(244,185,66,0.1);
+}
+
+.unlock-label {
+  font-size: 12px;
+  color: #F4B942;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.unlock-label svg {
+  flex-shrink: 0;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.keyword-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(244,185,66,0.2);
+  border-radius: 10px;
+  color: #e8e8e8;
+  font-size: 15px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.keyword-input:focus {
+  border-color: rgba(244,185,66,0.5);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 16px rgba(244,185,66,0.08);
+}
+
+.keyword-input::placeholder {
+  color: #4b5563;
+}
+
+.submit-btn {
+  padding: 12px 24px;
+  background: #F4B942;
+  border: none;
+  border-radius: 10px;
+  color: #07090f;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.submit-btn:hover {
+  background: #f0c95c;
+  box-shadow: 0 0 20px rgba(244,185,66,0.3);
+}
+
+/* 에러/성공 메시지 */
+.message {
+  margin-top: 10px;
+  font-size: 12px;
+  min-height: 18px;
+}
+
+.message.error {
+  color: #f87171;
+}
+
+.message.success {
+  color: #34d399;
+}
+
+/* 잠금 아이콘 오버레이 */
+.lock-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+  filter: none;
+  opacity: 1;
+}
+
+.lock-overlay span {
+  font-size: 11px;
+  color: #6b7280;
+  letter-spacing: 2px;
+}
+
+/* 성공 애니메이션 */
+@keyframes unlockPulse {
+  0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.3); }
+  70% { box-shadow: 0 0 0 15px rgba(52,211,153,0); }
+  100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+}
+
+.stage.just-unlocked {
+  animation: unlockPulse 0.8s ease;
+}
+
+/* 연결선 */
+.connector {
+  display: flex;
+  justify-content: center;
+  margin: -8px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.connector-line {
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(244,185,66,0.3), rgba(244,185,66,0.1));
+}
+
+/* 하단 브랜딩 */
+.footer {
+  text-align: center;
+  margin-top: 48px;
+  opacity: 0.2;
+}
+
+.footer span {
+  font-size: 14px;
+  letter-spacing: 8px;
+  color: #e8e8e8;
+  font-weight: 700;
+}
+
+/* 힌트 텍스트 */
+.hint {
+  font-size: 11px;
+  color: #4b5563;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* 체크 아이콘 */
+.check-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(52,211,153,0.1);
+  border: 1px solid rgba(52,211,153,0.3);
+  border-radius: 20px;
+  font-size: 11px;
+  color: #34d399;
+  font-weight: 500;
+}
+
+/* 진행률 바 */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(244,185,66,0.1);
+  border-radius: 4px;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F4B942, #f0c95c);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+  width: 0%;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="seal">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F4B942" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <div class="header-badge">CLASSIFIED SERIES</div>
+    <h1>마케팅, 100% 스스로 하는법</h1>
+    <p>총 3권으로 구성된 기밀 시리즈입니다.<br>각 권의 키워드를 찾아 다음 권을 잠금 해제하세요.</p>
+  </div>
+
+  <!-- 진행률 -->
+  <div class="progress-label">
+    <span>진행률</span>
+    <span id="progressText">0 / 3권</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ===== STAGE 1 ===== -->
+  <div class="stage" id="stage1">
+    <div class="stage-header">
+      <div class="stage-num">1</div>
+      <div>
+        <div class="stage-title">업계의 추악한 민낯</div>
+        <div class="stage-subtitle">CH.01 ~ CH.04</div>
+      </div>
+    </div>
+    <div class="stage-desc">마케팅 업계의 구조적 문제를 폭로합니다. 여러분의 돈이 어디로 사라지는지, 대행사와 실행사의 차이, 대대행의 실체를 낱낱이 공개합니다.</div>
+
+    <a href="#" class="download-btn" id="download1" onclick="return false;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      1권 무료 다운로드
+    </a>
+
+    <div class="unlock-area">
+      <div class="unlock-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        2권 잠금 해제
+      </div>
+      <div class="input-row">
+        <input type="text" class="keyword-input" id="input1" placeholder="1권에서 찾은 키워드 입력" autocomplete="off">
+        <button class="submit-btn" onclick="checkAnswer(1)">확인</button>
+      </div>
+      <div class="message" id="msg1"></div>
+      <div class="hint">힌트: 1권 본문에서 굵게 강조된 핵심 단어를 찾으세요</div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- ===== STAGE 2 ===== -->
+  <div class="stage locked" id="stage2">
+    <div class="lock-overlay" id="lock2">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>LOCKED</span>
+    </div>
+    <div class="stage-header">
+      <div class="stage-num">2</div>
+      <div>
+        <div class="stage-title">혼자 하면 무너지는 이유</div>
+        <div class="stage-subtitle">CH.05 ~ CH.08</div>
+      </div>
+    </div>
+    <div class="stage-desc">실행사를 직접 찾으면 생기는 문제, 유튜브 정보의 함정, 혼자 공부하면 93%가 포기하는 이유, 그리고 중간 유통을 걷어내는 방법을 알려드립니다.</div>
+
+    <a href="#" class="download-btn" id="download2" onclick="return false;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      2권 다운로드
+    </a>
+
+    <div class="unlock-area">
+      <div class="unlock-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        3권 잠금 해제
+      </div>
+      <div class="input-row">
+        <input type="text" class="keyword-input" id="input2" placeholder="2권에서 찾은 키워드 입력" autocomplete="off">
+        <button class="submit-btn" onclick="checkAnswer(2)">확인</button>
+      </div>
+      <div class="message" id="msg2"></div>
+      <div class="hint">힌트: 2권 본문에서 굵게 강조된 핵심 단어를 찾으세요</div>
+    </div>
+  </div>
+
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- ===== STAGE 3 ===== -->
+  <div class="stage locked" id="stage3">
+    <div class="lock-overlay" id="lock3">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>LOCKED</span>
+    </div>
+    <div class="stage-header">
+      <div class="stage-num">3</div>
+      <div>
+        <div class="stage-title">해결책, 그리고 무기를 쥐는 법</div>
+        <div class="stage-subtitle">CH.09 ~ CH.11</div>
+      </div>
+    </div>
+    <div class="stage-desc">모든 문제의 해결책과 억마도의 탄생 이유, 한 번 배우면 평생 쓰는 마케팅 도구, 그리고 운명의 주도권을 쥐는 마지막 선택을 안내합니다.</div>
+
+    <a href="#" class="download-btn" id="download3" onclick="return false;" style="background:rgba(244,185,66,0.15);border-color:rgba(244,185,66,0.6);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      최종편 다운로드
+    </a>
+
+    <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(244,185,66,0.15);text-align:center;">
+      <p style="font-size:13px;color:#F4B942;margin-bottom:12px;font-weight:500;">3권까지 읽으셨다면, 준비가 되셨습니다.</p>
+      <a href="https://xn--hq1b27ixtl.com/class/?idx=13" target="_blank" style="display:inline-block;padding:14px 36px;border:2px solid #F4B942;color:#F4B942;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:2px;border-radius:10px;transition:all 0.3s ease;">억마도 강의 보러가기</a>
+    </div>
+  </div>
+
+  <!-- 하단 -->
+  <div class="footer">
+    <span>억 마 도</span>
+  </div>
+
+</div>
+
+<script>
+// ========== 설정 ==========
+// 여기서 정답 키워드와 다운로드 링크를 설정하세요
+const CONFIG = {
+  answers: {
+    1: '실행사',      // 1권에 숨긴 키워드 → 2권 잠금 해제
+    2: '억마도',      // 2권에 숨긴 키워드 → 3권 잠금 해제
+  },
+  downloads: {
+    1: '#',  // 1권 PDF 다운로드 링크
+    2: '#',  // 2권 PDF 다운로드 링크
+    3: '#',  // 3권 PDF 다운로드 링크
+  }
+};
+// ============================
+
+let unlocked = { 2: false, 3: false };
+
+// 로컬스토리지에서 상태 복원
+function loadState() {
+  try {
+    const saved = localStorage.getItem('eokmado_ebook_state');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (state.unlocked2) { unlockStage(2, true); }
+      if (state.unlocked3) { unlockStage(3, true); }
+    }
+  } catch(e) {}
+  updateProgress();
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('eokmado_ebook_state', JSON.stringify({
+      unlocked2: unlocked[2],
+      unlocked3: unlocked[3]
+    }));
+  } catch(e) {}
+}
+
+function checkAnswer(stage) {
+  const input = document.getElementById('input' + stage);
+  const msg = document.getElementById('msg' + stage);
+  const answer = input.value.trim().replace(/\s/g, '');
+  const correct = CONFIG.answers[stage].replace(/\s/g, '');
+
+  if (!answer) {
+    msg.className = 'message error';
+    msg.textContent = '키워드를 입력해주세요.';
+    shakeInput(input);
+    return;
+  }
+
+  if (answer === correct) {
+    const nextStage = stage + 1;
+    msg.className = 'message success';
+    msg.textContent = '정답! ' + nextStage + '권이 잠금 해제되었습니다.';
+    input.disabled = true;
+    input.style.borderColor = 'rgba(52,211,153,0.4)';
+    input.style.color = '#34d399';
+    unlockStage(nextStage, false);
+    saveState();
+  } else {
+    msg.className = 'message error';
+    msg.textContent = '틀렸습니다. 본문을 다시 확인해보세요.';
+    shakeInput(input);
+  }
+}
+
+function unlockStage(num, instant) {
+  unlocked[num] = true;
+  const stage = document.getElementById('stage' + num);
+  const lock = document.getElementById('lock' + num);
+
+  if (lock) lock.style.display = 'none';
+  stage.classList.remove('locked');
+  stage.classList.add('unlocked');
+
+  if (!instant) {
+    stage.classList.add('just-unlocked');
+    stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // 이전 스테이지 입력 비활성화
+  const prevInput = document.getElementById('input' + (num - 1));
+  if (prevInput) {
+    prevInput.disabled = true;
+    prevInput.style.borderColor = 'rgba(52,211,153,0.4)';
+    prevInput.style.color = '#34d399';
+    prevInput.value = CONFIG.answers[num - 1];
+  }
+
+  updateProgress();
+}
+
+function updateProgress() {
+  let count = 1; // 1권은 항상 열림
+  if (unlocked[2]) count = 2;
+  if (unlocked[3]) count = 3;
+
+  document.getElementById('progressText').textContent = count + ' / 3권';
+  document.getElementById('progressFill').style.width = (count / 3 * 100) + '%';
+}
+
+function shakeInput(el) {
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = 'shake 0.4s ease';
+}
+
+// 엔터키 지원
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const focused = document.activeElement;
+    if (focused.id === 'input1') checkAnswer(1);
+    if (focused.id === 'input2') checkAnswer(2);
+  }
+});
+
+// 초기화
+loadState();
+
+// 흔들림 애니메이션
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = '@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}';
+document.head.appendChild(shakeStyle);
+</script>
+
+</body>
+</html>
