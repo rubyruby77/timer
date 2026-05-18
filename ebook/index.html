@@ -556,6 +556,21 @@ body::before {
 .step-node.secret {
   animation: secretBounce 2s ease infinite;
 }
+
+/* 모바일 대응 */
+@media (max-width: 420px) {
+  .step-indicator { gap: 0; }
+  .step-line { width: 24px; }
+  .step-dot { width: 34px; height: 34px; font-size: 12px; }
+  .step-label { font-size: 10px; white-space: normal; text-align: center; }
+  .step-sublabel { font-size: 8px; }
+  .step-node.secret .step-dot { width: 44px; height: 44px; font-size: 18px; }
+  .step-node.secret .step-label { font-size: 11px; }
+  .container { padding: 48px 18px 60px; }
+  .stage { padding: 24px 20px; }
+  .input-row { flex-direction: column; }
+  .submit-btn { width: 100%; }
+}
 </style>
 </head>
 <body>
