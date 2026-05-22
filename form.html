@@ -150,6 +150,7 @@ function selectOption(el, fieldId) {
 
 function validateForm() {
   var valid = true;
+  var firstError = null;
   var fields = [
     {id: 'name', err: 'err-name', field: 'field-name'},
     {id: 'phone', err: 'err-phone', field: 'field-phone'},
@@ -166,10 +167,15 @@ function validateForm() {
       errEl.style.display = 'block';
       fieldEl.classList.add('shake');
       setTimeout((function(el){return function(){el.classList.remove('shake');};})(fieldEl), 300);
+      if (!firstError) firstError = fieldEl;
       valid = false;
     } else {
       errEl.style.display = 'none';
     }
+  }
+
+  if (!valid && firstError) {
+    firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
   }
 
   if (valid) {
