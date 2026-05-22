@@ -37,7 +37,7 @@ button:active{opacity:0.7;transform:scale(0.98);}
     <div style="margin-bottom:16px;" id="field-phone">
       <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">연락처 <span style="color:#e84040;">*</span></div>
       <input type="tel" id="phone" placeholder="010-0000-0000" inputmode="tel" style="padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
-      <div class="error-msg" id="err-phone">올바른 연락처를 입력해주세요 (예: 010-1234-5678)</div>
+      <div class="error-msg" id="err-phone">휴대폰 번호 11자리를 정확히 입력해주세요 (예: 010-1234-5678)</div>
     </div>
     <div id="field-age">
       <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">연령대 <span style="color:#e84040;">*</span></div>
@@ -148,7 +148,8 @@ button:active{opacity:0.7;transform:scale(0.98);}
 <!-- 제출 완료 화면 -->
 <div id="successScreen" style="display:none;padding:80px 28px 60px;background:#f5f0e8;text-align:center;">
   <div style="font-size:28px;font-weight:900;color:#2a2520;margin-bottom:16px;">신청이 완료되었습니다</div>
-  <div style="font-size:16px;color:#666;line-height:2.0;">예약금 5만원 입금 후<br>예약이 확정됩니다.<br><br>입금 확인 후 개별 연락드리겠습니다.</div>
+  <div style="font-size:22px;font-weight:900;color:#e84040;line-height:1.6;margin-bottom:16px;">예약금 5만원 입금 후<br>예약이 확정됩니다</div>
+  <div style="font-size:16px;color:#666;line-height:2.0;">입금 확인 후 개별 연락드리겠습니다.</div>
   <div style="margin-top:24px;padding:20px;background:#fff;border-radius:12px;border:2px solid #b8956a;">
     <div style="font-size:16px;color:#2a2520;font-weight:800;margin-bottom:4px;">입금 계좌</div>
     <div style="font-size:18px;color:#2a2520;font-weight:900;">국민은행 469301-01-116643</div>
@@ -200,7 +201,7 @@ function toggleCheckbox() {
 
 function validatePhone(phone) {
   var cleaned = phone.replace(/[^0-9]/g, '');
-  return cleaned.length >= 10 && cleaned.length <= 11 && cleaned.startsWith('01');
+  return cleaned.length === 11 && cleaned.startsWith('01');
 }
 
 function validateForm() {
