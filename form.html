@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AI Private Coaching 수업 신청서</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Malgun Gothic','맑은 고딕',sans-serif;background:#f5f0e8;color:#2a2520;max-width:500px;margin:0 auto;min-height:100vh;}
+input,select,textarea{font-family:inherit;font-size:16px;width:100%;outline:none;-webkit-appearance:none;}
+input:focus{border-color:#b8956a !important;}
+.btn-select{cursor:pointer;transition:all 0.2s;}
+.btn-select.active{background:#2a2520 !important;color:#d4a854 !important;border-color:#2a2520 !important;}
+.error-msg{font-size:13px;color:#e84040;margin-top:6px;display:none;}
+.shake{animation:shake 0.3s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+</style>
+</head><body>
+
+<div style="padding:48px 28px;background:#2a2520;text-align:center;">
+  <div style="font-size:14px;letter-spacing:6px;color:#d4a854;margin-bottom:20px;">AI Private Coaching</div>
+  <div style="font-size:24px;font-weight:800;color:#f5f0e8;line-height:1.5;">수업 신청서</div>
+  <div style="font-size:14px;color:#8b8070;margin-top:12px;">작성 시간 1분이면 충분합니다</div>
+</div>
+
+<form id="coachingForm" onsubmit="return validateForm()" style="padding:32px 20px;background:#f5f0e8;">
+
+  <!-- 기본 정보 -->
+  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;">
+    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:16px;">기본 정보</div>
+    <div style="margin-bottom:16px;" id="field-name">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">성함 <span style="color:#e84040;">*</span></div>
+      <input type="text" id="name" placeholder="홍길동" style="padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+      <div class="error-msg" id="err-name">성함을 입력해주세요</div>
+    </div>
+    <div style="margin-bottom:16px;" id="field-phone">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">연락처 <span style="color:#e84040;">*</span></div>
+      <input type="tel" id="phone" placeholder="010-0000-0000" style="padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+      <div class="error-msg" id="err-phone">연락처를 입력해주세요</div>
+    </div>
+    <div id="field-age">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">연령대 <span style="color:#e84040;">*</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div class="btn-select" onclick="selectOption(this,'age')" data-value="30대" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">30대</div>
+        <div class="btn-select" onclick="selectOption(this,'age')" data-value="40대" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">40대</div>
+        <div class="btn-select" onclick="selectOption(this,'age')" data-value="50대" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">50대</div>
+        <div class="btn-select" onclick="selectOption(this,'age')" data-value="60대" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">60대</div>
+        <div class="btn-select" onclick="selectOption(this,'age')" data-value="70대" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">70대</div>
+      </div>
+      <input type="hidden" id="age" value="">
+      <div class="error-msg" id="err-age">연령대를 선택해주세요</div>
+    </div>
+  </div>
+
+  <!-- 수업 관련 -->
+  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;">
+    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:16px;">수업 관련</div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">직업 / 업종</div>
+      <input type="text" id="job" placeholder="예: 자영업, 회사원, 대표" style="padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+    </div>
+    <div id="field-laptop">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">노트북 종류 <span style="color:#e84040;">*</span></div>
+      <div style="display:flex;gap:10px;">
+        <div class="btn-select" onclick="selectOption(this,'laptop')" data-value="윈도우" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">윈도우</div>
+        <div class="btn-select" onclick="selectOption(this,'laptop')" data-value="맥" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">맥</div>
+        <div class="btn-select" onclick="selectOption(this,'laptop')" data-value="모름" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">모름</div>
+      </div>
+      <input type="hidden" id="laptop" value="">
+      <div class="error-msg" id="err-laptop">노트북 종류를 선택해주세요</div>
+    </div>
+  </div>
+
+  <!-- 일정 -->
+  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;">
+    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:8px;">일정</div>
+    <div style="font-size:15px;color:#e84040;font-weight:800;margin-bottom:16px;">토요일을 제외한 모든 요일, 모든 시간대 가능합니다</div>
+
+    <div style="margin-bottom:16px;" id="field-date1">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">1지망 <span style="color:#e84040;">*</span></div>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="date1" placeholder="날짜 (예: 6/5)" style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+        <input type="text" id="time1" placeholder="시간 (예: 오후 2시)" style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+      </div>
+      <div class="error-msg" id="err-date1">1지망 날짜와 시간을 입력해주세요</div>
+    </div>
+
+    <div style="margin-bottom:16px;" id="field-date2">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">2지망</div>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="date2" placeholder="날짜 (예: 6/7)" style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+        <input type="text" id="time2" placeholder="시간 (예: 저녁 7시)" style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">동반 인원</div>
+      <div style="display:flex;gap:10px;">
+        <div class="btn-select active" onclick="selectOption(this,'companion')" data-value="없음" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">없음</div>
+        <div class="btn-select" onclick="selectOption(this,'companion')" data-value="1명" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">1명</div>
+        <div class="btn-select" onclick="selectOption(this,'companion')" data-value="2명" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">2명</div>
+      </div>
+      <input type="hidden" id="companion" value="없음">
+      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-top:8px;">* 동반 시 1인당 15만원 추가</div>
+    </div>
+  </div>
+
+  <!-- 예약금 안내 -->
+  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;border:2px solid #b8956a;">
+    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:12px;">예약금 안내</div>
+    <div style="font-size:15px;color:#2a2520;line-height:2.0;font-weight:600;">
+      <span style="color:#e84040;">노쇼 방지를 위해 예약금 5만원을 입금해주시면 예약이 확정됩니다.</span><br>
+      잔금 34만원은 수업 당일 현장에서 결제하시면 됩니다.
+    </div>
+    <div style="margin-top:16px;padding:16px;background:#f5f0e8;border-radius:8px;">
+      <div style="font-size:16px;color:#2a2520;font-weight:800;margin-bottom:4px;">입금 계좌</div>
+      <div style="font-size:18px;color:#2a2520;font-weight:900;">국민은행 469301-01-116643</div>
+      <div style="font-size:15px;color:#2a2520;font-weight:700;margin-top:4px;">예금주: 안세훈</div>
+      <div onclick="navigator.clipboard.writeText('469301-01-116643');this.innerText='복사 완료!';setTimeout(function(){document.querySelectorAll('.copy-btn').forEach(function(el){el.innerText='계좌번호 복사하기';});},2000);" class="copy-btn" style="margin-top:10px;padding:10px;background:#2a2520;border-radius:6px;text-align:center;font-size:14px;font-weight:700;color:#d4a854;cursor:pointer;">계좌번호 복사하기</div>
+    </div>
+    <div style="font-size:14px;color:#666;margin-top:12px;line-height:1.8;">
+      입금자명은 신청자 성함과 동일하게 부탁드립니다<br>
+      수업 2일 전까지 취소 시 예약금 전액 환불
+    </div>
+  </div>
+
+  <!-- 제출 -->
+  <button type="submit" style="width:100%;padding:18px;background:#2a2520;border:none;border-radius:12px;text-align:center;cursor:pointer;">
+    <div style="font-size:18px;font-weight:800;color:#d4a854;">신청하기</div>
+  </button>
+
+</form>
+
+<!-- 제출 완료 화면 -->
+<div id="successScreen" style="display:none;padding:80px 28px;background:#f5f0e8;text-align:center;">
+  <div style="font-size:28px;font-weight:900;color:#2a2520;margin-bottom:16px;">신청이 완료되었습니다</div>
+  <div style="font-size:16px;color:#666;line-height:2.0;">예약금 5만원 입금 후<br>예약이 확정됩니다.<br><br>입금 확인 후 개별 연락드리겠습니다.</div>
+  <div style="margin-top:24px;padding:20px;background:#fff;border-radius:12px;border:2px solid #b8956a;">
+    <div style="font-size:16px;color:#2a2520;font-weight:800;margin-bottom:4px;">입금 계좌</div>
+    <div style="font-size:18px;color:#2a2520;font-weight:900;">국민은행 469301-01-116643</div>
+    <div style="font-size:15px;color:#2a2520;font-weight:700;margin-top:4px;">예금주: 안세훈</div>
+  </div>
+</div>
+
+<script>
+function selectOption(el, fieldId) {
+  var siblings = el.parentElement.querySelectorAll('.btn-select');
+  for (var i = 0; i < siblings.length; i++) {
+    siblings[i].classList.remove('active');
+  }
+  el.classList.add('active');
+  document.getElementById(fieldId).value = el.getAttribute('data-value');
+}
+
+function validateForm() {
+  var valid = true;
+  var fields = [
+    {id: 'name', err: 'err-name', field: 'field-name'},
+    {id: 'phone', err: 'err-phone', field: 'field-phone'},
+    {id: 'age', err: 'err-age', field: 'field-age'},
+    {id: 'laptop', err: 'err-laptop', field: 'field-laptop'},
+    {id: 'date1', err: 'err-date1', field: 'field-date1'}
+  ];
+
+  for (var i = 0; i < fields.length; i++) {
+    var val = document.getElementById(fields[i].id).value.trim();
+    var errEl = document.getElementById(fields[i].err);
+    var fieldEl = document.getElementById(fields[i].field);
+    if (!val) {
+      errEl.style.display = 'block';
+      fieldEl.classList.add('shake');
+      setTimeout((function(el){return function(){el.classList.remove('shake');};})(fieldEl), 300);
+      valid = false;
+    } else {
+      errEl.style.display = 'none';
+    }
+  }
+
+  if (valid) {
+    document.getElementById('coachingForm').style.display = 'none';
+    document.querySelector('[style*="padding:48px"]').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  return false;
+}
+</script>
+
+</body></html>
