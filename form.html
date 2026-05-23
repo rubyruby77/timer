@@ -162,6 +162,9 @@ button:active{opacity:0.7;transform:scale(0.98);}
 </div>
 
 <script>
+// 방문 기록
+fetch('https://script.google.com/macros/s/AKfycby4xjjyS7oOGJxAYktGdRS1K2QsUgvsh0X-XMdjeor0wnpQtQXtiRYWwhK1g2eJgQUK/exec?page=form', {mode:'no-cors'});
+
 // 날짜 예시 자동 세팅
 var today = new Date();
 var d1 = new Date(today); d1.setDate(today.getDate() + 3);
@@ -292,7 +295,7 @@ function validateForm() {
     };
 
     // 구글 시트로 전송 (Apps Script URL 연동 시 아래 URL 교체)
-    var scriptURL = 'https://script.google.com/macros/s/AKfycbx9UIJCdgJJW9KfHLGp2hZR_JAoGmL6LaW-n_qwWbsmw9yCJ7WrX2a7QExMh6Ks6ecN/exec';
+    var scriptURL = 'https://script.google.com/macros/s/AKfycby4xjjyS7oOGJxAYktGdRS1K2QsUgvsh0X-XMdjeor0wnpQtQXtiRYWwhK1g2eJgQUK/exec';
 
     if (scriptURL) {
       fetch(scriptURL, {
