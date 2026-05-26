@@ -80,19 +80,11 @@ button:active{opacity:0.7;transform:scale(0.98);}
 </form>
 
 <!-- 제출 완료 화면 -->
-<div id="successScreen" style="display:none;padding:80px 28px 60px;background:#f5f0e8;text-align:center;">
-  <div style="font-size:28px;font-weight:900;color:#2a2520;margin-bottom:16px;">신청이 완료되었습니다</div>
-  <div style="font-size:22px;font-weight:900;color:#2a2520;line-height:1.6;margin-bottom:16px;">예약금 5만원 입금 후<br>예약이 확정됩니다</div>
-  <div style="font-size:16px;color:#666;line-height:2.0;">입금 확인 후 개별 연락드리겠습니다.</div>
-  <div style="margin-top:24px;padding:20px;background:#fff;border-radius:12px;border:2px solid #b8956a;">
-    <div style="font-size:16px;color:#2a2520;font-weight:800;margin-bottom:4px;">입금 계좌</div>
-    <div style="font-size:18px;color:#2a2520;font-weight:900;">국민은행 469301-01-116643</div>
-    <div style="font-size:15px;color:#2a2520;font-weight:700;margin-top:4px;">예금주: 안세훈</div>
-    <div onclick="navigator.clipboard.writeText('469301-01-116643');this.innerText='복사 완료!';setTimeout(function(){document.querySelectorAll('.copy-btn').forEach(function(el){el.innerText='계좌번호 복사하기';});},2000);" class="copy-btn" style="margin-top:10px;padding:10px;background:#2a2520;border-radius:6px;text-align:center;font-size:14px;font-weight:700;color:#d4a854;cursor:pointer;-webkit-tap-highlight-color:transparent;">계좌번호 복사하기</div>
-  </div>
-  <div style="margin-top:24px;">
-    <div onclick="location.reload();" style="font-size:14px;color:#b8956a;cursor:pointer;text-decoration:underline;-webkit-tap-highlight-color:transparent;">다시 작성하기</div>
-  </div>
+<div id="successScreen" style="display:none;padding:120px 28px 60px;background:#f5f0e8;text-align:center;">
+  <div style="font-size:28px;font-weight:900;color:#2a2520;margin-bottom:28px;">신청이 완료되었습니다.</div>
+  <div style="font-size:18px;color:#2a2520;line-height:1.7;margin-bottom:16px;"><strong id="successPhone" style="color:#2a2520;"></strong>로 연락드리겠습니다.</div>
+  <div style="font-size:18px;color:#2a2520;margin-bottom:48px;">감사합니다.</div>
+  <div onclick="location.reload();" style="font-size:14px;color:#b8956a;cursor:pointer;text-decoration:underline;-webkit-tap-highlight-color:transparent;">다시 작성하기</div>
 </div>
 
 <script>
@@ -196,6 +188,7 @@ function validateForm() {
 function showSuccess() {
   document.getElementById('coachingForm').style.display = 'none';
   document.getElementById('formHeader').style.display = 'none';
+  document.getElementById('successPhone').innerText = document.getElementById('phone').value;
   document.getElementById('successScreen').style.display = 'block';
   window.scrollTo(0, 0);
 }
