@@ -20,10 +20,30 @@ button:active{opacity:0.7;transform:scale(0.98);}
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YNTB6BLJWW');</script>
 </head><body>
 
-<div id="formHeader" style="padding:48px 28px;background:#2a2520;text-align:center;">
-  <div style="font-size:14px;letter-spacing:6px;color:#d4a854;margin-bottom:20px;">AI Private Coaching</div>
-  <div style="font-size:24px;font-weight:800;color:#f5f0e8;line-height:1.5;">수업 신청서</div>
-  <div style="font-size:14px;color:#f5f0e8;margin-top:12px;">소요시간 : 1분</div>
+<div id="formHeader">
+
+  <!-- 돌아가기 버튼 -->
+  <a href="javascript:history.back()" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;margin:80px 16px 12px;background:#d4a854;color:#fff;font-size:16px;font-weight:800;text-decoration:none;border-radius:10px;letter-spacing:0.5px;">
+    <span style="font-size:18px;">←</span>
+    <span>돌아가기</span>
+  </a>
+
+  <!-- LIVE 잔여석 -->
+  <div style="margin:0 16px 16px;background:#fff;padding:18px;text-align:center;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+    <span style="display:inline-block;width:10px;height:10px;background:#cc0000;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
+    <span style="font-size:13px;color:#cc0000;font-weight:800;letter-spacing:2px;vertical-align:middle;">LIVE</span>
+    <span style="font-size:15px;color:#999;margin:0 10px;vertical-align:middle;">·</span>
+    <span style="font-size:16px;font-weight:700;color:#1a1614;vertical-align:middle;">잔여 </span>
+    <span style="font-size:22px;font-weight:900;color:#cc0000;vertical-align:middle;">3</span>
+    <span style="font-size:16px;font-weight:700;color:#1a1614;vertical-align:middle;">석</span>
+  </div>
+
+  <!-- 다크 박스 -->
+  <div style="margin:0 16px;background:#2a2520;text-align:center;padding:48px 28px;border-radius:10px;">
+    <div style="font-size:14px;letter-spacing:6px;color:#d4a854;margin-bottom:20px;">AI Private Coaching</div>
+    <div style="font-size:24px;font-weight:800;color:#f5f0e8;line-height:1.5;">수업 신청서</div>
+  </div>
+
 </div>
 
 <form id="coachingForm" onsubmit="return validateForm()" style="padding:32px 20px 60px;background:#f5f0e8;">
