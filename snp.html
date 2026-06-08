@@ -57,9 +57,9 @@
 
   /* 흰→다크 카드 / 후기 */
   .wcard{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px 24px; color:var(--text);}
-  .quote{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:24px 26px 24px 54px; position:relative;
-         font-size:19px; font-weight:500; color:#f1ebdf; line-height:1.7;}
-  .quote::before{content:"\201C"; position:absolute; left:18px; top:10px; font-size:46px; color:var(--champ); font-family:Georgia,serif; line-height:1;}
+  .quote{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 20px 14px 46px; position:relative;
+         font-size:18px; font-weight:500; color:#f1ebdf; line-height:1.5;}
+  .quote::before{content:"\201C"; position:absolute; left:16px; top:7px; font-size:34px; color:var(--champ); font-family:Georgia,serif; line-height:1;}
   .stack{display:flex; flex-direction:column; gap:16px; margin-top:40px;}
 
   /* 체크리스트 */
@@ -292,7 +292,7 @@
   .proof .pc{font-size:13px; color:var(--sub); margin-top:12px;}
   .proof .label{font-family:"Noto Serif KR",serif; font-weight:700; font-size:24px; margin-top:14px; color:var(--text);}
   .proof .stars5{color:var(--champ); font-size:32px; letter-spacing:6px; margin-top:14px;}
-  .proof .pdiv{border-top:1px solid var(--line); margin:36px 0;}
+  .proof .pdiv{border-top:1px solid var(--line); margin:20px 0;}
 
   /* 하단 고정바 */
   .sticky{position:fixed; left:0; right:0; bottom:0; z-index:50; background:rgba(16,15,14,.92); backdrop-filter:blur(10px);
@@ -388,38 +388,36 @@
   <section class="card center">
     <div><img class="illu" src="3d_illust/assets/snp_ebook.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4d6.webp'" alt="" style="width:190px;height:190px;"></div>
     <div style="margin-top:16px;"><span class="badge" style="font-size:28px;">[ 카톡하는 법 ]</span></div>
-    <p class="h2 mt" style="font-size:24px;">올해 상반기 <span class="hl y">900권 넘게</span> 팔린 전자책</p>
-    <p class="lead center mt2">네, 제가 그 책을 쓴 사람입니다.</p>
+    <div class="proof" style="margin-top:22px;">
+      <div class="stat">누적 구매자 <b>900명</b> +</div>
+      <div class="pc">* 카톡 행동강령 전자책 전 플랫폼 누적 판매 기준</div>
+    </div>
   </section>
 
   <!-- 후기 (결과 증명 + 후기) -->
   <section class="card center">
     <div class="proof">
-      <span class="badge2">결과가 증명합니다</span>
-      <div class="stat">누적 구매자 <b>900명</b> +</div>
-      <div class="pc">* 카톡 행동강령 전자책 전 플랫폼 누적 판매 기준</div>
-      <div class="pdiv"></div>
-      <div class="label">압도적인 만족도</div>
+      <div class="stars5" style="margin-top:0;">★★★★★</div>
+      <div class="label" style="margin-top:12px;">압도적인 만족도</div>
       <div class="scorebig"><b>4.9</b> <small>/ 5.0</small></div>
       <div class="pc">* 구매자 평점 합산 기준</div>
       <div class="pdiv"></div>
       <div class="label">실제 경험자의 후기</div>
-      <div class="stars5">★★★★★</div>
     </div>
-    <div class="stack">
+    <div class="stack" style="margin-top:20px; gap:10px;">
       <div class="quote">카톡 보내기 전에 이 책부터 펴요</div>
       <div class="quote">읽고 나서 진짜 읽씹이 줄었습니다</div>
       <div class="quote">상대방 수싸움 하는 게 훤히 보여요</div>
       <div class="quote">카톡 보는 눈 자체가 달라집니다</div>
     </div>
-    <p class="lead center mt">실제로 많은 분들이 <b>카톡 스타일만 바꾸고</b><br><span class="hl l">연애 인생이 바뀌었습니다.</span></p>
+    <p class="lead center mt">실제로 많은 분들이 <b>카톡하는 법을 제대로 배우고</b><br><span class="hl l">연애의 자유를 누리셨습니다.</span></p>
   </section>
 
   <!-- 하지만 -->
   <section class="card">
     <img class="sec-ic" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4ac.webp" alt="">
-    <div class="h2">근데 동시에<br>이런 얘기도 계속 나왔습니다</div>
-    <div class="stack">
+    <div class="h2">근데 동시에<br>이런 아쉬움도 말씀해주셨습니다</div>
+    <div class="stack" style="gap:10px;">
       <div class="quote">전자책은 다 읽었는데, 막상 카톡창 열면 또 멘트가 안 떠올라요</div>
       <div class="quote">제 카톡을 누가 직접 봐주고, 맞는지 틀린지 알려주면 좋겠는데…</div>
       <div class="quote">1:1 컨설팅은 너무 비쌉니다. 다른 방법 없나요?</div>
@@ -428,9 +426,16 @@
   </section>
 
   <!-- 공감 -->
-  <section class="card">
+  <section class="card center">
     <div class="center"><img class="illu" src="3d_illust/assets/frustrated_person.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f614.webp'" alt=""></div>
-    <p class="h2 mt2" style="font-size:24px;">누가 <span class="hl l">"여기서 이러면 안 돼, 이렇게 해"</span><br>이 한마디만 해줘도 달라지는데.</p>
+    <p class="h2 mt2" style="font-size:23px;">누가 이 상황에서,</p>
+    <div style="margin-top:24px; display:flex; flex-direction:column; gap:12px; align-items:center; font-family:'Noto Serif KR',serif; font-weight:700; font-size:21px;">
+      <span class="hl l">"이런 멘트 치세요"</span>
+      <span class="hl l">"이 말은 하면 안 됩니다"</span>
+      <span class="hl l">"지금은 당겨야 합니다"</span>
+      <span class="hl l">"지금은 무시하세요"</span>
+    </div>
+    <p class="h2 mt" style="font-size:23px;">이 한마디만 해줘도 달라지는데,</p>
   </section>
 
   <p style="text-align:center; margin:56px 18px; font-family:'Noto Serif KR',serif; font-size:29px; font-weight:700; color:var(--text);"><span class="hl l">그래서 만들었습니다.</span></p>
