@@ -237,6 +237,9 @@
   .sp-gmark{display:flex; justify-content:space-between; font-size:13px; color:var(--sub);}
   .sp-dir{display:flex; gap:12px; justify-content:center; margin-top:10px; flex-wrap:wrap;}
   .sp-dir span{border:1px solid var(--line); border-radius:12px; padding:10px 18px; color:var(--champ); font-weight:700; font-size:16px;}
+  .sp-sllabels{display:flex; justify-content:space-between; font-weight:700; color:var(--champ); font-size:17px; margin-bottom:16px;}
+  .sp-sltrack{position:relative; height:4px; background:var(--line); border-radius:99px; margin:6px 6px 0;}
+  .sp-sltrack b{position:absolute; left:42%; top:50%; transform:translate(-50%,-50%); width:22px; height:22px; border-radius:50%; background:var(--champ); box-shadow:0 0 16px var(--champ);}
   /* 출구 없어요 배너 + 4가지 증정 */
   .exit-banner{position:relative; background:#0c0b0b; border:1px solid var(--line); border-radius:16px; padding:30px 24px; text-align:center; margin-top:18px;}
   .exit-banner .no02{position:absolute; top:-21px; left:50%; transform:translateX(-50%); width:44px; height:44px; border-radius:50%; background:#0c0b0b; border:1px solid var(--champ); color:var(--champ); font-family:"Playfair Display",serif; display:flex; align-items:center; justify-content:center; font-size:18px;}
@@ -363,7 +366,7 @@
     <div class="ladder">
       <div class="tier now">
         <div><span class="now-badge">＋ 현재 가격</span><div class="tl">S&amp;P 1기 (현재)</div></div>
-        <div class="tp">59,000<span style="font-size:.55em;">원</span></div>
+        <div class="tp">99,000<span style="font-size:.55em;">원</span></div>
       </div>      <div class="tier up">
         <div class="tl">S&amp;P 2기</div>
         <div class="tp">290,000원</div>
@@ -448,7 +451,8 @@
       <div class="sp-item pos">
         <div class="h">Position · 포지션</div>
         <div class="d">그 거리에서 어떤 수를 둘지.</div>
-        <div class="sp-dir"><span>← 당긴다</span><span>● 둔다</span><span>민다 →</span></div>
+        <div class="sp-sllabels"><span>← 당긴다</span><span>민다 →</span></div>
+        <div class="sp-sltrack"><b></b></div>
       </div>
     </div>
   </section>
@@ -456,7 +460,7 @@
   <!-- 왜 30명 -->
   <section class="card dark">
     <img class="sec-ic" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f465.webp" alt="">
-    <div class="h2">왜 1:1이 아니라<br><span class="hl y">30명</span>이냐</div>
+    <div class="h2"><span class="hl y">30명</span>이 좋은 이유는<br>뭔가요?</div>
     <p class="lead center mt2">1:1 컨설팅은 내 카톡 1개, 피드백 1개. 거기서 끝.<br>S&amp;P는 <b class="gold">30명이 매일</b> 카톡을 보냅니다.</p>
     <div class="stack" style="margin-top:24px; gap:12px;">
       <div class="wcard"><b class="gold">A</b>는 썸 초반이라 → 첫 데이트 신청 <b>타이밍</b> 코칭</div>
@@ -467,9 +471,18 @@
     <p class="h2 mt" style="font-size:23px;">1:1은 내 경험 1개.<br><span class="hl l">S&amp;P는 30명의 경험 전부.</span></p>
   </section>
 
+  <!-- 공유 / 1:1 -->
+  <section class="card center">
+    <div class="h2" style="font-size:23px;">공유할 건 공유, <span class="hl l">민감한 건 1:1</span></div>
+    <div class="stack" style="margin-top:30px; gap:12px;">
+      <div class="wcard" style="text-align:left;">📢 <b>다 같이 알면 좋은 건</b> → 단톡방에 공유</div>
+      <div class="wcard" style="text-align:left;">🤝 <b class="gold">당신만 봐야 할 건</b> → 1:1로 따로 코칭</div>
+    </div>
+  </section>
+
   <!-- 남들의 경험을 내 경험으로 -->
   <section class="card dark">
-    <div class="h2">이제, 남들의 경험을<br><span class="hl l">내 경험으로</span> 만드세요</div>
+    <div class="h2"><span class="hl l">30명의 경험</span>이<br>내 경험이 됩니다</div>
     <div class="expgrid">
       <div class="expcard"><div class="l">썸 초반</div><div class="v">데이트 타이밍</div></div>
       <div class="expcard"><div class="l">밀당 중</div><div class="v">읽씹 대응</div></div>
@@ -492,7 +505,7 @@
     <div class="v4-pivot">↓ &nbsp;S&amp;P가 이 둘을 <span class="hl l">부숴버렸습니다</span></div>
     <div class="v4-box good">
       <div class="v4-tag">S&amp;P</div>
-      <div class="v4-li"><span class="o">✓</span>가격을 확 낮췄다 <span class="sub">— 3주 59,000원</span></div>
+      <div class="v4-li"><span class="o">✓</span>가격을 확 낮췄다 <span class="sub">— 3주 99,000원</span></div>
       <div class="v4-li"><span class="o">✓</span><b>나랑 비슷한 30명</b>의 데이터로 배운다 <span class="sub">— 내 데이터가 0이어도 OK</span></div>
     </div>
     <div class="wcard" style="margin-top:18px; text-align:center; border-color:rgba(216,195,154,.45); font-size:19px;">
@@ -541,7 +554,7 @@
   <div class="midcta">
     <p class="eye">여기까지 봤다면, 감 오시죠?</p>
     <a class="btn" href="#apply">👇 S&amp;P 1기 합류하기</a>
-    <p class="note">단 30명 한정 · 3주 59,000원</p>
+    <p class="note">단 30명 한정 · 3주 99,000원</p>
   </div>
 
   <!-- 체크리스트 -->
@@ -711,7 +724,7 @@
     <p class="serif" style="text-align:center; font-size:14px; letter-spacing:3px; color:var(--bronze); font-weight:800;">SPECIAL · 1기 한정</p>
     <div class="h2 mt2" style="font-size:27px;">이번 1기,<br><span class="hl l">놓칠 수 없는 이유</span></div>
     <div style="margin-top:34px;">
-      <div class="reason"><span class="no">01</span><span class="rt"><b>역대 최저가</b> — 1기에만 59,000원 <span style="color:var(--sub);">(2기 29만원)</span></span></div>
+      <div class="reason"><span class="no">01</span><span class="rt"><b>역대 최저가</b> — 1기에만 99,000원 <span style="color:var(--sub);">(2기 29만원)</span></span></div>
       <div class="reason"><span class="no">02</span><span class="rt"><b>전자책 2권 무료</b> — 10만원 상당 추가 증정</span></div>
       <div class="reason"><span class="no">03</span><span class="rt"><b>개별 1:1 코칭</b> — 내 카톡만 따로 직접 피드백</span></div>
       <div class="reason"><span class="no">04</span><span class="rt"><b>7일 100% 환불</b> — 아니다 싶으면 전액 돌려받음</span></div>
@@ -720,7 +733,7 @@
 
   <!-- CTA 3 -->
   <div class="midcta">
-    <p class="eye">하루 2,800원, 딱 3주면 됩니다</p>
+    <p class="eye">하루 4,700원, 딱 3주면 됩니다</p>
     <a class="btn" href="#apply">👇 S&amp;P 1기 신청하기</a>
     <p class="note">7일 내 마음에 안 들면 100% 환불</p>
   </div>
@@ -813,7 +826,7 @@
 
 <!-- 하단 고정 CTA -->
 <div class="sticky">
-  <span class="p">59,000원 <s>·30명 한정</s></span>
+  <span class="p">99,000원 <s>·30명 한정</s></span>
   <a href="#apply">1기 입회 →</a>
 </div>
 
