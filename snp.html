@@ -166,6 +166,12 @@
   .attn-banner{display:inline-block; margin-top:28px; background:linear-gradient(180deg,#e3d0a6,#cdb37e); color:#221905;
     font-family:"Noto Serif KR",serif; font-weight:900; font-size:27px; padding:16px 38px; border-radius:14px;
     box-shadow:0 10px 28px rgba(216,195,154,.24); transform:rotate(-1deg);}
+  /* 데코 타이머 링 */
+  .timer-ring{width:216px; height:216px; border-radius:50%; border:8px solid var(--champ); margin:38px auto 6px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    box-shadow:0 0 38px rgba(222,201,160,.2), inset 0 0 30px rgba(0,0,0,.3);}
+  .t-time{font-weight:900; font-size:56px; color:var(--text); line-height:1; font-variant-numeric:tabular-nums; letter-spacing:2px;}
+  .t-min{font-size:19px; color:var(--sub); margin-top:8px; letter-spacing:1px;}
   /* 선착순 마감 주의 */
   .scarce{margin:34px 18px; border:1.5px solid var(--champ); border-radius:22px; padding:36px 28px; text-align:center;
     background:radial-gradient(120% 90% at 50% 0%, rgba(222,201,160,.12), transparent 62%);}
@@ -283,7 +289,11 @@
   <!-- 집중 유도 -->
   <section class="card dark center">
     <p class="serif" style="font-size:26px; font-weight:700; line-height:1.55;">카톡만 바꿔서<br><span class="hl l">여자 마음</span>을 얻고 싶은 분이라면</p>
-    <div class="attn-banner">딱 2분만 집중하세요</div>
+    <div class="timer-ring">
+      <div class="t-time" id="snpTimer">2:00</div>
+      <div class="t-min">min</div>
+    </div>
+    <div class="attn-banner" style="margin-top:24px;">딱 2분만 집중하세요</div>
   </section>
 
   <!-- 선착순 마감 주의 -->
@@ -757,5 +767,18 @@
   <a href="#apply">1기 입회 →</a>
 </div>
 
+<script>
+(function(){
+  var el = document.getElementById('snpTimer');
+  if(!el) return;
+  var t = 120;                         // 2:00에서 시작
+  function fmt(s){ var m=Math.floor(s/60), x=s%60; return m+':'+(x<10?'0':'')+x; }
+  setInterval(function(){
+    t--;
+    if(t < 112) t = 120;               // 1:52(112초)까지만 갔다가 2:00으로 리셋
+    el.textContent = fmt(t);
+  }, 1000);
+})();
+</script>
 </body>
 </html>
