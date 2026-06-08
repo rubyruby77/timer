@@ -273,6 +273,22 @@
   .seat-cap b{color:var(--champ);}
   .seat-cap .ul{border-bottom:3px solid var(--champ); padding-bottom:3px;}
   .seat-cap .seat-star{color:var(--champ); margin-left:4px;}
+  /* 섹션 화살표 */
+  .sec-arrow{text-align:center; margin:4px 0 8px;}
+  .sec-arrow svg{width:46px; height:50px;}
+  .sec-arrow path{fill:var(--champ);}
+  /* 결과가 증명합니다 (proof) */
+  .proof{text-align:center;}
+  .proof .badge2{display:inline-block; background:linear-gradient(180deg,#e3d0a6,#cdb37e); color:#221905; font-weight:800; font-size:16px; padding:9px 24px; border-radius:999px;}
+  .proof .stat{font-family:"Noto Serif KR",serif; font-weight:900; font-size:32px; color:var(--text); margin-top:26px; line-height:1.35;}
+  .proof .stat b{color:var(--champ);}
+  .proof .scorebig{font-family:"Noto Serif KR",serif; font-weight:900; font-size:58px; color:var(--text); line-height:1; margin-top:4px;}
+  .proof .scorebig b{color:var(--champ);}
+  .proof .scorebig small{font-size:.46em; color:var(--sub); font-weight:700;}
+  .proof .pc{font-size:13px; color:var(--sub); margin-top:12px;}
+  .proof .label{font-family:"Noto Serif KR",serif; font-weight:700; font-size:24px; margin-top:14px; color:var(--text);}
+  .proof .stars5{color:var(--champ); font-size:32px; letter-spacing:6px; margin-top:14px;}
+  .proof .pdiv{border-top:1px solid var(--line); margin:36px 0;}
 
   /* 하단 고정바 */
   .sticky{position:fixed; left:0; right:0; bottom:0; z-index:50; background:rgba(16,15,14,.92); backdrop-filter:blur(10px);
@@ -312,6 +328,7 @@
     <div class="top">한정 30명 · 선착순 모집</div>
     <div class="big">S&amp;P 1기 모집 중<br><span class="warn-t">⚠ 조기 마감 주의</span></div>
     <p style="color:var(--sub); font-size:15px; margin-top:16px;">정원 30명이 차면 그대로 닫힙니다.</p>
+    <div class="h2" style="margin-top:28px; margin-bottom:0; font-size:25px;">지금 이 페이지를 보고 있다는 건<br><span class="hl l">아직 1기 가격</span>으로<br>받을 수 있다는 뜻입니다</div>
   </div>
 
   <!-- 도입 훅 -->
@@ -336,16 +353,22 @@
     <div style="margin-top:16px;"><span class="badge" style="font-size:28px;">[ 카톡하는 법 ]</span></div>
     <p class="h2 mt" style="font-size:24px;">올해 상반기 <span class="hl y">900권 넘게</span> 팔린 전자책</p>
     <p class="lead center mt2">네, 제가 그 책을 쓴 사람입니다.</p>
-    <div class="rating">
-      <div class="stars">★★★★★</div>
-      <div class="score">4.9<small> / 5.0</small></div>
-      <div class="cap">동종 강의 대비 압도적 만족도 · 전 플랫폼 합산 기준</div>
-    </div>
   </section>
 
-  <!-- 후기 -->
-  <section class="card">
-    <div class="h2">카톡 하나 바꿨을 뿐인데<br><span class="hl y">이런 후기</span>가 쏟아졌습니다</div>
+  <!-- 후기 (결과 증명 + 후기) -->
+  <section class="card center">
+    <div class="proof">
+      <span class="badge2">결과가 증명합니다</span>
+      <div class="stat">누적 구매자 <b>900명</b> +</div>
+      <div class="pc">* 카톡 행동강령 전자책 전 플랫폼 누적 판매 기준</div>
+      <div class="pdiv"></div>
+      <div class="label">압도적인 만족도</div>
+      <div class="scorebig"><b>4.9</b> <small>/ 5.0</small></div>
+      <div class="pc">* 구매자 평점 합산 기준</div>
+      <div class="pdiv"></div>
+      <div class="label">실제 경험자의 후기</div>
+      <div class="stars5">★★★★★</div>
+    </div>
     <div class="stack">
       <div class="quote">카톡 보내기 전에 이 책부터 펴요</div>
       <div class="quote">읽고 나서 진짜 읽씹이 줄었습니다</div>
@@ -374,6 +397,8 @@
   </section>
 
   <p style="text-align:center; margin:56px 18px; font-family:'Noto Serif KR',serif; font-size:29px; font-weight:700; color:var(--text);"><span class="hl l">그래서 만들었습니다.</span></p>
+
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
 
   <!-- S&amp;P 정의 -->
   <section class="card dark">
@@ -565,6 +590,8 @@
     </div>
   </section>
 
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+
   <!-- 전환 플로우 -->
   <section class="card center">
     <p class="serif" style="font-size:24px; font-weight:700; line-height:1.5;">딱 3주, S&amp;P 하나로</p>
@@ -641,6 +668,8 @@
     </div>
   </section>
 
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+
   <!-- 놓칠 수 없는 이유 -->
   <section class="card dark">
     <p class="serif" style="text-align:center; font-size:14px; letter-spacing:3px; color:var(--bronze); font-weight:800;">SPECIAL · 1기 한정</p>
@@ -666,7 +695,6 @@
   <!-- 가격 -->
   <section class="card feature">
     <div class="kicker">Price</div>
-    <div class="h2">지금 이 페이지를 보고 있다는 건<br><span class="hl l">아직 1기 가격</span>으로<br>받을 수 있다는 뜻입니다</div>
     <div class="ladder">
       <div class="tier now">
         <div><span class="now-badge">＋ 현재 가격</span><div class="tl">S&amp;P 1기 (현재)</div></div>
@@ -747,6 +775,8 @@
       <details><summary>1:1 컨설팅도 되나요?</summary><div class="faq-a">따로 문의 주시면 안내드립니다. 근데 1:1은 회당 15만~30만원. 솔직히 S&amp;P가 넘사벽으로 가성비 좋습니다.</div></details>
     </div>
   </section>
+
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
 
   <!-- 메이커 진심 -->
   <section class="card center">
