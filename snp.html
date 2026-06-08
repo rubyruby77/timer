@@ -262,6 +262,17 @@
   .alarm-circle .s{font-size:15px; font-weight:800; letter-spacing:1px;}
   .alarm-circle .big{font-family:"Noto Serif KR",serif; font-weight:900; font-size:40px; margin-top:8px; line-height:1;}
   .alarm-clock{width:84px; height:84px; margin-top:-30px; position:relative; filter:drop-shadow(0 8px 14px rgba(0,0,0,.4));}
+  /* 선착순 잔여 카운터 (플립) */
+  .seatcounter{text-align:center; margin:44px 18px;}
+  .flips{display:flex; gap:12px; justify-content:center;}
+  .flip{width:78px; height:104px; border-radius:12px; background:#26231f; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:58px; color:var(--text);
+    font-variant-numeric:tabular-nums; box-shadow:inset 0 -8px 16px rgba(0,0,0,.38);}
+  .flip.dim{color:#5a564e;}
+  .seat-cap{margin-top:22px; font-family:"Noto Serif KR",serif; font-weight:700; font-size:22px; color:var(--text);}
+  .seat-cap b{color:var(--champ);}
+  .seat-cap .ul{border-bottom:3px solid var(--champ); padding-bottom:3px;}
+  .seat-cap .seat-star{color:var(--champ); margin-left:4px;}
 
   /* 하단 고정바 */
   .sticky{position:fixed; left:0; right:0; bottom:0; z-index:50; background:rgba(16,15,14,.92); backdrop-filter:blur(10px);
@@ -642,6 +653,16 @@
     </div>
   </section>
 
+  <!-- 선착순 잔여 카운터 -->
+  <div class="seatcounter">
+    <div class="flips">
+      <span class="flip dim" id="sd0">0</span>
+      <span class="flip" id="sd1">2</span>
+      <span class="flip" id="sd2">7</span>
+    </div>
+    <div class="seat-cap">선착순 <span class="ul"><b>30명</b> 얼리버드 특가</span><span class="seat-star">★</span></div>
+  </div>
+
   <!-- 가격 -->
   <section class="card feature">
     <div class="kicker">Price</div>
@@ -778,6 +799,13 @@
     if(t < 112) t = 120;               // 1:52(112초)까지만 갔다가 2:00으로 리셋
     el.textContent = fmt(t);
   }, 1000);
+})();
+(function(){
+  var seats = [26,29,28,30,27], i = 0;
+  var b = [document.getElementById('sd0'), document.getElementById('sd1'), document.getElementById('sd2')];
+  if(!b[0]) return;
+  function render(n){ var s = ('00'+n).slice(-3); b[0].textContent=s[0]; b[1].textContent=s[1]; b[2].textContent=s[2]; }
+  setInterval(function(){ i = (i+1) % seats.length; render(seats[i]); }, 1300);   // 26→29→28→30→27 루프
 })();
 </script>
 </body>
