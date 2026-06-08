@@ -172,6 +172,10 @@
     box-shadow:0 0 38px rgba(222,201,160,.2), inset 0 0 30px rgba(0,0,0,.3);}
   .t-time{font-weight:900; font-size:56px; color:var(--text); line-height:1; font-variant-numeric:tabular-nums; letter-spacing:2px;}
   .t-min{font-size:19px; color:var(--sub); margin-top:8px; letter-spacing:1px;}
+  /* 잠깐! 결제부터 하지마세요 */
+  .stop-big{font-family:"Noto Serif KR",serif; font-weight:900; font-size:48px; color:var(--champ); line-height:1; text-shadow:0 0 18px rgba(222,201,160,.25);}
+  .stop-sub1{font-family:"Noto Serif KR",serif; font-weight:800; font-size:26px; color:var(--champ); margin-top:20px;}
+  .stop-sub2{font-size:16px; color:var(--body); margin-top:12px;}
   /* 선착순 마감 주의 */
   .scarce{margin:34px 18px; border:1.5px solid var(--champ); border-radius:22px; padding:36px 28px; text-align:center;
     background:radial-gradient(120% 90% at 50% 0%, rgba(222,201,160,.12), transparent 62%);}
@@ -313,15 +317,29 @@
     <img src="3d_illust/assets/snp_man_phone.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4f1.webp'" alt="" style="filter:drop-shadow(0 16px 30px rgba(0,0,0,.55));">
   </section>
 
-  <!-- 집중 유도 -->
+  <!-- 집중 유도 (잠깐! 결제부터 하지마세요) -->
   <section class="card dark center">
-    <p class="serif" style="font-size:26px; font-weight:700; line-height:1.55;">카톡만 바꿔서<br><span class="hl l">여자 마음</span>을 얻고 싶은 분이라면</p>
+    <div class="stop-big">잠깐!</div>
+    <div class="stop-sub1">결제부터 하지 마세요!</div>
+    <div class="stop-sub2">천천히 읽어보고 결정해주세요</div>
+    <div class="sec-arrow" style="margin:26px 0 22px;"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+    <p class="serif" style="font-size:27px; font-weight:700; line-height:1.55;">언제까지<br><span class="hl l">카톡 앞에서 무너지며</span><br>사시겠습니까?</p>
     <div class="timer-ring">
       <div class="t-time" id="snpTimer">2:00</div>
       <div class="t-min">min</div>
     </div>
-    <div class="attn-banner" style="margin-top:24px;">딱 2분만 집중하세요</div>
+    <p class="serif" style="font-size:21px; font-weight:700; margin-top:32px; line-height:1.5;">단 <b class="gold">2분</b>만 집중하시면<br><span class="hl l">그 카톡 지옥, 벗어날 수 있습니다.</span></p>
   </section>
+
+  <!-- 선착순 잔여 카운터 -->
+  <div class="seatcounter">
+    <div class="flips">
+      <span class="flip dim" id="sd0">0</span>
+      <span class="flip" id="sd1">2</span>
+      <span class="flip" id="sd2">7</span>
+    </div>
+    <div class="seat-cap">선착순 <span class="ul"><b>30명</b> 얼리버드 특가</span><span class="seat-star">★</span></div>
+  </div>
 
   <!-- 선착순 마감 주의 -->
   <div class="scarce">
@@ -681,16 +699,6 @@
       <div class="reason"><span class="no">04</span><span class="rt"><b>7일 100% 환불</b> — 아니다 싶으면 전액 돌려받음</span></div>
     </div>
   </section>
-
-  <!-- 선착순 잔여 카운터 -->
-  <div class="seatcounter">
-    <div class="flips">
-      <span class="flip dim" id="sd0">0</span>
-      <span class="flip" id="sd1">2</span>
-      <span class="flip" id="sd2">7</span>
-    </div>
-    <div class="seat-cap">선착순 <span class="ul"><b>30명</b> 얼리버드 특가</span><span class="seat-star">★</span></div>
-  </div>
 
   <!-- 가격 -->
   <section class="card feature">
