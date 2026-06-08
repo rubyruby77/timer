@@ -249,6 +249,12 @@
   .htl .rh{font-family:"Noto Serif KR",serif; font-weight:700; font-size:21px; color:var(--champ); margin-bottom:7px;}
   .htl .rd{font-size:17px; line-height:1.6; color:var(--body);}
   .htl .rd b{color:var(--text);}
+  /* 활용처 그리드 */
+  .usegrid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:42px;}
+  .usegrid .uc{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 8px; text-align:center;}
+  .usegrid .ui{width:48px; height:48px; margin:0 auto 11px;}
+  .usegrid .ui img, .usegrid .ui svg{width:100%; height:100%; object-fit:contain;}
+  .usegrid .ul{font-weight:700; color:var(--body); font-size:15px;}
   /* 출구 없어요 배너 + 4가지 증정 */
   .exit-banner{position:relative; background:#0c0b0b; border:1px solid var(--line); border-radius:16px; padding:30px 24px; text-align:center; margin-top:18px;}
   .exit-banner .no02{position:absolute; top:-21px; left:50%; transform:translateX(-50%); width:44px; height:44px; border-radius:50%; background:#0c0b0b; border:1px solid var(--champ); color:var(--champ); font-family:"Playfair Display",serif; display:flex; align-items:center; justify-content:center; font-size:18px;}
@@ -638,9 +644,23 @@
     </div>
   </section>
 
+  <!-- 카톡 마스터 활용처 -->
+  <section class="card">
+    <div class="h2"><span class="hl l">카톡하는 법</span>을 마스터하면</div>
+    <div class="usegrid">
+      <div class="uc"><div class="ui"><svg viewBox="0 0 24 24"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#feda75"/><stop offset="35%" stop-color="#fa7e1e"/><stop offset="60%" stop-color="#d62976"/><stop offset="100%" stop-color="#4f5bd5"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igGrad)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.5" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="16.3" cy="7.7" r="1.1" fill="#fff"/></svg></div><div class="ul">DM</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4ac.webp" alt=""></div><div class="ul">소개팅 전 연락</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f497.webp" alt=""></div><div class="ul">썸</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f496.webp" alt=""></div><div class="ul">연애</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f37e.webp" alt=""></div><div class="ul">헌팅</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f525.webp" alt=""></div><div class="ul">데이팅앱</div></div>
+    </div>
+    <p class="h2 mt" style="font-size:22px;">여자랑 만나는 모든 곳에<br><span class="hl l">무궁무진하게</span> 써먹습니다</p>
+  </section>
+
   <!-- CTA 2 -->
   <div class="midcta">
-    <p class="eye">이게 당신 얘기가 되려면 — 지금이 타이밍입니다</p>
+    <p class="eye">이게 당신 얘기가 되려면, 지금이 타이밍입니다</p>
     <a class="btn" href="#apply">👇 30명 안에 들어가기</a>
     <p class="note">마감되면 2기는 가격 인상</p>
   </div>
