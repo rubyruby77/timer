@@ -227,6 +227,16 @@
   .reason .no{font-family:"Playfair Display",serif; font-size:25px; color:var(--champ); font-weight:600; min-width:38px;}
   .reason .rt{font-size:17px; font-weight:600; color:var(--body); line-height:1.5;}
   .reason .rt b{color:var(--champ);}
+  /* Size/Position 게이지·방향 */
+  .sp-item .h{font-family:"Noto Serif KR",serif; font-weight:700; font-size:26px; color:var(--champ); margin-bottom:12px;}
+  .sp-item.pos .h{color:var(--bronze);}
+  .sp-item .d{color:var(--body); font-size:18px; line-height:1.6;}
+  .sp-gauge{height:9px; border-radius:99px; background:#2b2825; position:relative; margin:20px 0 10px;}
+  .sp-gauge i{position:absolute; left:0; top:0; width:62%; height:9px; border-radius:99px; background:linear-gradient(90deg,var(--rust),var(--champ));}
+  .sp-gauge b{position:absolute; left:62%; top:50%; transform:translate(-50%,-50%); width:18px; height:18px; border-radius:50%; background:var(--champ); box-shadow:0 0 14px var(--champ);}
+  .sp-gmark{display:flex; justify-content:space-between; font-size:13px; color:var(--sub);}
+  .sp-dir{display:flex; gap:12px; justify-content:center; margin-top:10px; flex-wrap:wrap;}
+  .sp-dir span{border:1px solid var(--line); border-radius:12px; padding:10px 18px; color:var(--champ); font-weight:700; font-size:16px;}
   /* 출구 없어요 배너 + 4가지 증정 */
   .exit-banner{position:relative; background:#0c0b0b; border:1px solid var(--line); border-radius:16px; padding:30px 24px; text-align:center; margin-top:18px;}
   .exit-banner .no02{position:absolute; top:-21px; left:50%; transform:translateX(-50%); width:44px; height:44px; border-radius:50%; background:#0c0b0b; border:1px solid var(--champ); color:var(--champ); font-family:"Playfair Display",serif; display:flex; align-items:center; justify-content:center; font-size:18px;}
@@ -391,13 +401,13 @@
       <div class="quote">상대방 수싸움 하는 게 훤히 보여요</div>
       <div class="quote">카톡 보는 눈 자체가 달라집니다</div>
     </div>
-    <p class="lead center mt">실제로 많은 분들이 <b>카톡하는 법을 제대로 배우고</b><br><span class="hl l">연애의 자유를 누리셨습니다.</span></p>
+    <p class="lead center mt">실제로 많은 분들이<br><b>카톡하는 법을 제대로 배우고</b><br><span class="hl l">연애의 자유를 누리셨습니다.</span></p>
   </section>
 
   <!-- 하지만 -->
   <section class="card">
     <img class="sec-ic" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4ac.webp" alt="">
-    <div class="h2">근데 동시에<br>이런 아쉬움도 말씀해주셨습니다</div>
+    <div class="h2">그러나 이런 아쉬움도<br>말씀하셨습니다</div>
     <div class="stack" style="gap:10px;">
       <div class="quote">전자책은 다 읽었는데, 막상 카톡창 열면 또 멘트가 안 떠올라요</div>
       <div class="quote">제 카톡을 누가 직접 봐주고, 맞는지 틀린지 알려주면 좋겠는데…</div>
@@ -416,7 +426,7 @@
       <span class="hl l">"지금은 당겨야 합니다"</span>
       <span class="hl l">"지금은 무시하세요"</span>
     </div>
-    <p class="h2 mt" style="font-size:23px;">이 한마디만 해줘도 달라지는데,</p>
+    <p class="h2 mt" style="font-size:23px;">이 한마디만 해줘도<br>성공확률이 달라지는데,</p>
   </section>
 
   <p style="text-align:center; margin:56px 18px; font-family:'Noto Serif KR',serif; font-size:29px; font-weight:700; color:var(--text);"><span class="hl l">그래서 만들었습니다.</span></p>
@@ -427,15 +437,18 @@
   <section class="card dark">
     <p class="serif" style="text-align:center; font-size:34px; font-weight:700; color:var(--champ);">S&amp;P 1기 모집</p>
     <p class="serif" style="text-align:center; font-size:20px; color:var(--bronze); margin-top:10px; letter-spacing:1px;">(Size &amp; Position)</p>
-    <div class="stack" style="gap:16px; margin-top:44px;">
-      <div class="wcard">
-        <div class="serif" style="font-weight:700; font-size:30px; color:var(--champ); margin-bottom:12px;">Size : 관계의 사이즈</div>
-        <div class="lead">지금 나랑 그 여자 사이의 거리. 호감이 있는지 없는지, 썸인지 그냥 아는 오빠인지.</div>
-        <div class="lead mt2" style="font-size:18px; color:var(--rust);">이 거리를 못 읽으면 → 아무것도 아닌 사이에 고백하고, 티 내다가 여자가 도망갑니다.</div>
+    <div style="margin-top:44px;">
+      <div class="sp-item">
+        <div class="h">Size · 관계의 사이즈</div>
+        <div class="d">이 여자와의 관계의 크기 / 온도</div>
+        <div class="sp-gauge"><i></i><b></b></div>
+        <div class="sp-gmark"><span>남</span><span>아는 사이</span><span>썸</span><span>연인</span></div>
       </div>
-      <div class="wcard">
-        <div class="serif" style="font-weight:700; font-size:30px; color:var(--bronze); margin-bottom:12px;">Position : 포지션</div>
-        <div class="lead">어떠한 포지션을 잡아야 할지.</div>
+      <div style="border-top:1px solid var(--line); margin:30px 0;"></div>
+      <div class="sp-item pos">
+        <div class="h">Position · 포지션</div>
+        <div class="d">그 거리에서 어떤 수를 둘지.</div>
+        <div class="sp-dir"><span>← 당긴다</span><span>● 둔다</span><span>민다 →</span></div>
       </div>
     </div>
   </section>
