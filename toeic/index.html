@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8"><base target="_top"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>성적상담지 · YOUFIT TOEIC</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{--pp:#452062;--pp2:#5a2d7d;--ppd:#33163f;--pp3:#7b4aa0;--lav:#d0bfff;--lavs:#ede6f3;--bg:#f4f1f8;--tx:#2b2340;--mut:#8b849c;--ln:#d9d2e4;--ok:#1f8f4e;--er:#c0392b;--blue:#dbe9fb;--pink:#f6e2f0}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{-webkit-text-size-adjust:100%}body{margin:0}
+  body{font-family:'Pretendard',system-ui,'Malgun Gothic',sans-serif;color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:20px 14px calc(80px + env(safe-area-inset-bottom))}
+  /* 로그인 */
+  #login{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .lc{width:100%;max-width:400px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 18px 50px -12px rgba(53,22,63,.28);animation:rise .5s both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .lc .h{background:linear-gradient(135deg,var(--pp),var(--ppd));padding:34px 28px 28px;text-align:center}.lc .h img{height:30px}.lc .h .t{color:#fff;font-weight:700;margin-top:16px;font-size:17px}.lc .h .s{color:var(--lav);font-size:13px;margin-top:5px}
+  .lc .b{padding:26px}.lc input{width:100%;height:52px;padding:0 16px;font-size:16px;border:1.5px solid var(--ln);border-radius:13px;outline:none;background:#fbfafd;font-family:inherit;text-align:center;letter-spacing:1px}
+  .lc input:focus{border-color:var(--pp2);box-shadow:0 0 0 4px rgba(90,45,125,.12)}
+  .lc button{width:100%;height:52px;margin-top:12px;border:none;border-radius:13px;cursor:pointer;font-family:inherit;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--pp),var(--pp2))}
+  .lc .hint{font-size:12.5px;color:var(--mut);text-align:center;margin-top:14px;line-height:1.6}
+  .lerr{color:var(--er);font-size:13px;margin-top:10px;font-weight:600;min-height:16px;text-align:center}
+  #app{display:none}
+  /* 성적상담지 - 종이 양식 재현 */
+  .paper{position:relative;background:#fff;border-radius:16px;padding:26px 26px 30px;box-shadow:0 6px 24px rgba(53,22,63,.08)}
+  .resetbtn{height:34px;padding:0 14px;border:1.5px solid var(--lav);background:#fff;color:var(--pp);border-radius:10px;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer}
+  .resetbtn:hover{background:#fdeff5}
+  .banner{background:linear-gradient(135deg,var(--pp3),var(--pp));color:#fff;font-size:30px;font-weight:800;text-align:center;padding:16px;border-radius:40px;letter-spacing:-.01em;box-shadow:0 8px 20px -8px rgba(69,32,98,.5)}
+  .infoline{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;font-size:15px;margin:30px 0 12px}
+  .resetrow{text-align:right;margin-bottom:8px}
+  .infoline b{border-bottom:1.5px solid var(--pp);padding:0 14px 2px;font-weight:800;min-width:70px;display:inline-block;text-align:center}
+  .hscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table.form{border-collapse:collapse;width:100%;min-width:600px;font-size:12.5px;table-layout:fixed}
+  table.form td,table.form th{border:1px solid var(--ln);padding:5px 6px;text-align:center;vertical-align:middle}
+  .hd{background:var(--lavs);font-weight:800;color:var(--pp)}
+  .hd2{background:#f5f0fa;font-weight:700}
+  .lbl{background:#faf8fc;font-weight:700;white-space:nowrap}
+  .pt{background:#fbfafd;font-size:11.5px;line-height:1.5;text-align:left;padding:8px}
+  .fi{width:100%;height:30px;border:none;background:transparent;text-align:center;font-size:12.5px;font-family:inherit;outline:none}
+  .fi:read-only{color:#5b5470}
+  .fi.ed{background:transparent}
+  .fi.ed:focus{background:#fff;box-shadow:inset 0 0 0 2px var(--lav)}
+  .fi[type="month"]{font-size:12px;padding:0 2px;color:var(--tx)}
+  .ymcell{cursor:pointer} .ymcell input:not(:disabled){pointer-events:none}
+  .books{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:18px 2px 12px;font-size:14px;font-weight:700;color:var(--pp)}
+  .books input{flex:1;min-width:180px;height:38px;border:none;border-bottom:1.5px solid var(--pp);background:transparent;font-size:14px;font-family:inherit;outline:none;padding:0 6px}
+  /* 메인 그리드 */
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--ln)}
+  table.grid{border-collapse:collapse;width:100%;min-width:720px;font-size:12px;table-layout:fixed}
+  table.grid th,table.grid td{border:1px solid var(--ln);padding:3px 4px;text-align:center;vertical-align:middle}
+  table.grid thead th{font-weight:800;font-size:11.5px;color:var(--pp)}
+  .lch{background:var(--blue)}.p7h{background:var(--pink)}
+  .lclab{background:#eef4fc;font-weight:800;white-space:nowrap;width:92px}
+  .p7lab{background:#fbeef6;font-weight:800;white-space:nowrap;width:64px}
+  .tot{background:#f3eff8;font-weight:800;color:var(--pp);width:52px}
+  col.cw{width:70px}
+  .cell{display:flex;flex-direction:column;gap:2px}
+  .cell{position:relative;z-index:1}
+  .cell input[type=number]{height:26px;padding:0 4px;font-size:12px;text-align:center;border:none;background:transparent;font-family:inherit;outline:none}
+  .cell input[type=number]:focus{box-shadow:0 0 0 2px var(--lav);border-radius:4px}
+  .cell input:focus{box-shadow:0 0 0 2px var(--lav);border-color:var(--pp2)}
+  table.grid .cell input{text-align:center!important;width:100%;padding-left:0;padding-right:0}
+  .dwrap{display:flex;align-items:center;justify-content:center;gap:2px;margin-bottom:2px}
+  .dwrap .sl{font-size:12px;color:var(--pp);font-weight:800;flex:none}
+  table.grid .cell .dwrap input{width:26px!important;height:24px;font-size:12px;border:none;background:transparent;flex:none}
+  table.grid .cell .dwrap input:focus{box-shadow:0 0 0 2px var(--lav);border-radius:4px}
+  .cell input[type=number]{-webkit-appearance:none;-moz-appearance:textfield;appearance:none;margin:0}
+  .cell input[type=number]::-webkit-outer-spin-button,.cell input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .inlsel{border:none;border-bottom:1.5px solid var(--pp);background:transparent;font-size:15px;font-weight:800;font-family:inherit;color:var(--tx);outline:none;padding:0 4px 2px;text-align:center;text-align-last:center;cursor:pointer;min-width:60px}
+  .inlname{border:none;border-bottom:1.5px solid var(--pp);background:transparent;font-size:15px;font-weight:800;font-family:inherit;color:var(--tx);outline:none;padding:0 4px 2px;text-align:center;width:84px}
+  .selsm{border:none;border-bottom:1px solid var(--pp3);background:transparent;font-family:inherit;font-size:12.5px;color:var(--pp);font-weight:700;outline:none;cursor:pointer;text-align:center;text-align-last:center}
+  td.life{position:relative;cursor:pointer;user-select:none}
+  td.life:hover{background:#fdf6fb}
+  td.life.on{background:#fdeff5}
+  td.life .chk{position:absolute;top:6px;right:8px;color:#e23b3b;font-size:18px;font-weight:900;display:none;pointer-events:none;line-height:1}
+  td.life.on .chk{display:block}
+  .fi:disabled{background:#efedf3!important;color:#c3bcd0;cursor:not-allowed}
+  .totcell{display:flex;align-items:center;justify-content:center;gap:0;white-space:nowrap;overflow:hidden}
+  .totcell .fi{width:30px!important}
+  .paren{font-size:12px;color:var(--mut)}
+  .stype{border:none;background:transparent;font-size:12px;font-family:inherit;color:var(--pp);font-weight:800;outline:none;cursor:pointer;padding:0;max-width:64px;text-align-last:center}
+  .wkcell{display:flex;align-items:center;justify-content:center;gap:4px}
+  .wkcell input{width:56px}
+  .pl{display:inline-flex;gap:2px;margin-top:3px}
+  .pl label{font-size:11.5px;font-weight:800;cursor:pointer;border:1.3px solid var(--ln);border-radius:5px;padding:1px 6px;color:var(--mut);background:#fff}
+  .pl label.on{background:var(--pp);color:#fff;border-color:var(--pp)}
+  td.hcell{position:relative}
+  .hoverlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:none;font-size:82px;line-height:1;color:#f6a6c8;opacity:.32;pointer-events:none;z-index:0}
+  td.hcell.on .hoverlay{display:block}
+  td.hcell.on .cell{gap:1px;padding:6px 0}
+  td.hcell.on .cell input{background:transparent!important;border-color:transparent!important;height:20px;font-size:11px;font-weight:700}
+  .legend{font-size:11.5px;color:var(--mut);margin-top:8px;line-height:1.5}
+  /* 하단 */
+  .estimate{margin-top:18px;background:linear-gradient(135deg,var(--pp),var(--pp2));color:#fff;border-radius:16px;padding:18px 22px;display:flex;align-items:center}
+  .estimate .el{font-size:13px;color:var(--lav);font-weight:600}.estimate .ev{font-size:30px;font-weight:800}.estimate .ev small{font-size:15px}
+  .bar{position:sticky;bottom:0;margin-top:8px;display:flex;gap:12px;background:var(--bg);padding:14px 0 calc(10px + env(safe-area-inset-bottom));box-shadow:0 -8px 16px -6px rgba(53,22,63,.12)}
+  .btn{flex:1;height:54px;border:none;border-radius:14px;cursor:pointer;font-family:inherit;font-size:16px;font-weight:800}
+  .btn.draft{background:#fff;color:var(--pp);border:1.5px solid var(--lav)}
+  .btn.submit{color:#fff;background:linear-gradient(135deg,var(--pp),var(--pp2));box-shadow:0 8px 20px -6px rgba(69,32,98,.5)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .note{font-size:12px;color:var(--mut);text-align:center;margin-top:8px}
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#1f8f4e;color:#fff;padding:13px 20px;border-radius:12px;font-weight:700;font-size:14px;z-index:99;display:none;max-width:90%}
+  .toast.err{background:var(--er)}.toast.show{display:block;animation:rise .3s}
+  .pending{background:#fff;border-radius:20px;padding:44px 28px;text-align:center;box-shadow:0 8px 30px rgba(53,22,63,.1)}
+  .pending .ic{font-size:44px}.pending .t{font-size:19px;font-weight:800;margin-top:14px}.pending .s{color:var(--mut);margin-top:8px;line-height:1.6;font-size:14px}
+  /* 기본정보 카드 */
+  .card{background:#fff;border:1px solid var(--ln);border-radius:18px;padding:20px 22px;margin-top:16px;box-shadow:0 2px 10px rgba(53,22,63,.04)}
+  .card h3{margin:0 0 14px;font-size:14px;font-weight:800;color:var(--pp)}
+  .titlebar{background:linear-gradient(135deg,var(--pp),var(--ppd));color:#fff;border-radius:20px;padding:22px 26px;display:flex;align-items:center;gap:16px}
+  .titlebar img{height:26px}.titlebar .tt{font-size:19px;font-weight:800}.titlebar .q{font-size:12px;color:var(--lav);margin-top:3px}
+  .row{display:grid;gap:12px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+  .fld{display:flex;flex-direction:column;gap:6px}
+  .fld label{font-size:12.5px;font-weight:600;color:#4a4359}
+  .fld input,.fld select{height:46px;padding:0 13px;font-size:15px;font-family:inherit;color:var(--tx);background:#fbfafd;border:1.5px solid var(--ln);border-radius:11px;outline:none;-webkit-appearance:none;appearance:none}
+  .fld input:read-only{background:#f3f1f7;border-style:dashed}
+  .scrollhint{display:none}
+  @media(max-width:640px){
+    .wrap{padding:12px 8px calc(84px + env(safe-area-inset-bottom))}
+    .paper{padding:16px 10px 22px;border-radius:14px}
+    .banner{font-size:19px;padding:12px;border-radius:24px}
+    .infoline{gap:8px 14px;font-size:13px;margin:18px 0 8px}
+    .infoline b{min-width:44px;padding:0 8px 2px}
+    .inlsel{min-width:46px;font-size:13px}
+    .books{gap:6px 14px;font-size:13px;margin:14px 2px 10px}
+    .books input{min-width:130px;flex:1 1 100%}
+    .g2,.g3{grid-template-columns:1fr}
+    .scrollhint{display:block;font-size:11.5px;color:var(--mut);margin:0 2px 6px;font-weight:600}
+    .btn{height:50px;font-size:15px}
+    .resetrow{margin-bottom:6px}
+  }
+</style></head><body>
+<script>
+/* 미리보기용 가짜 서버 */
+var _grid={lc:[],p7:[]};
+for(var i=0;i<10;i++){_grid.lc.push({pl:'',p1:{},p2:{},p3:{},p4:{}});_grid.p7.push({beforeS:{},beforeDT:{},afterS:{},afterDT:{}});}
+_grid.lc[0]={pl:'2',p1:{date:'7/14',wrong:1},p2:{date:'7/14',wrong:0},p3:{date:'7/15',wrong:3},p4:{date:'7/15',wrong:2}};
+_grid.lc[1]={pl:'3',p1:{date:'7/16',wrong:0},p2:{date:'7/16',wrong:1},p3:{date:'7/17',wrong:2},p4:{date:'7/17',wrong:1}};
+_grid.p7[0]={pl:'2',beforeS:{date:'7/14',wrong:14},beforeDT:{date:'7/14',wrong:16},afterS:{date:'7/18',wrong:2},afterDT:{date:'7/18',wrong:4}};
+_grid.p7[1]={pl:'1',beforeS:{date:'7/16',wrong:8},beforeDT:{date:'7/16',wrong:10},afterS:{date:'7/19',wrong:1},afterDT:{date:'7/19',wrong:0}};
+var _sheet={id:'CS_demo',seq:1,lcBook:'파고다 실전 1000 LC',rcBook:'YBM 실전 RC',opening:{sb:12,sa:3,db:15,da:5,stype:'현재',worktype:'part',reason:'학교',curYm:'2026-07',tgtYm:'2026-12',weekly:42},grid:_grid,estimate:765,status:'작성중',week:2,feedback:'',recheck:''};
+var _student={code:'ash8131',name:'안세훈',className:'A-1',manager:'문찬',curLC:'350',curRC:'300',curTot:'650',tgtLC:'450',tgtRC:'450',tgtTot:'900',studyMonths:'3',weeklyHours:'20',workType:'풀타임(Only 토익)',partReason:'',approved:true,recheck:''};
+window.google={script:{run:(function(){var s;var api={
+  withSuccessHandler:function(f){s=f;return api;},withFailureHandler:function(){return api;},
+  studentLogin:function(c){setTimeout(function(){s({ok:true,approved:true,student:_student,week:2,showRecheck:true,submissionOpen:true});},150);},
+  getActiveSheet:function(c){setTimeout(function(){s({ok:true,sheet:_sheet});},150);},
+  saveBasicInfo:function(c,i){setTimeout(function(){s({ok:true});},150);},
+  saveDraft:function(c,id,p){setTimeout(function(){s({ok:true,estimate:770});},150);},
+  finalSubmit:function(c,id,p){setTimeout(function(){s({ok:true});},150);}
+};return api;})()}};
+</script>
+
+<div id="login"><div class="lc">
+  <div class="h"><img src="data:image/jpeg;base64,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"><div class="t">성적상담지</div><div class="s">발급받은 코드로 입장하세요</div></div>
+  <div class="b"><input id="code" placeholder="예: ash8131" onkeydown="if(event.key==='Enter')login()" autocapitalize="off">
+    <button id="lbtn" onclick="login()">입장하기</button><div class="lerr" id="lerr"></div>
+    <div class="hint">코드는 담당 매니저에게 발급받으세요.<br>(이름 이니셜 + 휴대폰 뒤 4자리)</div></div>
+</div></div>
+
+<div id="app"><div class="wrap" id="appwrap"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var CODE='', SESS=null, SHEET=null;
+var $=function(id){return document.getElementById(id);};
+function toast(m,e){var t=$('toast');t.className='toast show'+(e?' err':'');t.textContent=m;setTimeout(function(){t.className='toast';},2600);}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function login(){var code=$('code').value.trim();var b=$('lbtn'),er=$('lerr');
+  if(!code){er.textContent='코드를 입력하세요.';return;}
+  b.disabled=true;b.textContent='확인 중...';er.textContent='';
+  google.script.run.withSuccessHandler(function(res){b.disabled=false;b.textContent='입장하기';
+    if(!res.ok){er.textContent=res.error;return;}
+    CODE=code;SESS=res;$('login').style.display='none';$('app').style.display='block';
+    if(!res.approved){renderBasic();}else{loadSheet();}
+  }).withFailureHandler(function(e){b.disabled=false;b.textContent='입장하기';er.textContent='오류: '+e.message;}).studentLogin(code);
+}
+
+/* 기본정보 (승인 전) */
+function renderBasic(){var s=SESS.student;
+  $('appwrap').innerHTML='<div class="titlebar"><img src="data:image/jpeg;base64,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"><div><div class="tt">기본정보 입력</div><div class="q">최초 1회 입력 → 매니저 승인 후 상담지를 작성할 수 있어요</div></div></div>'
+   +'<div class="card"><h3>📋 기본 정보</h3>'
+   +'<div class="row g2" style="margin-bottom:12px">'+fld('이름','name',s.name,true)+sel('담당 매니저','managerSel',['문찬','해빛','데바','리올','라임'],s.manager)+'</div>'
+   +'<div class="row g2" style="margin-bottom:12px">'+fld('체킹반','className',s.className)+'<div></div></div>'
+   +'<div class="row g3" style="margin-bottom:12px">'+fld('현재 LC','curLC',s.curLC,false,'number')+fld('현재 RC','curRC',s.curRC,false,'number')+fld('현재 총점','curTot',s.curTot,false,'number')+'</div>'
+   +'<div class="row g3" style="margin-bottom:12px">'+fld('목표 LC','tgtLC',s.tgtLC,false,'number')+fld('목표 RC','tgtRC',s.tgtRC,false,'number')+fld('목표 총점','tgtTot',s.tgtTot,false,'number')+'</div>'
+   +'<div class="row g2" style="margin-bottom:12px">'+fld('예상 공부기간(달)','studyMonths',s.studyMonths,false,'number')+fld('주 공부시간','weeklyHours',s.weeklyHours,false,'number')+'</div>'
+   +'<div class="row g2" style="margin-bottom:12px">'+sel('근무 형태','workType',['풀타임(Only 토익)','파트타임'],s.workType)+fld('파트타임 사유(학교/직장/기타)','partReason',s.partReason)+'</div>'
+   +'<button class="btn submit" style="width:100%" onclick="saveBasic()">저장하고 승인 요청</button><div class="note">저장하면 담당 매니저 승인 후 상담지 작성이 열려요.</div></div>';
+}
+function fld(l,id,v,ro,type){return '<div class="fld"><label>'+l+'</label><input id="'+id+'" type="'+(type||'text')+'" value="'+esc(v)+'"'+(ro?' readonly':'')+'></div>';}
+function sel(l,id,opts,v){var o=opts.map(function(x){return '<option'+(x===v?' selected':'')+'>'+esc(x)+'</option>';}).join('');return '<div class="fld"><label>'+l+'</label><select id="'+id+'"><option value="" disabled'+(v?'':' selected')+'>선택</option>'+o+'</select></div>';}
+function saveBasic(){var info={className:$('className').value,manager:$('managerSel').value,curLC:$('curLC').value,curRC:$('curRC').value,curTot:$('curTot').value,tgtLC:$('tgtLC').value,tgtRC:$('tgtRC').value,tgtTot:$('tgtTot').value,studyMonths:$('studyMonths').value,weeklyHours:$('weeklyHours').value,workType:$('workType').value,partReason:$('partReason').value};
+  if(!info.manager){toast('담당 매니저를 선택하세요.',true);return;}
+  google.script.run.withSuccessHandler(function(res){if(!res.ok){toast(res.error,true);return;}
+    $('appwrap').innerHTML='<div class="pending"><div class="ic">⏳</div><div class="t">승인 대기 중</div><div class="s">기본정보가 저장됐어요.<br>담당 매니저 <b>'+esc(info.manager)+'</b>님 승인 후<br>성적상담지 작성이 열립니다.</div></div>';
+  }).withFailureHandler(function(e){toast('오류: '+e.message,true);}).saveBasicInfo(CODE,info);
+}
+
+/* 성적상담지 (승인 후) */
+function loadSheet(){$('appwrap').innerHTML='<div class="pending"><div class="ic">⏳</div><div class="t">불러오는 중...</div></div>';
+  google.script.run.withSuccessHandler(function(res){if(!res.ok){$('appwrap').innerHTML='<div class="pending"><div class="ic">🔒</div><div class="t">'+esc(res.error)+'</div></div>';return;}
+    SHEET=res.sheet;renderSheet();
+  }).withFailureHandler(function(e){toast('오류: '+e.message,true);}).getActiveSheet(CODE);
+}
+
+function ci(id,d){d=d||{};var parts=String(d.date||'').split('/');var mm=parts[0]||'',dd=parts[1]||'';
+  return '<div class="cell"><div class="dwrap"><input type="number" inputmode="numeric" class="dmm" id="'+id+'-m" value="'+esc(mm)+'"><span class="sl">/</span><input type="number" inputmode="numeric" class="ddd" id="'+id+'-d" value="'+esc(dd)+'"></div><input type="number" min="0" id="'+id+'-w" value="'+esc(d.wrong!=null?d.wrong:'')+'"></div>';}
+function ropen(id,v){return '<input class="fi ed" id="'+id+'" type="number" min="0" value="'+esc(v!=null?v:'')+'">';}
+
+function renderSheet(){
+  var s=SESS.student, sh=SHEET, g=sh.grid, op=sh.opening||{};
+  var h='<div class="paper">';
+  h+='<div class="banner">유핏토익 성적 상담지</div>';
+  var mgrs=['문찬','해빛','데바','리올','라임'];
+  var mopt='<option value="">-</option>'+mgrs.map(function(m){return '<option'+(m===op.manager?' selected':'')+'>'+m+'</option>';}).join('');
+  var cls=['A-1','A-2','A-3','A-4','B-1','B-2','B-3','B-4','B-5','B-6','D-1','D-2','D-3','D-4','F-1','F-2','F-3','F-4','F-5','F-6','F-7','G-1'];
+  var copt='<option value="">-</option>'+cls.map(function(c){return '<option'+(c===op.className?' selected':'')+'>'+c+'</option>';}).join('');
+  h+='<div class="infoline"><span>담당 : <select id="hdrMgr" class="inlsel">'+mopt+'</select> 매니저</span><span>첨삭 : <select id="hdrClass" class="inlsel">'+copt+'</select> 반</span><span>이름 : <input id="hdrName" class="inlname" value="'+esc(op.name||'')+'"></span></div>';
+  h+='<div class="resetrow"><button class="resetbtn" onclick="resetForm()">↺ 초기화</button></div>';
+
+  // 상단 표 (원본 병합구조)
+  var life=(op.worktype!==undefined)?op.worktype:(String(s.workType||'').indexOf('풀')>=0?'full':(s.workType?'part':''));
+  h+='<input type="hidden" id="op_worktype" value="'+life+'">';
+  h+='<div class="scrollhint">← 표를 좌우로 넘겨서 확인하세요 →</div>';
+  h+='<div class="hscroll"><table class="form"><colgroup><col style="width:11%"><col style="width:9%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:6%"><col style="width:7%"><col style="width:7%"><col style="width:12%"><col style="width:12%"></colgroup>'
+   +'<tr><td class="hd" colspan="2">유핏커 라이프</td><td class="hd" colspan="4">Part 7 개강 날 모의고사 (플반 전용)</td><td class="hd">점수</td><td class="hd">LC</td><td class="hd">RC</td><td class="hd">총</td><td class="hd">응시일</td></tr>'
+   +'<tr>'
+     +'<td class="pt life'+(life==='part'?' on':'')+'" id="lifePart" rowspan="4" onclick="pickLife(\'part\')">Part Time<br>[사유 : <select id="op_reason" class="selsm" onclick="event.stopPropagation()"><option value="">-</option>'+['학교','직장','아르바이트','기타'].map(function(x){return '<option'+(op.reason===x?" selected":"")+'>'+x+'</option>';}).join('')+'</select>]<span class="chk">✓</span></td>'
+     +'<td class="pt life'+(life==='full'?' on':'')+'" id="lifeFull" rowspan="4" onclick="pickLife(\'full\')">Full Time<br>(Only 토익)<span class="chk">✓</span></td>'
+     +'<td class="hd2" colspan="2">Single</td><td class="hd2" colspan="2">Double triple</td>'
+     +'<td class="lbl">현재</td>'
+     +'<td><input class="fi ed" type="number" id="op_curLC" value="'+esc(op.curLC||'')+'"></td><td><input class="fi ed" type="number" id="op_curRC" value="'+esc(op.curRC||'')+'"></td>'
+     +'<td><div class="totcell"><span id="curTotV" style="font-weight:800;color:var(--pp);min-width:22px">-</span><span class="paren">(<select class="stype" id="op_stype" onchange="toggleYm()"><option value=""'+(op.stype?'':' selected')+'>-</option><option'+(op.stype==="현재"?" selected":"")+'>현재</option><option'+(op.stype==="모의고사"?" selected":"")+'>모의고사</option><option'+(op.stype==="예상"?" selected":"")+'>예상</option></select>)</span></div></td>'
+     +'<td class="ymcell" onclick="var i=document.getElementById(\'op_curYm\');if(!i.disabled){try{i.showPicker()}catch(e){i.focus()}}"><input type="month" class="fi ed" id="op_curYm" value="'+esc(op.curYm||'')+'"></td>'
+   +'</tr>'
+   +'<tr><td class="hd2">요약 전</td><td class="hd2">요약 후</td><td class="hd2">요약 전</td><td class="hd2">요약 후</td>'
+     +'<td class="lbl">목표</td>'
+     +'<td><input class="fi ed" type="number" id="op_tgtLC" value="'+esc(op.tgtLC||'')+'"></td><td><input class="fi ed" type="number" id="op_tgtRC" value="'+esc(op.tgtRC||'')+'"></td><td><span id="tgtTotV" style="font-weight:800;color:var(--pp)">-</span></td>'
+     +'<td class="ymcell" onclick="var i=document.getElementById(\'op_tgtYm\');try{i.showPicker()}catch(e){i.focus()}"><input type="month" class="fi ed" id="op_tgtYm" value="'+esc(op.tgtYm||'')+'"></td></tr>'
+   +'<tr><td>'+ropen('op_sb',op.sb)+'</td><td>'+ropen('op_sa',op.sa)+'</td><td>'+ropen('op_db',op.db)+'</td><td>'+ropen('op_da',op.da)+'</td>'
+     +'<td class="lbl" colspan="3">예상 토익 공부 기간</td><td colspan="2"><div class="wkcell"><input class="fi ed" type="number" min="0" id="op_studyMonths" value="'+esc(op.studyMonths||'')+'"><span>달</span></div></td></tr>'
+   +'<tr><td colspan="4" class="hd2" style="font-size:11px;color:#8b849c">개강 날 모의고사 (요약 전/후)</td>'
+     +'<td class="lbl" colspan="3">주 공부 시간</td><td colspan="2"><div class="wkcell"><input class="fi ed" id="op_weekly" type="number" min="40" placeholder="40↑" onblur="checkWeekly()" value="'+esc(op.weekly||'')+'"><span>시간</span></div></td></tr>'
+   +'</table></div>';
+
+  // 문제집
+  h+='<div class="books"><label>LC 문제집 :</label><input id="lcBook" value="'+esc(sh.lcBook)+'"><label>RC 문제집 :</label><input id="rcBook" value="'+esc(sh.rcBook)+'"></div>';
+
+  // 메인 그리드 (LC + P7 한 표)
+  h+='<div class="scrollhint">← 표를 좌우로 넘겨서 입력하세요 →</div>';
+  h+='<div class="scroll"><table class="grid">'
+   +'<colgroup><col style="width:92px"><col class="cw"><col class="cw"><col class="cw"><col class="cw"><col style="width:52px"><col style="width:64px"><col class="cw"><col class="cw"><col style="width:52px"><col class="cw"><col class="cw"></colgroup>'
+   +'<thead><tr>'
+     +'<th class="lch" rowspan="2">LC</th><th class="lch" rowspan="2">P1</th><th class="lch" rowspan="2">P2</th><th class="lch" rowspan="2">P3</th><th class="lch" rowspan="2">P4</th><th class="lch" rowspan="2">TOTAL</th>'
+     +'<th class="p7h" rowspan="2">P7</th><th class="p7h" colspan="3">요약 전</th><th class="p7h" colspan="2">요약 후</th></tr>'
+   +'<tr><th class="p7h">S<br><small>(25분)</small></th><th class="p7h">D.T<br><small>(25분)</small></th><th class="p7h">TOTAL</th><th class="p7h">S</th><th class="p7h">D.T</th></tr></thead><tbody>';
+  for(var i=0;i<10;i++){var t=g.lc[i]||{},p=g.p7[i]||{};
+    h+='<tr><td class="lclab">LC Test '+(i+1)+'<br>'+plCell('pl',i,t.pl,[1,2,3])+'</td>'
+      +'<td>'+ci('lc'+i+'p1',t.p1)+'</td><td>'+ci('lc'+i+'p2',t.p2)+'</td><td>'+ci('lc'+i+'p3',t.p3)+'</td><td>'+ci('lc'+i+'p4',t.p4)+'</td>'
+      +'<td class="tot"><span id="lctot'+i+'">-</span></td>'
+      +'<td class="p7lab">P7 Test '+(i+1)+'<br>'+plCell('plp7',i,p.pl,[1,2])+'</td>'
+      +'<td>'+ci('p7'+i+'beforeS',p.beforeS)+'</td><td>'+ci('p7'+i+'beforeDT',p.beforeDT)+'</td>'
+      +'<td class="tot"><span id="p7tot'+i+'">-</span></td>'
+      +'<td class="hcell">'+ci('p7'+i+'afterS',p.afterS)+'<div class="hoverlay" id="hs'+i+'">♥</div></td>'
+      +'<td class="hcell">'+ci('p7'+i+'afterDT',p.afterDT)+'<div class="hoverlay" id="hdt'+i+'">♥</div></td></tr>';
+  }
+  h+='</tbody></table></div>';
+  h+='<div class="legend">💜 하트 통과기준 — 요약 전 12개↑: (요약전−요약후)≥11 / 요약 전 11개↓: 요약 후 0~1개 · (S는 S끼리, D.T는 D.T끼리)</div>';
+
+  // 재수강 (해당 주차)
+  if(SESS.showRecheck){
+    h+='<div class="card"><h3>🔁 재수강 여부</h3><div class="row g2">'+sel('재수강 하시겠어요?','recheck',['재수강 희망','재수강 고민중','재수강 안 함'],sh.recheck)+'<div></div></div></div>';
+  }
+  h+='</div>'; // paper end
+
+  // 버튼
+  var open=SESS.submissionOpen;
+  h+='<div class="bar"><button class="btn draft" onclick="doDraft()">임시 저장</button><button class="btn submit" id="subBtn" onclick="doSubmit()"'+(open?'':' disabled')+'>최종 제출</button></div>'
+   +'<div class="note">'+(open?'':'⏰ 지금은 제출 기간이 아니에요. 임시저장은 언제든 가능해요.')+'</div>';
+
+  $('appwrap').innerHTML=h;attachRecompute();recompute();toggleYm();
+}
+function toggleYm(){var st=$('op_stype')?$('op_stype').value:'';var cy=$('op_curYm');if(!cy)return;if(st==='현재'){cy.disabled=false;}else{cy.disabled=true;cy.value='';}}
+function checkWeekly(){var el=$('op_weekly');if(!el)return;var w=el.value;if(w!==''&&Number(w)<40){alert('⚠️ 주 공부 시간은 40시간 이상이어야 해요.\n(입력한 값: '+w+'시간)');}}
+function resetForm(){if(!confirm('입력한 내용을 모두 초기화할까요?\n(저장 전 내용은 사라집니다)'))return;
+  var g={lc:[],p7:[]};for(var i=0;i<10;i++){g.lc.push({pl:'',p1:{},p2:{},p3:{},p4:{}});g.p7.push({pl:'',beforeS:{},beforeDT:{},afterS:{},afterDT:{}});}
+  SHEET.grid=g;SHEET.opening={worktype:''};SHEET.lcBook='';SHEET.rcBook='';SHEET.recheck='';renderSheet();}
+
+function plCell(pre,i,v,levels){var out='<span class="pl">';levels.forEach(function(n){out+='<label class="'+(String(v)===String(n)?'on':'')+'" onclick="pickPL(\''+pre+'\','+i+','+n+')">'+n+'</label>';});out+='</span>';return '<input type="hidden" id="'+pre+i+'" value="'+esc(v||'')+'">'+out;}
+function pickPL(pre,i,n){$(pre+i).value=n;var ls=document.querySelectorAll('#'+pre+i+'+.pl label');for(var k=0;k<ls.length;k++)ls[k].className=(String(ls[k].textContent)===String(n)?'on':'');}
+function pickLife(v){$('op_worktype').value=v;$('lifePart').className='pt life'+(v==='part'?' on':'');$('lifeFull').className='pt life'+(v==='full'?' on':'');}
+
+function num(id){var v=$(id)?$(id).value:'';return v===''||v==null?null:Number(v);}
+function attachRecompute(){document.querySelectorAll('input[type=number]').forEach(function(el){el.addEventListener('input',recompute);});}
+function recompute(){
+  if($('curTotV')){var clc=num('op_curLC'),crc=num('op_curRC');$('curTotV').textContent=(clc!=null||crc!=null)?((clc||0)+(crc||0)):'-';}
+  if($('tgtTotV')){var tlc=num('op_tgtLC'),trc=num('op_tgtRC');$('tgtTotV').textContent=(tlc!=null||trc!=null)?((tlc||0)+(trc||0)):'-';}
+  for(var i=0;i<10;i++){var sum=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=num('lc'+i+p+'-w');if(w!=null){sum+=w;any=true;}});if($('lctot'+i))$('lctot'+i).textContent=any?sum:'-';}
+  for(var j=0;j<10;j++){var bs=num('p7'+j+'beforeS-w'),bd=num('p7'+j+'beforeDT-w'),as=num('p7'+j+'afterS-w'),ad=num('p7'+j+'afterDT-w');
+    var tot=(bs||0)+(bd||0);if($('p7tot'+j))$('p7tot'+j).textContent=(bs!=null||bd!=null)?tot:'-';
+    setHeart('hs'+j,pass(bs,as));setHeart('hdt'+j,pass(bd,ad));}
+}
+function pass(b,a){if(b==null||a==null)return null;return b>11?(b-a>=11):(a<=1);}
+function setHeart(id,ok){var el=$(id);if(!el)return;var cell=el.parentNode;if(ok){cell.className='hcell on';}else{cell.className='hcell';}}
+
+function cellVal(p){var m=$(p+'-m'),dd=$(p+'-d'),w=$(p+'-w');var mm=m?m.value:'',dv=dd?dd.value:'';var date=(mm!==''||dv!=='')?(mm+'/'+dv):'';return {date:date,wrong:(w&&w.value!=='')?Number(w.value):''};}
+function gather(){var g={lc:[],p7:[]};
+  for(var i=0;i<10;i++){g.lc.push({pl:$('pl'+i).value,p1:cellVal('lc'+i+'p1'),p2:cellVal('lc'+i+'p2'),p3:cellVal('lc'+i+'p3'),p4:cellVal('lc'+i+'p4')});}
+  for(var j=0;j<10;j++){g.p7.push({pl:$('plp7'+j).value,beforeS:cellVal('p7'+j+'beforeS'),beforeDT:cellVal('p7'+j+'beforeDT'),afterS:cellVal('p7'+j+'afterS'),afterDT:cellVal('p7'+j+'afterDT')});}
+  return {lcBook:$('lcBook').value,rcBook:$('rcBook').value,opening:{manager:$('hdrMgr')?$('hdrMgr').value:'',className:$('hdrClass')?$('hdrClass').value:'',name:$('hdrName')?$('hdrName').value:'',worktype:$('op_worktype')?$('op_worktype').value:'',reason:$('op_reason')?$('op_reason').value:'',curLC:$('op_curLC').value,curRC:$('op_curRC').value,tgtLC:$('op_tgtLC').value,tgtRC:$('op_tgtRC').value,studyMonths:$('op_studyMonths').value,sb:$('op_sb').value,sa:$('op_sa').value,db:$('op_db').value,da:$('op_da').value,stype:$('op_stype')?$('op_stype').value:'',curYm:$('op_curYm').value,tgtYm:$('op_tgtYm').value,weekly:$('op_weekly')?$('op_weekly').value:''},grid:g,recheck:$('recheck')?$('recheck').value:''};
+}
+function doDraft(){var p=gather();toast('저장 중...');
+  google.script.run.withSuccessHandler(function(res){if(!res.ok){toast(res.error,true);return;}toast('💾 임시저장 완료');}).withFailureHandler(function(e){toast('오류: '+e.message,true);}).saveDraft(CODE,SHEET.id,p);}
+function doSubmit(){
+  var m=[];
+  if(!$('op_worktype').value) m.push('유핏커 라이프 (Part Time / Full Time) 선택');
+  if(!$('op_curLC').value || !$('op_curRC').value) m.push('현재 점수 (LC·RC)');
+  if(!$('op_tgtLC').value || !$('op_tgtRC').value) m.push('목표 점수 (LC·RC)');
+  if(!$('op_studyMonths').value) m.push('예상 토익 공부 기간');
+  var wk=$('op_weekly')?$('op_weekly').value:'';
+  if(wk==='') m.push('주 공부 시간');
+  else if(Number(wk)<40) m.push('주 공부 시간 (40시간 이상)');
+  var cy=$('op_curYm'); if(cy && !cy.disabled && !cy.value) m.push('현재 응시일');
+  var ty=$('op_tgtYm'); if(ty && !ty.value) m.push('목표 응시일');
+  if(!$('lcBook').value.trim()) m.push('LC 문제집');
+  if(!$('rcBook').value.trim()) m.push('RC 문제집');
+  if(SESS.showRecheck && (!$('recheck') || !$('recheck').value)) m.push('재수강 여부');
+  if(m.length){alert('⚠️ 아래 항목을 입력해야 제출할 수 있어요:\n\n• '+m.join('\n• '));return;}
+  if(!confirm('지금 제출한 상담지를 기반으로 나희쌤 첨삭이 제공됩니다.\n\n최종 제출하시겠어요?'))return;
+  var p=gather();var b=$('subBtn');b.disabled=true;b.textContent='제출 중...';
+  google.script.run.withSuccessHandler(function(res){b.disabled=false;b.textContent='최종 제출';if(!res.ok){toast(res.error,true);return;}
+    $('appwrap').innerHTML='<div class="pending"><div class="ic">🎉</div><div class="t">최종 제출 완료!</div><div class="s">제출한 상담지를 기반으로<br><b>나희쌤 첨삭</b>이 제공됩니다.<br>수고하셨어요 :)</div></div>';
+  }).withFailureHandler(function(e){b.disabled=false;b.textContent='최종 제출';toast('오류: '+e.message,true);}).finalSubmit(CODE,SHEET.id,p);}
+</script><script>window.addEventListener('load',function(){$('code').value='ash8131';login();});</script>
+</body></html>
