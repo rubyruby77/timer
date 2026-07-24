@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0HHY5KS0P4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-0HHY5KS0P4');
+</script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '3305567166287956');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=3305567166287956&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&amp;P 1기 모집 — 카톡 실전 그룹 코칭</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@500;700;900&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141312; --bg-deep:#100f0e; --card:#201e1c; --surface:#2b2825; --line:rgba(216,195,154,.16);
+    --text:#f6f1e9; --body:#e6e0d5; --sub:#b6b0a4; --faint:#7c7568;
+    --champ:#dec9a0; --bronze:#c4ae78; --rust:#e2926f; --btnink:#221905;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); font-family:"Pretendard",sans-serif; color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.95; letter-spacing:0; word-break:keep-all; overflow-wrap:break-word;}
+  .page{max-width:820px; margin:0 auto; padding:0 0 130px;}
+  .serif{font-family:"Noto Serif KR",serif;}
+  .hand{font-family:"Nanum Pen Script",cursive; color:var(--champ);}
+
+  /* 강조 */
+  .hl{padding:.02em .16em; border-radius:4px; display:inline-block;
+      box-decoration-break:clone; -webkit-box-decoration-break:clone; color:#1c170c;}
+  .hl.y,.hl.l{background:linear-gradient(180deg,transparent 12%,var(--champ) 12%,var(--champ) 88%,transparent 88%);}
+  .hl.p{background:linear-gradient(180deg,transparent 12%,var(--bronze) 12%,var(--bronze) 88%,transparent 88%);}
+  .badge{font-family:"Noto Serif KR",serif; display:inline-block; font-weight:900; color:#1c170c;
+         background:linear-gradient(180deg,transparent 12%,var(--champ) 12%,var(--champ) 88%,transparent 88%);
+         padding:.02em .32em; border-radius:6px;}
+  .wave{text-decoration:underline wavy var(--rust); text-underline-offset:6px; text-decoration-thickness:2px;}
+  .gold{color:var(--champ);} .red{color:var(--rust);} .blue{color:var(--bronze);} .sub{color:var(--sub);} b{font-weight:800;}
+
+  /* HERO */
+  .hero{padding:78px 30px 70px; text-align:center; background:radial-gradient(120% 70% at 50% -8%, rgba(216,195,154,.10), transparent 60%);}
+  .emblem{width:62px; height:62px; margin:0 auto 22px; border-radius:50%; border:1.5px solid var(--champ);
+          color:var(--champ); display:flex; align-items:center; justify-content:center; font-size:26px;
+          box-shadow:0 0 0 5px rgba(216,195,154,.07);}
+  .eyebrow{display:inline-block; font-family:"Playfair Display",serif; font-size:13px; font-weight:600; letter-spacing:5px;
+           color:var(--champ); border:1px solid rgba(216,195,154,.4); border-radius:999px; padding:8px 20px; margin-bottom:26px; text-transform:uppercase;}
+  .hero h1{font-family:"Noto Serif KR",serif; color:var(--text); font-size:44px; font-weight:700; line-height:1.58;}
+  .hero .sub2{color:var(--body); font-size:19px; font-weight:500; margin-top:22px;}
+  .hero img{width:215px; height:215px; object-fit:contain; margin:24px 0 6px; filter:saturate(.78) brightness(.95) drop-shadow(0 12px 22px rgba(0,0,0,.4));}
+  .metarow{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:22px;}
+  .meta{background:var(--surface); border:1px solid var(--line); color:var(--body); border-radius:999px; padding:11px 22px; font-weight:700; font-size:17px;}
+  .meta b{color:var(--champ);}
+  .scrolldown{margin-top:44px; color:var(--faint); font-size:30px; animation:bob 1.6s infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+  /* 섹션 카드 */
+  .card{background:none; border:none; border-radius:0; padding:6px 22px; margin:92px 18px;}
+  .card.dark{background:none;}
+  .card.feature{background:none; border:none;}
+  .kicker{font-family:"Playfair Display",serif; text-align:center; font-size:13px; font-weight:600; color:var(--champ); letter-spacing:4px; margin-bottom:12px; text-transform:uppercase;}
+  .h2{font-family:"Noto Serif KR",serif; text-align:center; font-size:29px; font-weight:700; line-height:1.62; color:var(--text); margin-bottom:62px;}
+  .h2.mt, .h2.mt2{margin-bottom:0;}   /* 문장 중간 강조용 제목은 예외(안 벌림) */
+  .lead{font-size:20px; font-weight:500; line-height:2.05; color:var(--body);}
+  .center{text-align:center;} .mt{margin-top:46px;} .mt2{margin-top:32px;}
+
+  /* 흰→다크 카드 / 후기 */
+  .wcard{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px 24px; color:var(--text);}
+  .quote{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 20px 14px 46px; position:relative;
+         font-size:18px; font-weight:500; color:#f1ebdf; line-height:1.5;}
+  .quote::before{content:"\201C"; position:absolute; left:16px; top:7px; font-size:34px; color:var(--champ); font-family:Georgia,serif; line-height:1;}
+  .stack{display:flex; flex-direction:column; gap:16px; margin-top:40px;}
+
+  /* 체크리스트 */
+  .chk{display:flex; align-items:flex-start; gap:14px; background:var(--surface); border:1px solid var(--line);
+       border-radius:14px; padding:20px 22px; font-size:18px; font-weight:500; color:#f1ebdf; line-height:1.65;}
+  .chk .box{width:26px; height:26px; border:2px solid #5a554c; border-radius:7px; flex:0 0 auto; margin-top:1px;
+            display:flex; align-items:center; justify-content:center; color:transparent; font-weight:800; font-size:15px;}
+  .chk.bad .box{background:var(--rust); border-color:var(--rust); color:#fff;}
+  .chk.no .box{border-color:var(--rust); color:var(--rust); border-radius:50%;}
+  .chk.good .box{background:var(--champ); border-color:var(--champ); color:#221905;}
+
+  /* 단계 */
+  .step{display:flex; gap:18px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:24px 26px; line-height:1.7;}
+  .num{width:42px; height:42px; border-radius:50%; background:var(--rust); color:#fff; font-weight:800; font-size:21px;
+       display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto;}
+  .num.gold{background:var(--champ); color:#221905;}
+
+  /* 비교 */
+  .compare{display:flex; gap:16px; margin-top:26px;}
+  .compare>div{flex:1; border-radius:18px; padding:26px 22px;}
+  .c-old{background:#1b1a18; border:1px solid rgba(255,255,255,.04);}
+  .c-new{background:#241f16; border:1px solid rgba(216,195,154,.3);}
+  .compare h3{font-family:"Noto Serif KR",serif; font-size:20px; font-weight:700; margin-bottom:16px; text-align:center;}
+  .c-old h3{color:#9a948a;} .c-new h3{color:var(--champ);}
+  .compare li{list-style:none; font-size:17px; line-height:1.7; padding:14px 0; border-top:1px solid rgba(216,195,154,.16);}
+  .c-old li{color:#bcb6aa;} .c-new li{color:#ece4d2;}
+
+  /* BEFORE/AFTER */
+  .ba{border-radius:18px; padding:30px 30px; margin-top:20px; font-size:17px; line-height:2;}
+  .ba.before{background:#211714; border-left:6px solid var(--rust); color:#e3dacd;}
+  .ba.after{background:#201d14; border-left:6px solid var(--champ); color:#e8dfcd;}
+  .ba .tag{font-family:"Playfair Display",serif; font-weight:600; font-size:14px; letter-spacing:3px; display:block; margin-bottom:12px;}
+  .ba.before .tag{color:var(--rust);} .ba.after .tag{color:var(--champ);}
+  /* 1:1 단점 제거 — ✗/✓ 스택 */
+  .v4-box{border-radius:16px; padding:26px 28px;}
+  .v4-box.bad{background:#241715; border:1px solid rgba(226,146,111,.3);}
+  .v4-box.good{background:linear-gradient(165deg,#2c2517,#231d12); border:1.5px solid var(--champ); box-shadow:0 0 30px rgba(222,201,160,.16);}
+  .v4-tag{font-family:"Noto Serif KR",serif; font-size:15px; letter-spacing:2px; font-weight:700; margin-bottom:18px;}
+  .v4-box.bad .v4-tag{color:var(--rust);} .v4-box.good .v4-tag{color:var(--champ);}
+  .v4-li{font-size:18px; line-height:1.8; color:var(--body);}
+  .v4-li:not(:last-child){margin-bottom:8px;}
+  .v4-li .x{color:var(--rust); font-weight:800; margin-right:10px;}
+  .v4-li .o{color:var(--champ); font-weight:800; margin-right:10px;}
+  .v4-li .sub{color:var(--sub); font-size:15px;}
+  .v4-pivot{text-align:center; font-family:"Noto Serif KR",serif; font-weight:700; font-size:22px; color:var(--text); padding:26px 0;}
+
+  /* 결과 체크 */
+  .win{display:flex; align-items:flex-start; gap:14px; font-size:18px; font-weight:500; color:#f1ebdf; line-height:1.65; padding:15px 0;}
+  .win .ck{width:30px; height:30px; flex:0 0 auto; border-radius:50%; border:1px solid var(--champ); color:var(--champ);
+           background:rgba(216,195,154,.12); display:inline-flex; align-items:center; justify-content:center; font-weight:800; margin-top:1px;}
+
+  /* 가격 */
+  .price-old{color:var(--sub); font-size:21px; font-weight:700;}
+  .price-old s{color:var(--faint);}
+  .price-new{font-family:"Noto Serif KR",serif; font-size:64px; font-weight:900; color:var(--champ); line-height:1.1; margin-top:6px;}
+  .perday{display:inline-flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--line);
+          border-radius:999px; padding:13px 26px; font-weight:800; font-size:20px; margin-top:22px; color:var(--text);}
+
+  .e3d{width:60px; height:60px; object-fit:contain; vertical-align:middle;}
+  .e3d.lg{width:110px; height:110px;}
+  .sec-ic{width:56px; height:56px; object-fit:contain; display:block; margin:0 auto 14px; filter:drop-shadow(0 6px 12px rgba(0,0,0,.4));}
+  .ic-in{width:28px; height:28px; object-fit:contain; vertical-align:-6px; margin:0 3px;}
+  .illu{width:210px; height:210px; object-fit:contain; filter:saturate(.78) brightness(.95) drop-shadow(0 10px 18px rgba(0,0,0,.35));}
+
+  /* FAQ */
+  details{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:0 24px; margin-bottom:11px;}
+  summary{cursor:pointer; list-style:none; font-weight:700; font-size:18px; color:var(--text); padding:24px 0; line-height:1.6;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"Q  "; font-family:"Playfair Display",serif; color:var(--champ); font-weight:600;}
+  details[open] summary{border-bottom:1px solid var(--line);}
+  .faq-a{padding:20px 0 26px; font-size:17px; line-height:1.9; color:var(--body);}
+  .faq-a::before{content:"A  "; font-family:"Playfair Display",serif; color:var(--rust); font-weight:600;}
+
+  /* CTA */
+  .cta{padding:74px 30px 30px; text-align:center;}
+  .cta h2{font-family:"Noto Serif KR",serif; color:var(--text); font-size:33px; font-weight:900; line-height:1.5;}
+  .ctabtn{display:inline-block; margin-top:32px; background:linear-gradient(180deg,#e3d0a6,#cdb37e); color:var(--btnink);
+          font-weight:900; font-size:23px; padding:21px 54px; border-radius:999px; text-decoration:none; box-shadow:0 12px 32px rgba(216,195,154,.22);}
+  /* 중간 CTA 블록 */
+  .midcta{text-align:center; margin:34px 18px; padding:46px 28px; border-radius:24px; border:1px solid var(--line);
+          background:radial-gradient(120% 85% at 50% 0%, rgba(222,201,160,.09), transparent 62%);}
+  .midcta .eye{font-size:15px; color:var(--bronze); font-weight:700;}
+  .midcta .btn{display:inline-block; margin:22px 0 18px; background:linear-gradient(180deg,#e3d0a6,#cdb37e); color:var(--btnink);
+               font-weight:900; font-size:21px; padding:19px 46px; border-radius:999px; text-decoration:none;
+               box-shadow:0 12px 30px rgba(216,195,154,.24); transition:transform .15s;}
+  .midcta .btn:hover{transform:translateY(-2px);}
+  .midcta .note{font-size:14px; color:var(--sub);}
+  /* 가격 사다리 */
+  .ladder{margin-top:8px;}
+  .tier{display:flex; align-items:center; justify-content:space-between; gap:14px; border-radius:14px; padding:13px 20px; border:1px solid var(--line); background:var(--surface);}
+  .tier .tl{font-weight:700; font-size:16px; color:var(--body);}
+  .tier .tp{font-family:"Noto Serif KR",serif; font-weight:900; font-size:21px; white-space:nowrap;}
+  .tier.now{background:linear-gradient(165deg,#2c2517,#231d12); border:1.6px solid var(--champ); box-shadow:0 0 30px rgba(222,201,160,.18);}
+  .tier.now .tl{color:var(--champ);} .tier.now .tp{color:var(--champ); font-size:28px;}
+  .tier.up{opacity:.9;} .tier.up .tl{color:var(--sub);} .tier.up .tp{color:#cbb39c;}
+  .tier.up2{border-color:rgba(226,146,111,.32); background:#241715;} .tier.up2 .tp{color:var(--rust);}
+  .lad-arr{text-align:center; color:var(--faint); font-size:15px; padding:2px 0;}
+  .now-badge{display:inline-block; background:var(--champ); color:#221905; font-weight:800; font-size:12px; padding:3px 11px; border-radius:999px; margin-bottom:5px;}
+  .warn{margin-top:26px; border:1.5px dashed var(--rust); border-radius:18px; padding:26px 24px; text-align:center; background:rgba(226,146,111,.06);}
+  .warn .t{color:var(--rust); font-weight:800; font-size:20px; font-family:"Noto Serif KR",serif;}
+  .warn .d{color:var(--body); font-size:16px; margin-top:10px; line-height:1.75;}
+  .warn .d b{color:var(--rust); font-weight:800;}
+  /* 집중 유도 배너 */
+  .attn-banner{display:inline-block; margin-top:28px; background:linear-gradient(180deg,#e3d0a6,#cdb37e); color:#221905;
+    font-family:"Noto Serif KR",serif; font-weight:900; font-size:27px; padding:16px 38px; border-radius:14px;
+    box-shadow:0 10px 28px rgba(216,195,154,.24); transform:rotate(-1deg);}
+  /* 데코 타이머 링 */
+  .timer-ring{width:216px; height:216px; border-radius:50%; border:8px solid var(--champ); margin:38px auto 6px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    box-shadow:0 0 38px rgba(222,201,160,.2), inset 0 0 30px rgba(0,0,0,.3);}
+  .t-time{font-weight:900; font-size:56px; color:var(--text); line-height:1; font-variant-numeric:tabular-nums; letter-spacing:2px;}
+  .t-min{font-size:19px; color:var(--sub); margin-top:8px; letter-spacing:1px;}
+  /* 잠깐! 결제부터 하지마세요 */
+  .stop-big{font-family:"Noto Serif KR",serif; font-weight:900; font-size:48px; color:var(--champ); line-height:1; text-shadow:0 0 18px rgba(222,201,160,.25);}
+  .stop-sub1{font-family:"Noto Serif KR",serif; font-weight:800; font-size:26px; color:var(--champ); margin-top:20px;}
+  .stop-sub2{font-size:16px; color:var(--body); margin-top:12px;}
+  /* 선착순 마감 주의 */
+  .scarce{margin:34px 18px; border:1.5px solid var(--champ); border-radius:22px; padding:36px 28px; text-align:center;
+    background:radial-gradient(120% 90% at 50% 0%, rgba(222,201,160,.12), transparent 62%);}
+  .scarce .top{font-size:14px; letter-spacing:3px; color:var(--bronze); font-weight:800;}
+  .scarce .big{font-family:"Noto Serif KR",serif; font-weight:900; font-size:30px; color:var(--text); margin-top:14px; line-height:1.45;}
+  .scarce .warn-t{color:var(--rust);}
+  /* 별점 만족도 */
+  .rating{text-align:center; margin-top:28px; padding-top:24px; border-top:1px solid var(--line);}
+  .rating .stars{color:var(--champ); font-size:26px; letter-spacing:5px;}
+  .rating .score{font-family:"Noto Serif KR",serif; font-weight:900; font-size:44px; color:var(--champ); margin-top:8px; line-height:1;}
+  .rating .score small{font-size:20px; color:var(--sub); font-weight:700;}
+  .rating .cap{font-size:13px; color:var(--sub); margin-top:10px;}
+  /* Q&A 안도감 */
+  .qa{text-align:center;}
+  .qa .bub{display:inline-block; max-width:520px; border-radius:24px; padding:24px 30px; font-size:20px; font-weight:700; line-height:1.5;}
+  .qa .q{background:#1a1816; border:1px solid var(--line); color:var(--body);}
+  .qa .a{background:linear-gradient(165deg,#2c2517,#231d12); border:1.5px solid var(--champ); color:var(--champ); box-shadow:0 0 28px rgba(222,201,160,.16);}
+  .qa .down{font-size:32px; color:var(--champ); margin:16px 0;}
+  .qa .emo{width:32px; height:32px; vertical-align:-7px; margin-right:8px;}
+  /* 전환 플로우 */
+  .flow .p{display:block; max-width:340px; margin:13px auto; border:1.5px solid var(--champ); border-radius:14px;
+    padding:15px 0; font-size:21px; font-weight:800; color:var(--text); background:rgba(222,201,160,.05);}
+  .flow .down{font-size:38px; color:var(--champ); margin:8px 0; line-height:1;}
+  .flow .result{display:inline-block; font-family:"Noto Serif KR",serif; font-weight:900; font-size:30px; color:var(--champ); padding:0 .2em;}
+  .flow .result::before{content:"[ "; color:var(--bronze);} .flow .result::after{content:" ]"; color:var(--bronze);}
+  /* 경험 그리드 */
+  .expgrid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:8px;}
+  .expcard{border-radius:14px; padding:18px 10px; text-align:center; border:1px solid var(--line); background:linear-gradient(160deg,#2a2620,#211d17);}
+  .expcard .l{font-size:13px; color:var(--sub); margin-bottom:7px;}
+  .expcard .v{font-family:"Noto Serif KR",serif; font-weight:800; font-size:17px; color:var(--champ); line-height:1.3;}
+  /* 효율 배너 */
+  .effbanner{display:inline-block; background:#17151230; background:#1a1816; border:1px solid var(--champ); border-radius:12px;
+    padding:13px 28px; font-family:"Noto Serif KR",serif; font-weight:800; font-size:23px;}
+  .effbanner .hl{padding:0 .12em;}
+  /* 증정 책커버 */
+  .plus-badge{width:48px; height:48px; border-radius:50%; background:var(--champ); color:#221905; font-size:28px; font-weight:900;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 18px;}
+  .books{display:flex; gap:18px; justify-content:center; margin-top:30px;}
+  .book{flex:1; max-width:210px; text-align:center;}
+  .book .cover{aspect-ratio:3/4; border-radius:10px; background:linear-gradient(160deg,#2c2620,#171309);
+    border:1px solid var(--champ); display:flex; align-items:center; justify-content:center; padding:18px;
+    box-shadow:0 12px 26px rgba(0,0,0,.45);}
+  .book .cover span{font-family:"Noto Serif KR",serif; font-weight:800; font-size:21px; color:var(--champ); line-height:1.45;}
+  .book .bt{font-weight:700; margin-top:14px; font-size:16px; color:var(--text);}
+  .book .bc{font-size:13px; color:var(--sub); margin-top:4px;}
+  /* 놓칠 수 없는 이유 */
+  .reason{display:flex; gap:16px; align-items:center; background:var(--surface); border:1px solid var(--line);
+    border-radius:14px; padding:20px 22px; margin-bottom:12px;}
+  .reason .no{font-family:"Playfair Display",serif; font-size:25px; color:var(--champ); font-weight:600; min-width:38px;}
+  .reason .rt{font-size:17px; font-weight:600; color:var(--body); line-height:1.5;}
+  .reason .rt b{color:var(--champ);}
+  /* Size/Position 게이지·방향 */
+  .sp-item .h{font-family:"Noto Serif KR",serif; font-weight:700; font-size:26px; color:var(--champ); margin-bottom:12px;}
+  .sp-item.pos .h{color:var(--bronze);}
+  .sp-item .d{color:var(--body); font-size:18px; line-height:1.6;}
+  .sp-gauge{height:9px; border-radius:99px; background:#2b2825; position:relative; margin:20px 0 10px;}
+  .sp-gauge i{position:absolute; left:0; top:0; width:62%; height:9px; border-radius:99px; background:linear-gradient(90deg,var(--rust),var(--champ));}
+  .sp-gauge b{position:absolute; left:62%; top:50%; transform:translate(-50%,-50%); width:18px; height:18px; border-radius:50%; background:var(--champ); box-shadow:0 0 14px var(--champ);}
+  .sp-gmark{display:flex; justify-content:space-between; font-size:13px; color:var(--sub);}
+  .sp-dir{display:flex; gap:12px; justify-content:center; margin-top:10px; flex-wrap:wrap;}
+  .sp-dir span{border:1px solid var(--line); border-radius:12px; padding:10px 18px; color:var(--champ); font-weight:700; font-size:16px;}
+  .sp-sllabels{display:flex; justify-content:space-between; font-weight:700; color:var(--champ); font-size:17px; margin-bottom:16px;}
+  .sp-sltrack{position:relative; height:4px; background:var(--line); border-radius:99px; margin:6px 6px 0;}
+  .sp-sltrack b{position:absolute; left:42%; top:50%; transform:translate(-50%,-50%); width:22px; height:22px; border-radius:50%; background:var(--champ); box-shadow:0 0 16px var(--champ);}
+  /* 운영방식 세로 타임라인 */
+  .htl{position:relative; padding-left:38px;}
+  .htl::before{content:""; position:absolute; left:13px; top:10px; bottom:10px; width:2px; background:linear-gradient(var(--champ),var(--bronze)); opacity:.45;}
+  .htl .r{position:relative; padding:4px 0 28px;}
+  .htl .r:last-child{padding-bottom:0;}
+  .htl .dot{position:absolute; left:-31px; top:2px; width:28px; height:28px; border-radius:50%; background:var(--champ); color:#221905; font-weight:900; font-size:13px; display:flex; align-items:center; justify-content:center;}
+  .htl .rh{font-family:"Noto Serif KR",serif; font-weight:700; font-size:21px; color:var(--champ); margin-bottom:7px;}
+  .htl .rd{font-size:17px; line-height:1.6; color:var(--body);}
+  .htl .rd b{color:var(--text);}
+  /* 순환 사이클 */
+  .cyc{position:relative; margin-top:48px; padding-right:88px;}
+  .cyc .cb{display:flex; gap:14px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px;}
+  .cyc .cb .cn{flex:0 0 auto; width:30px; height:30px; border-radius:50%; background:var(--champ); color:#221905; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:15px;}
+  .cyc .cb .rh{font-family:"Noto Serif KR",serif; font-weight:700; font-size:19px; color:var(--champ); margin-bottom:6px;}
+  .cyc .cb .rd{font-size:16px; color:var(--body); line-height:1.55;}
+  .cyc .cb .rd b{color:var(--text);}
+  .cyc .cdown{text-align:center; color:var(--champ); font-size:22px; line-height:1; padding:9px 0;}
+  .cyc .cloop{position:absolute; right:52px; top:24px; bottom:24px; width:30px; border:2.5px solid var(--champ); border-left:none; border-radius:0 26px 26px 0;}
+  .cyc .cloop::before{content:""; position:absolute; left:-3px; top:-4px; border:7px solid transparent; border-bottom-color:var(--champ); border-top:0;}
+  .cyc .crepeat{position:absolute; right:2px; top:50%; transform:translateY(-50%); writing-mode:vertical-rl; text-orientation:upright; font-family:"Noto Serif KR",serif; font-weight:700; font-size:15px; color:var(--bronze); letter-spacing:2px;}
+  /* 활용처 그리드 */
+  .usegrid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:42px;}
+  .usegrid .uc{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 8px; text-align:center;}
+  .usegrid .ui{width:48px; height:48px; margin:0 auto 11px;}
+  .usegrid .ui img, .usegrid .ui svg{width:100%; height:100%; object-fit:contain;}
+  .usegrid .ul{font-weight:700; color:var(--body); font-size:15px;}
+  /* 출구 없어요 배너 + 4가지 증정 */
+  .exit-banner{position:relative; background:#0c0b0b; border:1px solid var(--line); border-radius:16px; padding:30px 24px; text-align:center; margin-top:18px;}
+  .exit-banner .no02{position:absolute; top:-21px; left:50%; transform:translateX(-50%); width:44px; height:44px; border-radius:50%; background:#0c0b0b; border:1px solid var(--champ); color:var(--champ); font-family:"Playfair Display",serif; display:flex; align-items:center; justify-content:center; font-size:18px;}
+  .exit-banner .l1{color:var(--sub); font-size:15px;}
+  .exit-banner .l2{color:var(--rust); font-family:"Noto Serif KR",serif; font-weight:900; font-size:22px; margin-top:8px;}
+  .bonus2x2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px;}
+  .bonus2x2 .it{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 14px; text-align:center;}
+  .bonus2x2 .ic img{width:54px; height:54px;}
+  .bonus2x2 .t{font-weight:700; font-size:16px; margin-top:12px; color:var(--text);}
+  .bonus2x2 .d{font-size:13px; color:var(--sub); margin-top:5px;}
+  .only-banner{margin-top:28px; border:1px dashed var(--rust); border-radius:14px; padding:18px; text-align:center; background:rgba(226,146,111,.06);}
+  .only-banner span{font-family:"Playfair Display",serif; color:var(--rust); font-weight:600; letter-spacing:2px; margin-right:8px;}
+  .only-banner{font-family:"Noto Serif KR",serif; font-weight:800; font-size:20px; color:var(--text);}
+  /* 얻어 가실 수 있는 것 */
+  .getlist{margin-top:8px;}
+  .getlist .gi{display:flex; gap:13px; align-items:flex-start; padding:13px 0; font-size:17px; color:var(--body); line-height:1.6; border-bottom:1px solid var(--line);}
+  .getlist .gi:last-child{border:0;}
+  .getlist .gi .bk{color:var(--champ); font-size:18px; flex:0 0 auto;}
+  .getlist .gi b{color:var(--champ);}
+  /* 메이커 진심 */
+  .heart-photo{width:132px; height:132px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid var(--champ); background:#2b2825; margin:0 auto; display:block; box-shadow:0 0 26px rgba(222,201,160,.16);}
+  .heart-q{margin-top:28px; font-size:18px; line-height:2; color:var(--body); text-align:center;}
+  .heart-q b{color:var(--champ);}
+  .heart-q::before{content:"\201C"; color:var(--champ); font-family:Georgia,serif; font-size:52px; display:block; line-height:.5; margin-bottom:14px;}
+  .heart-q::after{content:"\201D"; color:var(--champ); font-family:Georgia,serif; font-size:52px; display:block; line-height:.2; margin-top:18px;}
+  /* 지치셨다면 */
+  .tired{text-align:center; margin:50px 18px;}
+  .tired p{font-size:21px; line-height:2.1; color:var(--body);}
+  .tired u{text-decoration:none; border-bottom:2px solid var(--champ); padding-bottom:3px;}
+  .tired .final{font-family:"Noto Serif KR",serif; font-weight:800; color:var(--text); font-size:24px; margin-top:26px;}
+  .tired .final u{border-bottom:3px solid var(--champ);}
+  /* 딱 20명 알람 원형 */
+  .alarm-wrap{text-align:center; margin:46px 18px 10px;}
+  .alarm-circle{width:248px; height:248px; border-radius:50%; margin:0 auto; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; color:#221905;
+    background:radial-gradient(circle at 50% 38%, #e7d5ad, #cbb277); box-shadow:0 0 46px rgba(222,201,160,.28);}
+  .alarm-circle .s{font-size:15px; font-weight:800; letter-spacing:1px;}
+  .alarm-circle .big{font-family:"Noto Serif KR",serif; font-weight:900; font-size:40px; margin-top:8px; line-height:1;}
+  .alarm-clock{width:84px; height:84px; margin-top:-30px; position:relative; filter:drop-shadow(0 8px 14px rgba(0,0,0,.4));}
+  /* 선착순 잔여 카운터 (플립) */
+  .seatcounter{text-align:center; margin:44px 18px;}
+  .flips{display:flex; gap:12px; justify-content:center;}
+  .flip{width:78px; height:104px; border-radius:12px; background:#26231f; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:58px; color:var(--text);
+    font-variant-numeric:tabular-nums; box-shadow:inset 0 -8px 16px rgba(0,0,0,.38);}
+  .flip.dim{color:#5a564e;}
+  .seat-cap{margin-top:22px; font-family:"Noto Serif KR",serif; font-weight:700; font-size:22px; color:var(--text);}
+  .seat-cap b{color:var(--champ);}
+  .seat-cap .ul{border-bottom:3px solid var(--champ); padding-bottom:3px;}
+  .seat-cap .seat-star{color:var(--champ); margin-left:4px;}
+  /* 섹션 화살표 */
+  .sec-arrow{text-align:center; margin:4px 0 8px;}
+  .sec-arrow svg{width:46px; height:50px;}
+  .sec-arrow path{fill:var(--champ);}
+  /* 결과가 증명합니다 (proof) */
+  .proof{text-align:center;}
+  .proof .badge2{display:inline-block; background:linear-gradient(180deg,#e3d0a6,#cdb37e); color:#221905; font-weight:800; font-size:16px; padding:9px 24px; border-radius:999px;}
+  .proof .stat{font-family:"Noto Serif KR",serif; font-weight:900; font-size:32px; color:var(--text); margin-top:26px; line-height:1.35;}
+  .proof .stat b{color:var(--champ);}
+  .proof .scorebig{font-family:"Noto Serif KR",serif; font-weight:900; font-size:58px; color:var(--text); line-height:1; margin-top:4px;}
+  .proof .scorebig b{color:var(--champ);}
+  .proof .scorebig small{font-size:.46em; color:var(--sub); font-weight:700;}
+  .proof .pc{font-size:13px; color:var(--sub); margin-top:12px;}
+  .proof .label{font-family:"Noto Serif KR",serif; font-weight:700; font-size:24px; margin-top:14px; color:var(--text);}
+  .proof .stars5{color:var(--champ); font-size:32px; letter-spacing:6px; margin-top:14px;}
+  .proof .pdiv{border-top:1px solid var(--line); margin:20px 0;}
+
+  /* 하단 고정바 */
+  .sticky{position:fixed; left:0; right:0; bottom:0; z-index:50; background:rgba(16,15,14,.92); backdrop-filter:blur(10px);
+          border-top:1px solid var(--line); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px;}
+  .sticky .p{color:var(--text); font-weight:800; font-size:20px;} .sticky .p s{color:var(--faint); font-size:15px; font-weight:600;}
+  .sticky a{background:linear-gradient(180deg,#e3d0a6,#cdb37e); color:var(--btnink); font-weight:900; font-size:18px; padding:14px 34px; border-radius:999px; text-decoration:none; white-space:nowrap;}
+
+  @media (max-width:640px){
+    .hero h1{font-size:33px;} .card{padding:38px 22px; margin:16px 12px;} .h2{font-size:24px;}
+    .compare{flex-direction:column;} .price-new{font-size:52px;} .hero img,.illu{width:175px; height:175px;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="emblem">✦</div>
+    <span class="eyebrow" style="font-family:'Playfair Display',serif; letter-spacing:4px; text-transform:uppercase; font-weight:700;">MEMBERSHIP ONLY</span>
+    <h1>2주 만에<br><span class="hl l">카톡고자</span><br>탈출시켜드립니다.</h1>
+    <img src="3d_illust/assets/snp_man_phone.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4f1.webp'" alt="" style="filter:drop-shadow(0 16px 30px rgba(0,0,0,.55));">
+  </section>
+
+  <!-- 집중 유도 (잠깐! 결제부터 하지마세요) -->
+  <section class="card dark center">
+    <div class="stop-big">잠깐!</div>
+    <div class="stop-sub1">결제부터 하지 마세요!</div>
+    <div class="stop-sub2">천천히 읽어보고 결정해주세요</div>
+    <div class="sec-arrow" style="margin:26px 0 22px;"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+    <div class="timer-ring">
+      <div class="t-time" id="snpTimer">2:00</div>
+      <div class="t-min">min</div>
+    </div>
+    <p class="serif" style="font-size:21px; font-weight:700; margin-top:72px; line-height:1.5;">단 <b class="gold">2분</b>만 집중하시면<br><span class="hl l">카톡고자</span> 탈출시켜드립니다.</p>
+  </section>
+
+  <!-- 선착순 잔여 카운터 -->
+  <div class="seatcounter" style="margin-top:120px;">
+    <div class="flips">
+      <span class="flip dim" id="sd0">0</span>
+      <span class="flip" id="sd1">1</span>
+      <span class="flip" id="sd2">4</span>
+    </div>
+    <div class="seat-cap">선착순 <span class="ul"><b>20명</b> 얼리버드 특가</span><span class="seat-star">★</span></div>
+  </div>
+
+  <!-- 선착순 마감 주의 -->
+  <div class="scarce" style="margin:84px 18px 34px; border:none; background:none; padding:0;">
+    <div class="big"><span class="warn-t">⚠ 조기 마감 주의</span></div>
+  </div>
+
+  <!-- 가격 -->
+  <section class="card feature" style="padding:40px 32px;">
+    <div class="kicker">Price</div>
+    <div class="ladder">
+      <div class="tier now">
+        <div><span class="now-badge">＋ 현재 가격</span><div class="tl">S&amp;P 1기 (현재)</div></div>
+        <div class="tp">39,000<span style="font-size:.55em;">원</span></div>
+      </div>      <div class="tier up">
+        <div class="tl">S&amp;P 2기</div>
+        <div class="tp">290,000원</div>
+      </div>      <div class="tier up">
+        <div class="tl">S&amp;P 3기</div>
+        <div class="tp">490,000원</div>
+      </div>
+    </div>
+    <p class="h2 mt" style="font-size:21px; margin-top:60px;"><span class="hl l">가격은 계속 오릅니다.</span><br>이 기회를 놓치지 마세요.</p>
+    <div style="text-align:center; padding:34px 0 0;"><div style="width:3px; height:46px; background:rgba(222,201,160,.55); margin:0 auto;"></div></div>
+  </section>
+
+  <!-- 전자책 저자 소개 -->
+  <section class="card center">
+    <p class="lead" style="margin-bottom:18px;">올 상반기 <b class="gold">히트쳤던</b> 전자책</p>
+    <div><img class="illu" src="3d_illust/assets/ebook_kakao.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4d6.webp'" alt="" style="height:250px; width:auto;"></div>
+    <div style="margin-top:16px;"><span class="badge" style="font-size:23px;">[ 카톡 관계설계 프레임워크 ]</span></div>
+    <div class="proof" style="margin-top:22px;">
+      <div class="stat">누적 구매자 <b>900명</b> +</div>
+      <div class="pc">* 카톡 행동강령 전자책 전 플랫폼 누적 판매 기준</div>
+    </div>
+  </section>
+
+  <!-- 후기 (결과 증명 + 후기) -->
+  <section class="card center">
+    <div class="proof">
+      <div class="stars5" style="margin-top:0;">★★★★★</div>
+      <div class="label" style="margin-top:12px;">압도적인 만족도</div>
+      <div class="scorebig"><b>4.9</b> <small>/ 5.0</small></div>
+      <div class="pc">* 구매자 평점 합산 기준</div>
+      <div class="pdiv"></div>
+      <div class="label">실제 경험자의 후기</div>
+    </div>
+    <div class="stack" style="margin-top:20px; gap:10px;">
+      <div class="quote">예전 카톡 다시 보니 제 실수가 보이네요</div>
+      <div class="quote">읽씹하던 그 여자한테 답장 왔습니다</div>
+      <div class="quote">멘트 고민하는 시간이 확 줄었어요</div>
+      <div class="quote">이런 걸 왜 이제야 알았나 싶어요</div>
+    </div>
+    <p class="lead center" style="margin-top:70px;">실제로 많은 분들이<br><b>카톡하는 법을 제대로 배우고</b><br><span class="hl l">연애의 자유를 누리셨습니다.</span></p>
+  </section>
+
+  <!-- 하지만 -->
+  <section class="card">
+    <img class="sec-ic" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f614.webp" alt="">
+    <div class="h2">그러나, 이런 아쉬움도<br>있었습니다.</div>
+    <div class="stack" style="gap:10px;">
+      <div class="quote">막상 여자랑 카톡하면, 제가 잘하고 있나 모르겠어요</div>
+      <div class="quote">1:1 컨설팅은 너무 비쌉니다. 다른 방법 없나요?</div>
+      <div class="quote">책 내용은 좋은데, <b>실전 예시</b>가 더 많았으면 좋겠어요</div>
+    </div>
+  </section>
+
+  <!-- 공감 -->
+  <section class="card center">
+    <div class="center"><img class="illu" src="3d_illust/assets/frustrated_person.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f614.webp'" alt=""></div>
+    <p class="h2 mt2" style="font-size:23px;">누가 내 카톡을 봐주면서</p>
+    <div style="margin-top:24px; display:flex; flex-direction:column; gap:12px; align-items:center; font-family:'Noto Serif KR',serif; font-weight:700; font-size:21px;">
+      <span class="hl l">"이런 멘트 치세요"</span>
+      <span class="hl l">"이 말은 하면 안 됩니다"</span>
+      <span class="hl l">"지금은 당겨야 합니다"</span>
+      <span class="hl l">"지금은 무시하세요"</span>
+    </div>
+    <p class="h2 mt" style="font-size:23px;">이 한마디만 해줘도<br>성공확률이 확 오를텐데...</p>
+  </section>
+
+  <p style="text-align:center; margin:56px 18px; font-family:'Noto Serif KR',serif; font-size:29px; font-weight:700; color:var(--text);"><span class="hl l">그래서 만들었습니다.</span></p>
+
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+
+  <!-- S&amp;P 정의 -->
+  <section class="card dark">
+    <div style="border:1.5px solid var(--champ); border-radius:18px; padding:30px 24px; box-shadow:0 0 30px rgba(222,201,160,.1);">
+      <p class="serif" style="text-align:center; font-size:34px; font-weight:700; color:var(--champ); margin:0;">S&amp;P 1기 모집 (20명)</p>
+      <p class="serif" style="text-align:center; font-size:20px; color:var(--bronze); margin-top:10px; letter-spacing:1px;">(Size &amp; Position)</p>
+    </div>
+    <div style="margin-top:44px;">
+      <div class="sp-item">
+        <div class="h">Size : 관계의 사이즈</div>
+        <div class="d">이 여자와의 관계의 크기 / 온도</div>
+        <div class="sp-gauge"><i></i><b></b></div>
+        <div class="sp-gmark"><span>남</span><span>아는 사이</span><span>썸</span><span>연인</span></div>
+      </div>
+      <div style="border-top:1px solid var(--line); margin:30px 0;"></div>
+      <div class="sp-item pos">
+        <div class="h">Position : 포지션</div>
+        <div class="d">이 거리에서 취할 스탠스와 전략.</div>
+        <div class="sp-sllabels" style="margin-top:30px;"><span>← 당긴다</span><span>민다 →</span></div>
+        <div class="sp-sltrack"><b></b></div>
+      </div>
+    </div>
+    <div style="text-align:center; padding:64px 0 0;"><svg width="22" height="50" viewBox="0 0 22 50"><line x1="11" y1="2" x2="11" y2="38" stroke="#dec9a0" stroke-width="3"/><path d="M11 48 l-8 -11 16 0 z" fill="#dec9a0"/></svg></div>
+    <p class="h2 mt" style="font-size:22px; margin-top:70px;">여러분이 카톡하다 망하는 이유는<br>현재 상황에서의<br><span class="hl l">사이즈와 포지션을 모르기 때문</span>입니다.</p>
+    <p class="h2 mt" style="font-size:22px; margin-top:40px;">이 둘만 확실히 익히면<br><span class="hl l">평생 카톡 걱정은 끝</span>입니다.</p>
+  </section>
+
+  <!-- 작동방식 -->
+  <section class="card" style="margin-top:150px;">
+    <div class="kicker">How It Works</div>
+    <div class="h2">S&amp;P는 이렇게 운영됩니다</div>
+    <div class="cyc">
+      <div class="cb"><span class="cn">1</span><div><div class="rh">매일, 동기 20명분 피드백이 올라옵니다</div><div class="rd">각자 상황에 맞춘 <b>구체적인 실전 피드백</b>이 매일 단톡방에 쌓입니다.</div></div></div>
+      <div class="cdown">↓</div>
+      <div class="cb"><span class="cn">2</span><div><div class="rh">보면서 내 것으로 만듭니다</div><div class="rd">"나였으면 어떻게 말했을까", "왜 이 전략이 좋은 건가"를 고민하며 학습합니다.</div></div></div>
+      <div class="cloop"></div>
+      <div class="crepeat">2주간 반복</div>
+    </div>
+    <div class="wcard" style="margin-top:48px; text-align:center; border-color:rgba(216,195,154,.45); font-size:17px;"><b class="gold" style="font-size:21px;">＋</b> 당신 카톡을 보내면 <b class="gold">제가 직접 1:1 피드백</b>.<br>다 같이 알면 좋은 건 <b>단톡방에 공유</b>됩니다.</div>
+    <div class="wcard" style="margin-top:24px; text-align:center; font-size:16px;"><img class="ic-in" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f512.webp"> 공유되는 카톡은 <b class="gold">100% 익명 처리</b> : 이름·프사·상대 정보 전부 가립니다.</div>
+  </section>
+
+  <!-- ② Why 30 -->
+  <section class="card" style="margin-top:150px;">
+    <div class="h2"><span class="hl l">20명의 경험</span>이<br>내 경험이 됩니다</div>
+    <div class="center" style="margin:48px 0 0;">
+      <svg viewBox="0 0 420 568" width="100%" style="max-width:380px; display:block; margin:0 auto;">
+        <text x="210" y="20" text-anchor="middle" fill="#dec9a0" font-family="'Noto Serif KR',serif" font-weight="700" font-size="16">20명이 매일 보내는 카톡</text>
+        <!-- 말풍선 -->
+        <g>
+          <rect x="60" y="32" width="40" height="22" rx="9" fill="#26231f" stroke="#dec9a0" stroke-width="1.5"/><path d="M76,54 l8,0 l-4,6 z" fill="#26231f"/><circle cx="73" cy="43" r="2" fill="#dec9a0"/><circle cx="80" cy="43" r="2" fill="#dec9a0"/><circle cx="87" cy="43" r="2" fill="#dec9a0"/>
+          <rect x="190" y="32" width="40" height="22" rx="9" fill="#26231f" stroke="#dec9a0" stroke-width="1.5"/><path d="M206,54 l8,0 l-4,6 z" fill="#26231f"/><circle cx="203" cy="43" r="2" fill="#dec9a0"/><circle cx="210" cy="43" r="2" fill="#dec9a0"/><circle cx="217" cy="43" r="2" fill="#dec9a0"/>
+          <rect x="320" y="32" width="40" height="22" rx="9" fill="#26231f" stroke="#dec9a0" stroke-width="1.5"/><path d="M336,54 l8,0 l-4,6 z" fill="#26231f"/><circle cx="333" cy="43" r="2" fill="#dec9a0"/><circle cx="340" cy="43" r="2" fill="#dec9a0"/><circle cx="347" cy="43" r="2" fill="#dec9a0"/>
+        </g>
+        <!-- 졸라맨 3명 -->
+        <g stroke="#f6f1e9" stroke-width="3" stroke-linecap="round" fill="none">
+          <circle cx="80" cy="76" r="8"/><line x1="80" y1="84" x2="80" y2="106"/><line x1="69" y1="91" x2="91" y2="91"/><line x1="80" y1="106" x2="72" y2="120"/><line x1="80" y1="106" x2="88" y2="120"/>
+          <circle cx="210" cy="76" r="8"/><line x1="210" y1="84" x2="210" y2="106"/><line x1="199" y1="91" x2="221" y2="91"/><line x1="210" y1="106" x2="202" y2="120"/><line x1="210" y1="106" x2="218" y2="120"/>
+          <circle cx="340" cy="76" r="8"/><line x1="340" y1="84" x2="340" y2="106"/><line x1="329" y1="91" x2="351" y2="91"/><line x1="340" y1="106" x2="332" y2="120"/><line x1="340" y1="106" x2="348" y2="120"/>
+        </g>
+        <g fill="#f6f1e9"><circle cx="77" cy="75" r="1.4"/><circle cx="83" cy="75" r="1.4"/><circle cx="207" cy="75" r="1.4"/><circle cx="213" cy="75" r="1.4"/><circle cx="337" cy="75" r="1.4"/><circle cx="343" cy="75" r="1.4"/></g>
+        <text x="210" y="146" text-anchor="middle" fill="#b6b0a4" font-size="13">20명 카톡 → 매일 코치가 피드백</text>
+        <!-- 모이는 선 -->
+        <g stroke="#dec9a0" stroke-width="2" stroke-dasharray="4 5" fill="none" opacity=".5">
+          <path d="M80,126 Q150,158 198,184"/><path d="M210,152 L210,184"/><path d="M340,126 Q270,158 222,184"/>
+        </g>
+        <!-- 단톡방 -->
+        <rect x="148" y="186" width="124" height="142" rx="18" fill="#26231f" stroke="#dec9a0" stroke-width="2.5"/>
+        <text x="210" y="234" text-anchor="middle" fill="#dec9a0" font-family="'Noto Serif KR',serif" font-weight="900" font-size="42">20</text>
+        <text x="210" y="256" text-anchor="middle" fill="#b6b0a4" font-size="12.5">명분 피드백</text>
+        <g fill="#3a352e"><rect x="166" y="276" width="62" height="9" rx="4"/><rect x="166" y="292" width="86" height="9" rx="4"/><rect x="166" y="308" width="48" height="9" rx="4"/></g>
+        <!-- 화살표1 -->
+        <line x1="210" y1="338" x2="210" y2="366" stroke="#dec9a0" stroke-width="3"/><path d="M210,372 l-7,-9 14,0 z" fill="#dec9a0"/>
+        <!-- 단톡방에 공유 -->
+        <text x="210" y="400" text-anchor="middle" fill="#dec9a0" font-family="'Noto Serif KR',serif" font-weight="700" font-size="18">단톡방에 공유</text>
+        <!-- 화살표2 -->
+        <line x1="210" y1="418" x2="210" y2="446" stroke="#dec9a0" stroke-width="3"/><path d="M210,452 l-7,-9 14,0 z" fill="#dec9a0"/>
+        <!-- 학습하는 나 -->
+        <g stroke="#f6f1e9" stroke-width="3" stroke-linecap="round" fill="none">
+          <circle cx="210" cy="476" r="9"/><line x1="210" y1="485" x2="210" y2="509"/><line x1="197" y1="493" x2="223" y2="493"/><line x1="210" y1="509" x2="201" y2="524"/><line x1="210" y1="509" x2="219" y2="524"/>
+        </g>
+        <g fill="#f6f1e9"><circle cx="207" cy="475" r="1.5"/><circle cx="213" cy="475" r="1.5"/></g>
+        <text x="240" y="470" fill="#dec9a0" font-size="20">★</text>
+        <text x="210" y="552" text-anchor="middle" fill="#f6f1e9" font-family="'Noto Serif KR',serif" font-weight="700" font-size="15">20명분 피드백을 한 번에 학습한다</text>
+      </svg>
+    </div>
+    <div style="text-align:center; padding:30px 0 0;"><div style="width:3px; height:48px; background:rgba(222,201,160,.6); margin:0 auto;"></div></div>
+    <p class="h2 mt" style="font-size:21px; margin-top:34px;">혼자선 1년 걸릴 경험을,<br><span class="hl l">2주로 압축</span>합니다.</p>
+    <div style="text-align:center; font-size:17px; font-weight:800; color:var(--bronze); letter-spacing:.5px; margin-top:72px; margin-bottom:18px;">매일 이렇게 다양한 상황이 올라옵니다</div>
+    <div class="stack" style="gap:12px;">
+      <div class="wcard"><b class="gold">A님</b>은 썸 초반이라 → <b>매력 어필·감점요소 방어</b> 코칭</div>
+      <div class="wcard"><b class="gold">B님</b>은 밀당 중이라 → <b>끌려다니지 않고 주도권 잡기</b> 코칭</div>
+      <div class="wcard"><b class="gold">C님</b>은 고백 직전이라 → <b>고백 타이밍·멘트</b> 코칭</div>
+      <div class="wcard"><b class="gold">D님</b>은 카톡을 <b>19금까지 끌고 가는 법</b> 코칭</div>
+    </div>
+  </section>
+
+
+  <!-- 1:1 단점 제거 -->
+  <section class="card">
+    <div class="h2">장점은 유지,<br><span class="hl l">단점은 없앴습니다.</span></div>
+    <div class="v4-box bad">
+      <div class="v4-tag">1:1 컨설팅의 한계</div>
+      <div class="v4-li"><span class="x">✕</span>가격이 너무 비싸다<br><span class="sub">: 최소 100만원</span></div>
+      <div class="v4-li"><span class="x">✕</span>코칭받으려면 <b>내 카톡 데이터</b>부터 많아야 한다</div>
+    </div>
+    <div class="v4-pivot" style="color:var(--bronze);">↓</div>
+    <div class="v4-box good">
+      <div class="v4-tag">S&amp;P</div>
+      <div class="v4-li"><span class="o">✓</span>합리적인 가격으로</div>
+      <div class="v4-li"><span class="o">✓</span><b>나랑 비슷한 20명</b>의 데이터로 배운다</div>
+    </div>
+    <div class="wcard" style="margin-top:80px; text-align:center; border-color:rgba(216,195,154,.45); font-size:19px;">
+      <b class="gold" style="font-size:22px;">＋</b> <span class="hl y">민감한 내용</span>은 1:1 코칭까지 따로 해드립니다.
+    </div>
+  </section>
+
+  <!-- 효율 / 가벼운 루틴 -->
+  <section class="card dark center">
+    <div style="margin-bottom:32px;"><img class="illu" src="3d_illust/assets/snp_bed_phone.png" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f6cc.webp'" alt="" style="filter:drop-shadow(0 14px 26px rgba(0,0,0,.5));"></div>
+    <p class="lead" style="margin-top:6px;">자기 전, 그날 올라온 피드백들을<br><b>쓱 읽고 자세요.</b></p>
+    <div style="margin-top:30px;"><svg width="32" height="48" viewBox="0 0 32 48"><line x1="16" y1="2" x2="16" y2="32" stroke="#c4ae78" stroke-width="4"/><path d="M16 47 l-12 -16 24 0 z" fill="#c4ae78"/></svg></div>
+    <p class="lead" style="margin-top:16px; color:var(--bronze); font-weight:700;">이게 2주 동안 반복되면?</p>
+    <p class="h2 mt" style="font-size:24px;">자신감을 넘어<br><span class="hl l">카톡 전문가</span>가 됩니다.</p>
+  </section>
+
+  <!-- Q&A 안도감 -->
+  <section class="card">
+    <div class="qa">
+      <div class="bub q"><img class="emo" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f914.webp">카톡만 하면 대화가 끊기는데<br>저 같은 사람도 될까요?</div>
+      <div class="down">↓</div>
+      <div class="bub a"><img class="emo" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f60e.webp">그래서 20명입니다.</div>
+    </div>
+    <p class="lead center mt">끊긴 대화 살리는 법, 읽씹 뚫는 법이<br><b>매일 단톡방에 올라옵니다.</b><br>내 상황이랑 똑같은 걸 보고 따라 하면 됩니다.</p>
+  </section>
+
+  <!-- CTA 1 -->
+  <div class="midcta">
+    <p class="eye">마감 임박이니 서둘러 신청하세요</p>
+    <a class="btn" href="https://forms.gle/GcLQiV97CR3qoub19" target="_blank" rel="noopener">👇 S&amp;P 1기 합류하기</a>
+    <p class="note">단 20명 한정 · 2주 39,000원</p>
+  </div>
+
+  <!-- 체크리스트 -->
+  <section class="card">
+    <img class="sec-ic" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/26a0-fe0f.webp" alt="">
+    <div class="h2">이런 분들이 들으시면 좋습니다.</div>
+    <div class="stack">
+      <div class="chk bad"><span class="box">✓</span>카톡 보내기 전에 30분 넘게 문장을 고치고 또 고친다</div>
+      <div class="chk bad"><span class="box">✓</span>보내고 나서 "아 이거 아닌데" 후회한다</div>
+      <div class="chk bad"><span class="box">✓</span>읽씹당하면 하루종일 카톡창만 들여다본다</div>
+      <div class="chk bad"><span class="box">✓</span>여자가 밀면 같이 밀어야 하는지, 더 다가가야 하는지 모른다</div>
+      <div class="chk bad"><span class="box">✓</span>분위기 좋다가 내 멘트 하나로 갑자기 싸해진 적 있다</div>
+      <div class="chk bad"><span class="box">✓</span>몇 주째 썸만 타다가 결국 "그냥 친구하자" 들었다</div>
+      <div class="chk bad"><span class="box">✓</span>카톡으로 19금까지 분위기를 끌고 가는 법을 모른다</div>
+    </div>
+  </section>
+
+  <!-- 비교표 -->
+  <section class="card">
+    <div class="h2">S&amp;P만의<br>차별화 포인트</div>
+    <div class="compare">
+      <div class="c-old">
+        <h3>기존 연애 강의</h3>
+        <ul>
+          <li>이미 끝난 옛날 사례로 배움</li>
+          <li>이론만, 내 상황 답은 없음</li>
+          <li>듣고 끝. 써먹는 건 알아서</li>
+        </ul>
+      </div>
+      <div class="c-new">
+        <h3>S&amp;P</h3>
+        <ul>
+          <li>오늘 일어난 카톡으로 배움</li>
+          <li>"이 상황엔 이렇게" 답을 바로</li>
+          <li>매일 20명분 코칭 → 바로 써먹음</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE/AFTER -->
+  <section class="card">
+    <div class="h2">2주 뒤,<br>당신의 모습을 상상해보세요</div>
+    <div style="margin-top:24px;">
+      <div class="win"><span class="ck">✓</span>카톡창 열기 전에 "이 여자랑 나 사이 거리"가 보입니다</div>
+      <div class="win"><span class="ck">✓</span>"당겨? 밀어?" 고민 안 합니다. 답이 보이니까</div>
+      <div class="win"><span class="ck">✓</span>읽씹당해도 안 흔들립니다. 왜 읽씹했는지 읽히니까</div>
+      <div class="win"><span class="ck">✓</span>20명의 실전 케이스가 통째로 머릿속에 들어가 있습니다</div>
+      <div class="win"><span class="ck">✓</span>"보내고 후회"가 없어집니다. 확신 갖고 보내니까</div>
+    </div>
+  </section>
+
+  <!-- 카톡 마스터 활용처 -->
+  <section class="card">
+    <div class="h2"><span class="hl l">카톡하는 법</span>을 마스터하면</div>
+    <div class="usegrid">
+      <div class="uc"><div class="ui"><svg viewBox="0 0 24 24"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#feda75"/><stop offset="35%" stop-color="#fa7e1e"/><stop offset="60%" stop-color="#d62976"/><stop offset="100%" stop-color="#4f5bd5"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igGrad)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.5" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="16.3" cy="7.7" r="1.1" fill="#fff"/></svg></div><div class="ul">DM</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4ac.webp" alt=""></div><div class="ul">소개팅 전 연락</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f497.webp" alt=""></div><div class="ul">썸</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f496.webp" alt=""></div><div class="ul">연애</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f37e.webp" alt=""></div><div class="ul">헌팅</div></div>
+      <div class="uc"><div class="ui"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f525.webp" alt=""></div><div class="ul">데이팅앱</div></div>
+    </div>
+    <div style="text-align:center; margin-top:36px;"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f511.webp" alt="" style="width:66px; height:66px; filter:drop-shadow(0 6px 14px rgba(222,201,160,.4));"></div>
+    <p class="h2 mt" style="font-size:22px; margin-top:18px;">여자랑 만나는 모든 상황에서<br><span class="hl l">마스터키</span>를 얻는 겁니다.</p>
+  </section>
+
+  <!-- CTA 2 -->
+  <div class="midcta">
+    <p class="eye">가격은 예고 없이 오릅니다</p>
+    <a class="btn" href="https://forms.gle/GcLQiV97CR3qoub19" target="_blank" rel="noopener">👇 10초 만에 신청하기</a>
+    <p class="note">마감되면 2기는 가격 인상</p>
+  </div>
+
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+
+  <!-- 전환 플로우 -->
+  <section class="card center">
+    <p class="serif" style="font-size:24px; font-weight:700; line-height:1.5;">딱 2주, S&amp;P 하나로</p>
+    <div class="flow" style="margin-top:38px;">
+      <span class="p">누구나 쉽게</span>
+      <span class="p">나와 상황이 비슷한 동기들과</span>
+      <span class="p">매일 실전 코칭으로</span>
+    </div>
+  </section>
+
+  <!-- 메이커 소개 (내용 추후 입력) -->
+  <section class="card center">
+    <p class="kicker">Maker</p>
+    <div class="serif" style="font-size:28px; font-weight:700; line-height:1.5; margin-top:12px;">“안녕하세요<br><span class="hl l">와이낫유</span> 입니다”</div>
+    <div style="width:180px; height:180px; border-radius:50%; margin:30px auto 0; overflow:hidden; border:2px solid var(--line); box-shadow:0 10px 30px rgba(0,0,0,.45);"><img src="maker.jpg" alt="와이낫유" style="width:100%; height:100%; object-fit:cover;"></div>
+    <div style="font-family:'Noto Serif KR',serif; font-size:50px; color:var(--champ); opacity:.4; line-height:.6; margin-top:30px;">&ldquo;</div>
+    <p style="font-family:'Noto Serif KR',serif; font-size:22px; font-weight:700; line-height:1.8; color:var(--text); margin-top:8px;"><b class="gold">와이낫유의 카톡 이론</b>은<br>이미 전자책만으로도<br>많은 분께 그 가치를 인정받았습니다.</p>
+    <p style="font-family:'Noto Serif KR',serif; font-size:22px; font-weight:700; line-height:1.8; color:var(--text); margin-top:34px;">제가 알고 있는 <b class="gold">모든 노하우</b>를 토대로<br>제가 모든 걸 책임지고<br><span class="hl l">카톡고자 탈출</span>시켜드리겠습니다.</p>
+    <p style="font-family:'Noto Serif KR',serif; font-size:22px; font-weight:700; line-height:1.8; color:var(--text); margin-top:34px;">카톡으로 스트레스 받는 게 싫으시다면,<br>연애에 <b class="gold">확실한 무기</b> 하나쯤 필요하시다면,</p>
+    <p style="font-family:'Noto Serif KR',serif; font-size:22px; font-weight:700; line-height:1.8; color:var(--text); margin-top:34px;">이번 <span class="hl l">S&amp;P 1기</span>에 참여해보세요.</p>
+    <div style="font-family:'Noto Serif KR',serif; font-size:50px; color:var(--champ); opacity:.4; line-height:.1; margin-top:26px;">&rdquo;</div>
+  </section>
+
+  <!-- 포함된 것 -->
+  <section class="card">
+    <div style="text-align:center;">
+      <div style="display:inline-flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--champ); border-radius:999px; padding:11px 26px;">
+        <span style="color:var(--champ); font-weight:800; font-size:18px; letter-spacing:.5px;">수강생 전용 추가 혜택</span>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:36px;"><img src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f381.webp" alt="" style="width:98px; height:98px; filter:drop-shadow(0 8px 18px rgba(0,0,0,.4));"></div>
+    <div class="h2" style="margin-top:18px;">총 <span class="hl l">220만원 상당</span>의 혜택을<br>받아가세요</div>
+    <div class="stack" style="gap:16px; margin-top:32px;">
+      <div class="step"><span class="num gold">1</span><div><b style="font-size:19px;">전자책 2권 추가 무료 증정!</b><div class="lead" style="font-size:16px; color:#9fe8b3; font-weight:700;">20만원 상당</div><div class="lead" style="font-size:16px;">카톡 관계설계 프레임워크 + 가우스 5단계 이론</div></div></div>
+      <div class="books" style="margin:6px 0 2px;">
+        <div class="book"><img src="3d_illust/assets/ebook_kakao.png" alt="" style="width:100%; height:240px; object-fit:contain; border-radius:8px; display:block;"><div class="bt">카톡 관계설계 프레임워크</div><div class="bc">10만원 상당</div></div>
+        <div class="book"><img src="3d_illust/assets/ebook_gauss.png" alt="" style="width:100%; height:240px; object-fit:contain; border-radius:8px; display:block;"><div class="bt">가우스 5단계 이론</div><div class="bc">10만원 상당</div></div>
+      </div>
+      <div class="step"><span class="num gold">2</span><div><b style="font-size:19px;">카톡 / 데이팅앱 프로필 컨설팅</b><div class="lead" style="font-size:16px; color:#9fe8b3; font-weight:700;">50만원 상당</div><div class="lead" style="font-size:16px;">지워야 할 사진, 메인에 둘 사진 등의 조언으로 이미지 메이킹을 해드립니다.</div></div></div>
+      <div class="step"><span class="num gold">3</span><div><b style="font-size:19px;">수강 뒤에도 개별 카톡 코칭</b><div class="lead" style="font-size:16px; color:#9fe8b3; font-weight:700;">150만원 상당</div><div class="lead" style="font-size:16px;">막힐 때마다, 조언이 필요할 때마다 조언해드립니다.</div></div></div>
+    </div>
+    <div style="margin-top:44px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; padding:20px 4px; border-top:1px solid var(--line);">
+        <span style="color:#7fd99a; font-weight:800; font-size:17px;">총 가치</span>
+        <span style="text-align:right;"><b style="color:#9fe8b3; font-size:25px;">약 220만 원 상당</b></span>
+      </div>
+      <div style="text-align:center; padding:14px 0 8px;"><svg width="28" height="42" viewBox="0 0 28 42"><line x1="14" y1="2" x2="14" y2="28" stroke="#9fe8b3" stroke-width="3.5"/><path d="M14 40 l-10 -13 20 0 z" fill="#9fe8b3"/></svg></div>
+      <div style="background:linear-gradient(135deg,#16301d,#1f3f28); border:1px solid #3f8455; border-radius:18px; padding:22px 26px; box-shadow:0 8px 26px rgba(0,0,0,.4);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="color:#7fd99a; font-weight:800; font-size:16px;">이 모든 걸</span>
+          <span style="color:#fff; font-weight:900; font-size:34px; font-family:'Noto Serif KR',serif;">39,000<span style="font-size:.5em;">원</span></span>
+        </div>
+        <div style="text-align:right; margin-top:8px;">
+          <span style="color:#9fb9a5; font-size:13px;">2기부터는 제공이 중단됩니다.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+
+  <!-- 놓칠 수 없는 이유 -->
+  <section class="card dark">
+    <p class="serif" style="text-align:center; font-size:14px; letter-spacing:3px; color:var(--bronze); font-weight:800;">SPECIAL · 1기 한정</p>
+    <div class="h2 mt2" style="font-size:27px;">이번 1기,<br><span class="hl l">놓칠 수 없는 이유</span></div>
+    <div style="margin-top:34px;">
+      <div class="reason"><span class="no">01</span><span class="rt"><b>역대 최저가</b> — 1기에만 39,000원 <span style="color:var(--sub);">(2기 29만원)</span></span></div>
+      <div class="reason"><span class="no">02</span><span class="rt"><b>전자책 2권 무료</b>, 20만원 상당 추가 증정</span></div>
+      <div class="reason"><span class="no">03</span><span class="rt"><b>개별 1:1 코칭</b> — 내 카톡만 따로 직접 피드백</span></div>
+    </div>
+  </section>
+
+  <!-- CTA 3 -->
+  <div class="midcta">
+    <p class="eye">하루 2,800원, 인생 최고의 선택.</p>
+    <a class="btn" href="https://forms.gle/GcLQiV97CR3qoub19" target="_blank" rel="noopener">👇 S&amp;P 1기 신청하기</a>
+  </div>
+
+  <!-- 신청 마/와야 -->
+  <section class="card">
+    <div class="h2" style="font-size:24px;">이런 분은 <span class="red">신청하지 마세요</span></div>
+    <div class="stack" style="gap:11px;">
+      <div class="chk no"><span class="box">✕</span>"카톡은 타고나는 거지 배우는 게 아니다" 생각하는 분</div>
+      <div class="chk no"><span class="box">✕</span>하루 10분 투자도 아까운 분</div>
+      <div class="chk no"><span class="box">✕</span>외모·돈 탓만 하고 카톡은 안 고칠 분</div>
+    </div>
+    <div class="h2 mt" style="font-size:24px;">이런 분이랑 <span class="hl l">잘 맞습니다</span></div>
+    <div class="stack" style="gap:11px;">
+      <div class="chk good"><span class="box">✓</span>카톡 보내기 전에 항상 "이거 맞나?" 고민하는 분</div>
+      <div class="chk good"><span class="box">✓</span>안 읽씹당하면 종일 카톡창만 들여다보는 분</div>
+      <div class="chk good"><span class="box">✓</span>여자가 밀 때 당겨야 하는지 같이 밀어야 하는지 모르는 분</div>
+      <div class="chk good"><span class="box">✓</span>썸만 타다가 매번 "그냥 친구하자"로 끝나는 분</div>
+      <div class="chk good"><span class="box">✓</span>카톡으로 분위기 끌고 가는 법을 진짜 배우고 싶은 분</div>
+    </div>
+  </section>
+
+
+  <!-- FAQ -->
+  <section class="card">
+    <img class="sec-ic" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/1f4ac.webp" alt="">
+    <div class="h2">자주 묻는 질문</div>
+    <div style="margin-top:26px;">
+      <details><summary>연애 경험이 거의 없어도 되나요?</summary><div class="faq-a">오히려 그런 분이 제일 빨리 늡니다. 혼자 1년 삽질할 거, 20명 케이스 보면서 2주 만에 깨닫습니다.</div></details>
+      <details><summary>제 카톡이 공개되는 게 부담됩니다.</summary><div class="faq-a">이름·프사·상대방 정보 전부 가립니다. 누가 보냈는지 본인 빼고 아무도 모릅니다.</div></details>
+      <details><summary>매일 참여해야 하나요?</summary><div class="faq-a">아닙니다. 올라오는 코칭 읽기만 해도 됩니다. 본인 카톡 안 보내도 20명분 코칭 전부 볼 수 있습니다.</div></details>
+      <details><summary>지금 카톡하는 여자가 없어도 괜찮나요?</summary><div class="faq-a">네. 20명 사례로 사이즈 읽는 법·포지션 잡는 법을 미리 익혀두고, 다음에 카톡할 때 바로 써먹으면 됩니다.</div></details>
+      <details><summary>1:1 컨설팅도 되나요?</summary><div class="faq-a">네, 꼭 필요한 부분은 1:1 컨설팅으로 진행됩니다.</div></details>
+    </div>
+  </section>
+
+  <div class="sec-arrow"><svg viewBox="0 0 100 110"><path d="M38 0H62V60H82L50 105 18 60H38Z"/></svg></div>
+
+
+
+  <!-- 딱 20명 알람 -->
+  <div class="alarm-wrap">
+    <div class="alarm-circle">
+      <div class="s">선착순 한정 · 마감 시 조기종료</div>
+      <div class="big">딱 20명!</div>
+    </div>
+    <img class="alarm-clock" src="https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/23f0.webp" alt="">
+  </div>
+
+  <!-- 최종 CTA -->
+  <section class="cta">
+    <div class="emblem" style="margin-bottom:24px;">✦</div>
+    <h2>빨리 배울수록<br>당신의 인생이 빨리 바뀝니다</h2>
+    <a class="ctabtn" href="https://forms.gle/GcLQiV97CR3qoub19" target="_blank" rel="noopener">S&amp;P 1기 신청하기 →</a>
+    <p style="color:var(--rust); font-size:15px; font-weight:700; margin-top:30px;">이 가격은 1기 20명까지. 마감되면 끝입니다.</p>
+  </section>
+
+</div>
+
+<!-- 하단 고정 CTA -->
+<div class="sticky">
+  <span class="p">39,000원 <s>·20명 한정</s></span>
+  <a href="https://forms.gle/GcLQiV97CR3qoub19" target="_blank" rel="noopener">1기 신청 →</a>
+</div>
+
+<script>
+(function(){
+  var el = document.getElementById('snpTimer');
+  if(!el) return;
+  var t = 120;                         // 2:00에서 시작
+  function fmt(s){ var m=Math.floor(s/60), x=s%60; return m+':'+(x<10?'0':'')+x; }
+  setInterval(function(){
+    t--;
+    if(t < 112) t = 120;               // 1:52(112초)까지만 갔다가 2:00으로 리셋
+    el.textContent = fmt(t);
+  }, 1000);
+})();
+(function(){
+  var seats = [14,17,15,18,16], i = 0;
+  var b = [document.getElementById('sd0'), document.getElementById('sd1'), document.getElementById('sd2')];
+  if(!b[0]) return;
+  function render(n){ var s = ('00'+n).slice(-3); b[0].textContent=s[0]; b[1].textContent=s[1]; b[2].textContent=s[2]; }
+  setInterval(function(){ i = (i+1) % seats.length; render(seats[i]); }, 1300);   // 26→29→28→30→27 루프
+})();
+</script>
+</body>
+</html>

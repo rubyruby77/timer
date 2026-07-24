@@ -6,173 +6,107 @@ body{font-family:'Malgun Gothic','맑은 고딕',sans-serif;background:#f5f0e8;c
 input,select,textarea{font-family:inherit;font-size:16px;width:100%;outline:none;-webkit-appearance:none;}
 input:focus{border-color:#b8956a !important;}
 input::placeholder{color:#bbb;}
-.btn-select{cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
-.btn-select.active{background:#2a2520 !important;color:#d4a854 !important;border-color:#2a2520 !important;}
 .error-msg{font-size:13px;color:#e84040;margin-top:6px;display:none;}
 .shake{animation:shake 0.3s;}
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
 button:active{opacity:0.7;transform:scale(0.98);}
-.checkbox-wrap{display:flex;align-items:flex-start;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.checkbox-box{width:22px;height:22px;border:2px solid #e0d8cc;border-radius:4px;background:#faf8f4;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#d4a854;margin-top:2px;}
-.checkbox-box.checked{background:#2a2520;border-color:#2a2520;}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YNTB6BLJWW"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YNTB6BLJWW');</script>
 </head><body>
 
-<div id="formHeader" style="padding:48px 28px;background:#2a2520;text-align:center;">
-  <div style="font-size:14px;letter-spacing:6px;color:#d4a854;margin-bottom:20px;">AI Private Coaching</div>
-  <div style="font-size:24px;font-weight:800;color:#f5f0e8;line-height:1.5;">수업 신청서</div>
-  <div style="font-size:14px;color:#f5f0e8;margin-top:12px;">소요시간 : 1분</div>
+<div id="formHeader">
+
+  <!-- 돌아가기 버튼 -->
+  <a href="https://aiprivatecoaching.crekit.io/new-page" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;margin:80px 16px 12px;background:#d4a854;color:#fff;font-size:16px;font-weight:800;text-decoration:none;border-radius:10px;letter-spacing:0.5px;">
+    <span style="font-size:18px;">←</span>
+    <span>돌아가기</span>
+  </a>
+
+  <!-- LIVE 잔여석 -->
+  <div style="margin:0 16px 16px;background:#fff;padding:18px;text-align:center;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+    <span style="display:inline-block;width:10px;height:10px;background:#cc0000;border-radius:50%;margin-right:8px;vertical-align:middle;"></span>
+    <span style="font-size:13px;color:#cc0000;font-weight:800;letter-spacing:2px;vertical-align:middle;">LIVE</span>
+    <span style="font-size:15px;color:#999;margin:0 10px;vertical-align:middle;">·</span>
+    <span style="font-size:16px;font-weight:700;color:#1a1614;vertical-align:middle;">잔여 </span>
+    <span style="font-size:22px;font-weight:900;color:#cc0000;vertical-align:middle;">3</span>
+    <span style="font-size:16px;font-weight:700;color:#1a1614;vertical-align:middle;">석</span>
+  </div>
+
+  <!-- 다크 박스 -->
+  <div style="margin:0 16px;background:#2a2520;color:#f5f0e8;padding:56px 20px;text-align:center;border-radius:10px;">
+    <div style="font-size:14px;letter-spacing:6px;color:#d4a854;margin-bottom:18px;">AI Private Coaching</div>
+    <div style="font-size:28px;font-weight:800;">수업 신청서</div>
+  </div>
+
 </div>
 
-<form id="coachingForm" onsubmit="return validateForm()" style="padding:32px 20px 60px;background:#f5f0e8;">
+<form id="coachingForm" onsubmit="return validateForm()" style="padding:0 0 60px;">
 
-  <!-- 기본 정보 -->
-  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;">
-    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:16px;">기본 정보</div>
-    <div style="margin-bottom:16px;" id="field-name">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">성함 <span style="color:#e84040;">*</span></div>
-      <input type="text" id="name" placeholder="홍길동" style="padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+  <div style="margin:16px;background:#fff;padding:28px 22px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+
+    <!-- 성함 -->
+    <div style="margin-bottom:24px;" id="field-name">
+      <label style="display:block;font-size:15px;font-weight:700;margin-bottom:10px;">성함 <span style="color:#cc0000;">*</span></label>
+      <input type="text" id="name" placeholder="홍길동" style="width:100%;padding:16px;border:1px solid #f0ece4;border-radius:8px;background:#faf8f4;font-size:16px;box-sizing:border-box;">
       <div class="error-msg" id="err-name">성함을 입력해주세요</div>
     </div>
-    <div style="margin-bottom:16px;" id="field-phone">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">연락처 <span style="color:#e84040;">*</span></div>
-      <input type="tel" id="phone" placeholder="010-0000-0000" inputmode="tel" style="padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
+
+    <!-- 연락처 -->
+    <div style="margin-bottom:24px;" id="field-phone">
+      <label style="display:block;font-size:15px;font-weight:700;margin-bottom:10px;">연락처 <span style="color:#cc0000;">*</span></label>
+      <input type="tel" id="phone" placeholder="010-0000-0000" inputmode="tel" style="width:100%;padding:16px;border:1px solid #f0ece4;border-radius:8px;background:#faf8f4;font-size:16px;box-sizing:border-box;">
+      <div style="font-size:12px;color:#999;margin-top:8px;">신청 후 1시간 내 연락드립니다</div>
       <div class="error-msg" id="err-phone">휴대폰 번호 11자리를 정확히 입력해주세요 (예: 010-1234-5678)</div>
     </div>
-    <div id="field-age">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">연령대 <span style="color:#e84040;">*</span></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <div class="btn-select" onclick="selectOption(this,'age')" data-value="30대" style="padding:14px 0;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;width:calc(33.33% - 6px);">30대</div>
-        <div class="btn-select" onclick="selectOption(this,'age')" data-value="40대" style="padding:14px 0;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;width:calc(33.33% - 6px);">40대</div>
-        <div class="btn-select" onclick="selectOption(this,'age')" data-value="50대" style="padding:14px 0;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;width:calc(33.33% - 6px);">50대</div>
-        <div class="btn-select" onclick="selectOption(this,'age')" data-value="60대" style="padding:14px 0;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;width:calc(50% - 4px);">60대</div>
-        <div class="btn-select" onclick="selectOption(this,'age')" data-value="70대" style="padding:14px 0;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;width:calc(50% - 4px);">70대</div>
+
+    <!-- 신청 접수 안내 박스 -->
+    <div style="background:#faf6ef;padding:18px 16px;border-radius:8px;margin-bottom:20px;">
+      <div style="font-size:13px;color:#b8956a;font-weight:800;letter-spacing:1px;margin-bottom:12px;">신청 접수 안내</div>
+      <div style="font-size:14px;color:#333;line-height:1.7;">
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;"><span style="color:#d4a854;font-weight:700;flex-shrink:0;">✓</span><span>예약금 <strong style="color:#1a1614;">5만원</strong> 입금 시 예약 확정</span></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;"><span style="color:#d4a854;font-weight:700;flex-shrink:0;">✓</span><span>잔금은 <strong style="color:#1a1614;">수업 당일</strong> 현장 결제</span></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;"><span style="color:#d4a854;font-weight:700;flex-shrink:0;">✓</span><span>수업 2일 전 취소 시 <strong style="color:#1a1614;">100% 환불</strong></span></div>
       </div>
-      <input type="hidden" id="age" value="">
-      <div class="error-msg" id="err-age">연령대를 선택해주세요</div>
     </div>
+
+    <!-- 신청하기 버튼 -->
+    <button type="submit" id="submitBtn" style="width:100%;padding:18px;background:#d4a854;color:#fff;font-size:17px;font-weight:800;border:none;border-radius:10px;letter-spacing:0.5px;cursor:pointer;">
+      <span id="submitText">신청하기</span>
+    </button>
+
   </div>
-
-  <!-- 수업 관련 -->
-  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;">
-    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:16px;">수업 관련</div>
-    <div style="margin-bottom:16px;">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">직업 / 업종</div>
-      <input type="text" id="job" placeholder="예: 자영업, 회사원, 대표, 주부" style="padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
-    </div>
-    <div id="field-laptop">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">노트북 종류 <span style="color:#e84040;">*</span></div>
-      <div style="display:flex;gap:10px;">
-        <div class="btn-select" onclick="selectOption(this,'laptop')" data-value="윈도우" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">윈도우</div>
-        <div class="btn-select" onclick="selectOption(this,'laptop')" data-value="맥" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">맥</div>
-        <div class="btn-select" onclick="selectOption(this,'laptop')" data-value="모름" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">모름</div>
-      </div>
-      <input type="hidden" id="laptop" value="">
-      <div class="error-msg" id="err-laptop">노트북 종류를 선택해주세요</div>
-    </div>
-  </div>
-
-  <!-- 일정 -->
-  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;">
-    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:8px;">일정</div>
-    <div style="font-size:15px;color:#e84040;font-weight:800;margin-bottom:16px;">토요일을 제외한 모든 요일, 모든 시간대 가능합니다</div>
-
-    <div style="margin-bottom:16px;" id="field-date1">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">1지망 <span style="color:#e84040;">*</span></div>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="date1"  style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
-        <input type="text" id="time1" placeholder="시간 (예: 오후 2시)" style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
-      </div>
-      <div class="error-msg" id="err-date1">1지망 날짜와 시간을 모두 입력해주세요</div>
-    </div>
-
-    <div style="margin-bottom:16px;" id="field-date2">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">2지망</div>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="date2"  style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
-        <input type="text" id="time2" placeholder="시간 (예: 저녁 7시)" style="flex:1;padding:14px 16px;border:2px solid #e0d8cc;border-radius:8px;background:#faf8f4;">
-      </div>
-    </div>
-
-    <div>
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-bottom:8px;">동반 인원</div>
-      <div style="display:flex;gap:10px;">
-        <div class="btn-select active" onclick="selectOption(this,'companion')" data-value="없음" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">없음</div>
-        <div class="btn-select" onclick="selectOption(this,'companion')" data-value="1명" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">1명</div>
-        <div class="btn-select" onclick="selectOption(this,'companion')" data-value="2명" style="flex:1;padding:14px;border:2px solid #e0d8cc;border-radius:8px;text-align:center;background:#faf8f4;font-size:16px;font-weight:700;">2명</div>
-      </div>
-      <input type="hidden" id="companion" value="없음">
-      <div style="font-size:14px;color:#2a2520;font-weight:700;margin-top:8px;">* 동반 시 1인당 15만원 추가</div>
-    </div>
-  </div>
-
-  <!-- 개인정보 수집 동의 -->
-  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;" id="field-privacy">
-    <div class="checkbox-wrap" onclick="toggleCheckbox()">
-      <div class="checkbox-box" id="privacy-box"></div>
-      <div style="font-size:14px;color:#2a2520;line-height:1.6;">
-        <span style="font-weight:700;">개인정보 수집 및 이용에 동의합니다</span> <span style="color:#e84040;">*</span>
-        <div style="font-size:12px;color:#999;margin-top:4px;">수집 항목: 성함, 연락처, 연령대 / 이용 목적: 수업 예약 및 안내 / 보유 기간: 수업 종료 후 3개월</div>
-      </div>
-    </div>
-    <input type="hidden" id="privacy" value="">
-    <div class="error-msg" id="err-privacy">개인정보 수집에 동의해주세요</div>
-  </div>
-
-  <!-- 예약금 안내 -->
-  <div style="background:#fff;border-radius:12px;padding:24px;margin-bottom:16px;border:2px solid #b8956a;">
-    <div style="font-size:15px;color:#b8956a;font-weight:700;margin-bottom:12px;">예약금 안내</div>
-    <div style="font-size:15px;color:#2a2520;line-height:2.0;font-weight:600;">
-      <span style="color:#e84040;">노쇼 방지를 위해 예약금 5만원을 입금해주시면 예약이 확정됩니다.</span><br>
-      잔금 34만원은 수업 당일 현장에서 결제하시면 됩니다.
-    </div>
-    <div style="margin-top:16px;padding:16px;background:#f5f0e8;border-radius:8px;">
-      <div style="font-size:16px;color:#2a2520;font-weight:800;margin-bottom:4px;">입금 계좌</div>
-      <div style="font-size:18px;color:#2a2520;font-weight:900;">국민은행 469301-01-116643</div>
-      <div style="font-size:15px;color:#2a2520;font-weight:700;margin-top:4px;">예금주: 안세훈</div>
-      <div onclick="navigator.clipboard.writeText('469301-01-116643');this.innerText='복사 완료!';setTimeout(function(){document.querySelectorAll('.copy-btn').forEach(function(el){el.innerText='계좌번호 복사하기';});},2000);" class="copy-btn" style="margin-top:10px;padding:10px;background:#2a2520;border-radius:6px;text-align:center;font-size:14px;font-weight:700;color:#d4a854;cursor:pointer;-webkit-tap-highlight-color:transparent;">계좌번호 복사하기</div>
-    </div>
-    <div style="font-size:14px;color:#666;margin-top:12px;line-height:1.8;">
-      입금자명은 신청자 성함과 동일하게 부탁드립니다<br>
-      수업 2일 전까지 취소 시 예약금 전액 환불
-    </div>
-  </div>
-
-  <!-- 제출 -->
-  <button type="submit" id="submitBtn" style="width:100%;padding:18px;background:#2a2520;border:none;border-radius:12px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;">
-    <div id="submitText" style="font-size:18px;font-weight:800;color:#d4a854;">신청하기</div>
-  </button>
 
 </form>
 
 <!-- 제출 완료 화면 -->
-<div id="successScreen" style="display:none;padding:80px 28px 60px;background:#f5f0e8;text-align:center;">
-  <div style="font-size:28px;font-weight:900;color:#2a2520;margin-bottom:16px;">신청이 완료되었습니다</div>
-  <div style="font-size:22px;font-weight:900;color:#2a2520;line-height:1.6;margin-bottom:16px;">예약금 5만원 입금 후<br>예약이 확정됩니다</div>
-  <div style="font-size:16px;color:#666;line-height:2.0;">입금 확인 후 개별 연락드리겠습니다.</div>
-  <div style="margin-top:24px;padding:20px;background:#fff;border-radius:12px;border:2px solid #b8956a;">
-    <div style="font-size:16px;color:#2a2520;font-weight:800;margin-bottom:4px;">입금 계좌</div>
-    <div style="font-size:18px;color:#2a2520;font-weight:900;">국민은행 469301-01-116643</div>
-    <div style="font-size:15px;color:#2a2520;font-weight:700;margin-top:4px;">예금주: 안세훈</div>
-    <div onclick="navigator.clipboard.writeText('469301-01-116643');this.innerText='복사 완료!';setTimeout(function(){document.querySelectorAll('.copy-btn').forEach(function(el){el.innerText='계좌번호 복사하기';});},2000);" class="copy-btn" style="margin-top:10px;padding:10px;background:#2a2520;border-radius:6px;text-align:center;font-size:14px;font-weight:700;color:#d4a854;cursor:pointer;-webkit-tap-highlight-color:transparent;">계좌번호 복사하기</div>
-  </div>
-  <div style="margin-top:24px;">
-    <div onclick="location.reload();" style="font-size:14px;color:#b8956a;cursor:pointer;text-decoration:underline;-webkit-tap-highlight-color:transparent;">다시 작성하기</div>
+<div id="successScreen" style="display:none;padding:60px 16px;background:#f5f0e8;min-height:100vh;">
+  <div style="background:#fff;border-radius:14px;padding:56px 24px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+
+    <!-- 체크 아이콘 -->
+    <div style="width:72px;height:72px;border-radius:50%;background:#d4a854;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;font-weight:900;">✓</div>
+
+    <!-- 메인 메시지 -->
+    <div style="font-size:26px;font-weight:900;color:#2a2520;margin-bottom:32px;">신청이 완료되었습니다</div>
+
+    <!-- 전화번호 박스 -->
+    <div style="background:#faf6ef;border-radius:10px;padding:22px 16px;margin-bottom:24px;">
+      <div style="font-size:22px;font-weight:900;color:#2a2520;letter-spacing:0.5px;"><strong id="successPhone"></strong></div>
+      <div style="font-size:14px;color:#666;margin-top:8px;">로 연락드리겠습니다</div>
+    </div>
+
+    <!-- 감사 -->
+    <div style="font-size:16px;color:#666;margin-bottom:36px;">감사합니다.</div>
+
+    <!-- 다시 작성하기 -->
+    <button onclick="location.reload();" style="background:none;border:1px solid #d4a854;color:#b8956a;padding:14px 28px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;">다시 작성하기</button>
+
   </div>
 </div>
 
 <script>
 // 방문 기록
 fetch('https://script.google.com/macros/s/AKfycby4xjjyS7oOGJxAYktGdRS1K2QsUgvsh0X-XMdjeor0wnpQtQXtiRYWwhK1g2eJgQUK/exec?page=form', {mode:'no-cors'});
-
-// 날짜 예시 자동 세팅
-var today = new Date();
-var d1 = new Date(today); d1.setDate(today.getDate() + 3);
-var d2 = new Date(today); d2.setDate(today.getDate() + 5);
-document.getElementById('date1').placeholder = '날짜 (예: ' + (d1.getMonth()+1) + '/' + d1.getDate() + ')';
-document.getElementById('date2').placeholder = '날짜 (예: ' + (d2.getMonth()+1) + '/' + d2.getDate() + ')';
 
 // 뒤로가기 방지
 window.addEventListener('beforeunload', function(e) {
@@ -188,29 +122,6 @@ window.addEventListener('beforeunload', function(e) {
   }
 });
 
-function selectOption(el, fieldId) {
-  var siblings = el.parentElement.querySelectorAll('.btn-select');
-  for (var i = 0; i < siblings.length; i++) {
-    siblings[i].classList.remove('active');
-  }
-  el.classList.add('active');
-  document.getElementById(fieldId).value = el.getAttribute('data-value');
-}
-
-function toggleCheckbox() {
-  var box = document.getElementById('privacy-box');
-  var input = document.getElementById('privacy');
-  if (box.classList.contains('checked')) {
-    box.classList.remove('checked');
-    box.innerHTML = '';
-    input.value = '';
-  } else {
-    box.classList.add('checked');
-    box.innerHTML = '&#10003;';
-    input.value = 'agreed';
-  }
-}
-
 function validatePhone(phone) {
   var cleaned = phone.replace(/[^0-9]/g, '');
   return cleaned.length === 11 && cleaned.startsWith('01');
@@ -220,7 +131,6 @@ function validateForm() {
   var valid = true;
   var firstError = null;
 
-  // 에러 전부 초기화
   var allErrors = document.querySelectorAll('.error-msg');
   for (var i = 0; i < allErrors.length; i++) {
     allErrors[i].style.display = 'none';
@@ -228,11 +138,7 @@ function validateForm() {
 
   var fields = [
     {id: 'name', err: 'err-name', field: 'field-name'},
-    {id: 'phone', err: 'err-phone', field: 'field-phone', validate: 'phone'},
-    {id: 'age', err: 'err-age', field: 'field-age'},
-    {id: 'laptop', err: 'err-laptop', field: 'field-laptop'},
-    {id: 'date1', err: 'err-date1', field: 'field-date1'},
-    {id: 'privacy', err: 'err-privacy', field: 'field-privacy'}
+    {id: 'phone', err: 'err-phone', field: 'field-phone', validate: 'phone'}
   ];
 
   for (var i = 0; i < fields.length; i++) {
@@ -257,46 +163,23 @@ function validateForm() {
     }
   }
 
-  // 1지망 시간도 체크
-  var time1Val = document.getElementById('time1').value.trim();
-  var date1Val = document.getElementById('date1').value.trim();
-  if (date1Val && !time1Val) {
-    document.getElementById('err-date1').style.display = 'block';
-    var dateField = document.getElementById('field-date1');
-    dateField.classList.add('shake');
-    setTimeout(function(){dateField.classList.remove('shake');}, 300);
-    if (!firstError) firstError = dateField;
-    valid = false;
-  }
-
   if (!valid && firstError) {
     firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
   }
 
   if (valid) {
-    // 버튼 로딩 표시
     var btn = document.getElementById('submitBtn');
     var btnText = document.getElementById('submitText');
     btn.disabled = true;
     btnText.innerText = '신청 중...';
     btn.style.opacity = '0.6';
 
-    // 데이터 수집
     var formData = {
       name: document.getElementById('name').value.trim(),
       phone: document.getElementById('phone').value.trim(),
-      age: document.getElementById('age').value,
-      job: document.getElementById('job').value.trim(),
-      laptop: document.getElementById('laptop').value,
-      date1: document.getElementById('date1').value.trim(),
-      time1: document.getElementById('time1').value.trim(),
-      date2: document.getElementById('date2').value.trim(),
-      time2: document.getElementById('time2').value.trim(),
-      companion: document.getElementById('companion').value,
       timestamp: new Date().toLocaleString('ko-KR')
     };
 
-    // 구글 시트로 전송 (Apps Script URL 연동 시 아래 URL 교체)
     var scriptURL = 'https://script.google.com/macros/s/AKfycby4xjjyS7oOGJxAYktGdRS1K2QsUgvsh0X-XMdjeor0wnpQtQXtiRYWwhK1g2eJgQUK/exec';
 
     if (scriptURL) {
@@ -310,7 +193,6 @@ function validateForm() {
         showSuccess();
       });
     } else {
-      // 백엔드 미연동 시 바로 완료 표시
       setTimeout(function() {
         showSuccess();
       }, 500);
@@ -323,6 +205,14 @@ function validateForm() {
 function showSuccess() {
   document.getElementById('coachingForm').style.display = 'none';
   document.getElementById('formHeader').style.display = 'none';
+  var phone = document.getElementById('phone').value.replace(/[^0-9]/g, '');
+  var formatted = phone;
+  if (phone.length === 11) {
+    formatted = phone.substring(0,3) + '-' + phone.substring(3,7) + '-' + phone.substring(7);
+  } else if (phone.length === 10) {
+    formatted = phone.substring(0,3) + '-' + phone.substring(3,6) + '-' + phone.substring(6);
+  }
+  document.getElementById('successPhone').innerText = formatted;
   document.getElementById('successScreen').style.display = 'block';
   window.scrollTo(0, 0);
 }
