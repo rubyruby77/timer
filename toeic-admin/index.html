@@ -190,12 +190,19 @@ function estFromData(op,grid){
   var improving=last3all(hf), reduce55=lastSingle?last3all(r55s):last3all(r55);
   var lcp=lcScore(lcw,lcl), rcp=rcScore(rcw);
   var res={lcw:lcw,lcl:lcl,rcw:rcw,lcp:lcp,rcp:rcp,base:null,thisText:'-',nextText:'-',flags:[]};
-  if(lcp==null||rcp==null){res.thisText='입력부족';return res;}
-  var base=lcp+rcp;res.base=base;
+  if(lcp==null&&rcp==null){res.thisText='입력부족';return res;}
   var course=op.course||'up', cur=(Number(op.curLC)||0)+(Number(op.curRC)||0);
-  var cond=false;
-  if(p7Tests<3){res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';res.nextText='-';return res;}
-  if(!improving){ if(reduce55){cond=true;res.flags.push(['f-cond','조건부(55%)']);} else {res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';res.nextText='-';return res;} }
+  var lcOK=(lcp!=null)&&(lcTests>=3);                                   // LC 최소 3테스트(가정)
+  var p7OK=(rcp!=null)&&(p7Tests>=3)&&(improving||reduce55);            // 팟7 조건
+  var cond=p7OK&&!improving&&reduce55;
+  // 한쪽만 도출 가능 → 그것만 기대치, 다음달 계산 안 함
+  if(!(lcOK&&p7OK)){
+    if(lcOK){res.flags.push(['f-cond','LC만']);res.thisText='불가·LC '+(lcp-50)+'~'+lcp;}
+    else if(p7OK){res.flags.push(['f-cond','팟7만']);res.thisText='불가·팟7 '+(rcp-50)+'~'+rcp;}
+    else{res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';}
+    res.nextText='-';return res;
+  }
+  var base=lcp+rcp;res.base=base;
   var lo,hi;
   if(course==='up'){var top=base;if(cur&&base-cur>300)top=cur+300;hi=top;lo=top-50;
     if(lcTests>=4&&p7Tests>=3&&cur&&(top-cur)<100&&Math.floor(top/100)>Math.floor(cur/100)){var fl=Math.floor(top/100)*100;if(fl>lo){lo=fl;res.flags.push(['f-cond','앞자리↑']);}}}

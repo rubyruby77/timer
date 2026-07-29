@@ -364,33 +364,40 @@ function updateEstimate(){
   var C=$('hdrCourse')?$('hdrCourse').value:'up';
   var lcp=lcScore(d.lcw,d.lcl), rcp=rcScore(d.rcw);
   $('estBase').textContent = (lcp!=null&&rcp!=null)?('기본계산 '+(lcp+rcp)+'점 (LC '+lcp+' + 팟7 '+rcp+') · 대표 LC오답 '+d.lcw+'(레벨'+d.lcl+'), 팟7오답 '+d.rcw+' 기준 자동'):'';
-  if(lcp==null||rcp==null){$('estThis').textContent='입력 대기';$('estNext').textContent='-';$('estNote').innerHTML='';return;}
-  var base=lcp+rcp, W=[], stop=false, cond=false;
-  var total=d.p7Tests;
-  if(total<3){ stop=true; W.push(['stop','팟7 테스트 3개 미만 → 산정 불가']); }
-  else if(d.improving){ /* 최신 3연속 쌍하트 → 정상 산정 */ }
-  else if(d.reduce55){ cond=true; W.push(['cond','최신 3연속 쌍하트는 아니지만, 최신 3개 요약후가 55%↑ 감소 → 조건부 산정 (3연속 쌍하트 달성 시 확정)']); }
-  else { stop=true; W.push(['stop','최신 3연속 쌍하트·요약후 55% 감소 모두 미달 → 산정 불가']); }
-  var r=estRange(base,d);
-  if(!stop){
+  if(lcp==null&&rcp==null){$('estThis').textContent='입력 대기';$('estNext').textContent='-';$('estNote').innerHTML='';return;}
+  var W=[];
+  // 항목별 도출 가능 여부 (LC·팟7 독립 판정)
+  var lcOK = (lcp!=null) && (d.lcTests>=3);                                   // LC 최소 3테스트(가정, 확인필요)
+  var p7OK = (rcp!=null) && (d.p7Tests>=3) && (d.improving||d.reduce55);      // 팟7: 3개↑ & (3연속쌍하트|최신3 55%↓)
+  var cond = p7OK && !d.improving && d.reduce55;
+  if(lcOK && p7OK){
+    var base=lcp+rcp, r=estRange(base,d);
     if(r[2])W.push(['info','상승폭 +300 상한 적용']);
     if(r[3])W.push(['info','현재점수 대비 상승폭이 작아 앞자리 올림 (최소 100↑ 상승감)']);
-    if(base>=700&&base<800&&!(d.lcl>=2&&d.improving))W.push(['cond','700점대는 LC레벨2 + 최신 3연속 쌍하트 필요 → "달성 시 700"']);
-    if(d.lcl>=3&&d.zero&&d.rcl>=2)W.push(['good','900 안내 조건 충족']);
-  }
-  $('estThis').textContent = stop?'산정 불가':((cond?'(조건부) ':'')+r[0]+'~'+r[1]+'점');
-  // 다음달
-  var nextTxt='-';
-  if(!stop){
+    if(base>=700&&base<800&&!(d.lcl>=2&&d.improving))W.push(['cond','700점대는 LC레벨2 + 최신 3연속 쌍하트 필요']);
+    $('estThis').textContent = (cond?'(조건부) ':'')+r[0]+'~'+r[1]+'점';
+    var nextTxt='-';
     if(r[1]>=900){nextTxt='"900점부터는 10~20점 싸움"';}
     else{
-      var work=$('op_worktype')?$('op_worktype').value:'', hrs=num('op_weekly'), cur=num('op_curTot')!=null?num('op_curTot'):((num('op_curLC')||0)+(num('op_curRC')||0));
+      var work=$('op_worktype')?$('op_worktype').value:'', hrs=num('op_weekly');
       var bump=(work==='full'||(hrs&&hrs>=50))?150:100; var nLo=r[0]+bump,nHi=r[1]+bump;
-      if(nHi>=850){ nextTxt = (work==='full')?(nLo+'~8후반'):(nLo+'+'); } // 풀타임=8후반 도달가능, 파트=+로(과대평가 방지)
+      if(nHi>=850){ nextTxt = (work==='full')?(nLo+'~8후반'):(nLo+'+'); }
       else nextTxt=nLo+'~'+nHi+'점';
     }
+    $('estNext').textContent=nextTxt;
+  } else if(lcOK && !p7OK){
+    $('estThis').textContent='예상점수 불가 · 단 LC '+(lcp-50)+'~'+lcp+'점 기대 가능';
+    $('estNext').textContent='-';
+    W.push(['stop','팟7 도출 불가('+((d.p7Tests<3)?'테스트 3개 미만':'3연속 쌍하트·55% 미달')+') → LC만 제공, 다음달 계산 안 함']);
+  } else if(!lcOK && p7OK){
+    $('estThis').textContent='예상점수 불가 · 단 팟7 '+(rcp-50)+'~'+rcp+'점 기대 가능';
+    $('estNext').textContent='-';
+    W.push(['stop','LC 도출 불가(테스트 부족) → 팟7만 제공, 다음달 계산 안 함']);
+  } else {
+    $('estThis').textContent='산정 불가';
+    $('estNext').textContent='-';
+    W.push(['stop','LC·팟7 모두 도출 불가']);
   }
-  $('estNext').textContent=nextTxt;
   $('estNote').innerHTML=W.map(function(w){return '<span class="w '+w[0]+'">'+w[1]+'</span>';}).join('');
 }
 function setHeart(id,ok){var el=$(id);if(!el)return;var cell=el.parentNode;if(ok){cell.className='hcell on';}else{cell.className='hcell';}}
