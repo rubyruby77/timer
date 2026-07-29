@@ -174,28 +174,29 @@ var LC1={},LC2={},RC1={};
 R(1,4,400,LC1);R(5,9,380,LC1);R(10,14,370,LC1);R(15,19,350,LC1);R(20,22,320,LC1);R(23,26,300,LC1);
 R(1,4,440,LC2);R(5,9,430,LC2);LC2[10]=420;LC2[11]=420;LC2[12]=400;LC2[13]=400;LC2[14]=400;R(15,26,380,LC2);
 RC1[8]=400;RC1[9]=400;RC1[10]=390;R(11,13,370,RC1);R(14,19,350,RC1);RC1[20]=320;R(21,26,300,RC1);R(27,29,290,RC1);RC1[30]=280;RC1[31]=270;R(32,38,250,RC1);RC1[39]=230;R(40,42,200,RC1);})();
-function lcScore(w,lv){if(w==null)return null;if(w<=0)return lv>=2?440:400;var t=(lv>=2)?LC2:LC1;var s=t[w];if(s==null)s=(w>26?(lv>=2?380:300):null);if(lv>=3&&s!=null)s+=50;return s;}
+function lcScore(w,lv){if(w==null)return null;if(w<=0)return lv>=2?440:400;var t=(lv>=2)?LC2:LC1;var s=t[w];if(s==null)s=(w>26?(lv>=2?380:300):null);return s;}
 function rcScore(w){if(w==null)return null;if(w<=7)return 400;var s=RC1[w];return s==null?(w>42?200:null):s;}
 function numW(c){return c&&c.wrong!==''&&c.wrong!=null?Number(c.wrong):null;}
 function pass(b,a){if(b==null||a==null)return null;return b>11?(b-a>=11):(a<=1);}
+function heartImproving(hf){if(hf.length===0)return false;var h=Math.floor(hf.length/2);var e=hf.slice(0,h),l=hf.slice(h);var er=e.length?e.filter(Boolean).length/e.length:0;var lr=l.length?l.filter(Boolean).length/l.length:0;return l.length>0&&lr>=er&&l.filter(Boolean).length>0;}
 function estFromData(op,grid){
   var lc=grid.lc||[],p7=grid.p7||[];
-  var bestLc=Infinity,bestLcLv=1,lcTests=0,p7Tests=0,hearts=0,p7best=Infinity;
-  for(var i=0;i<lc.length;i++){var t=lc[i]||{},s=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=numW(t[p]);if(w!=null){s+=w;any=true;}});if(any){lcTests++;if(s<bestLc){bestLc=s;bestLcLv=Number(t.pl)||1;}}}
-  for(var j=0;j<p7.length;j++){var q=p7[j]||{};var as=numW(q.afterS),ad=numW(q.afterDT),bs=numW(q.beforeS),bd=numW(q.beforeDT);if(as!=null||ad!=null){p7Tests++;var tot=(as||0)+(ad||0);if(tot<p7best)p7best=tot;}if(pass(bs,as)===true&&pass(bd,ad)===true)hearts++;}
-  var lcw=bestLc===Infinity?null:bestLc, rcw=p7best===Infinity?null:p7best;
-  var lcp=lcScore(lcw,bestLcLv), rcp=rcScore(rcw);
-  var res={lcw:lcw,lcl:bestLcLv,rcw:rcw,lcp:lcp,rcp:rcp,base:null,thisText:'-',nextText:'-',flags:[]};
+  var lcw=null,lcl=1,rcw=null,lcTests=0,p7Tests=0,hf=[];
+  for(var i=0;i<lc.length;i++){var t=lc[i]||{},s=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=numW(t[p]);if(w!=null){s+=w;any=true;}});if(any){lcTests++;lcw=s;lcl=Number(t.pl)||1;}}
+  for(var j=0;j<p7.length;j++){var q=p7[j]||{};var as=numW(q.afterS),ad=numW(q.afterDT),bs=numW(q.beforeS),bd=numW(q.beforeDT);if(as!=null||ad!=null){p7Tests++;rcw=(as||0)+(ad||0);hf.push(pass(bs,as)===true&&pass(bd,ad)===true);}}
+  var improving=heartImproving(hf), hearts=hf.filter(Boolean).length;
+  var lcp=lcScore(lcw,lcl), rcp=rcScore(rcw);
+  var res={lcw:lcw,lcl:lcl,rcw:rcw,lcp:lcp,rcp:rcp,base:null,thisText:'-',nextText:'-',flags:[]};
   if(lcp==null||rcp==null){res.thisText='입력부족';return res;}
   var base=lcp+rcp;res.base=base;
   var course=op.course||'up', cur=(Number(op.curLC)||0)+(Number(op.curRC)||0);
   if(lcTests<3||p7Tests<=2){res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';res.nextText='-';return res;}
-  if(hearts<Math.ceil(p7Tests/2))res.flags.push(['f-cond','쌍하트미달']);
+  if(!improving)res.flags.push(['f-cond','쌍하트↓']);
   var lo,hi;
   if(course==='up'){var top=base;if(cur&&base-cur>300)top=cur+300;hi=top;lo=top-50;}
   else if(base>=800){lo=800+Math.floor((base-800)/40)*40;hi=lo+40;}
   else{lo=Math.floor(base/50)*50;hi=lo+50;}
-  if(base>=700&&base<800&&!(bestLcLv>=2&&hearts>=Math.ceil(p7Tests/2)))res.flags.push(['f-cond','700조건']);
+  if(base>=700&&base<800&&!(lcl>=2&&improving))res.flags.push(['f-cond','700조건']);
   res.thisText=lo+'~'+hi;
   if(hi>=900){res.nextText='900↑(10~20점)';}
   else{var work=op.worktype||'',hrs=Number(op.weekly)||0;var bump=(work==='full'||hrs>=50)?150:100;var nlo=lo+bump,nhi=hi+bump;

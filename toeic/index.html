@@ -325,7 +325,7 @@ var LC1={},LC2={},RC1={};
 R(1,4,400,LC1);R(5,9,380,LC1);R(10,14,370,LC1);R(15,19,350,LC1);R(20,22,320,LC1);R(23,26,300,LC1);
 R(1,4,440,LC2);R(5,9,430,LC2);LC2[10]=420;LC2[11]=420;LC2[12]=400;LC2[13]=400;LC2[14]=400;R(15,26,380,LC2);
 RC1[8]=400;RC1[9]=400;RC1[10]=390;R(11,13,370,RC1);R(14,19,350,RC1);RC1[20]=320;R(21,26,300,RC1);R(27,29,290,RC1);RC1[30]=280;RC1[31]=270;R(32,38,250,RC1);RC1[39]=230;R(40,42,200,RC1);})();
-function lcScore(w,lv){if(w==null)return null;if(w<=0)return lv>=2?440:400;var t=(lv>=2)?LC2:LC1;var s=t[w];if(s==null)s=(w>26?(lv>=2?380:300):null);if(lv>=3&&s!=null)s+=50;return s;}
+function lcScore(w,lv){if(w==null)return null;if(w<=0)return lv>=2?440:400;var t=(lv>=2)?LC2:LC1;var s=t[w];if(s==null)s=(w>26?(lv>=2?380:300):null);return s;}
 function rcScore(w){if(w==null)return null;if(w<=7)return 400;var s=RC1[w];return s==null?(w>42?200:null):s;}
 function estRange(base){/* 이번달 범위 */
   var C=$('hdrCourse')?$('hdrCourse').value:'up';
@@ -335,18 +335,17 @@ function estRange(base){/* 이번달 범위 */
   var lo2=Math.floor(base/50)*50;return [lo2,lo2+50,false];
 }
 function deriveCalc(){
-  var bestLc=Infinity,bestLcLv=1,lcTests=0,p7Tests=0,hearts=0,p7best=Infinity,p7bestIdx=-1;
+  var lcw=null,lcl=1,rcw=null,rcl=1,zero=false,lcTests=0,p7Tests=0,hf=[];
   for(var i=0;i<10;i++){
     var lc=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=num('lc'+i+p+'-w');if(w!=null){lc+=w;any=true;}});
-    if(any){lcTests++;if(lc<bestLc){bestLc=lc;bestLcLv=Number($('pl'+i)?$('pl'+i).value:1)||1;}}
+    if(any){lcTests++;lcw=lc;lcl=Number($('pl'+i)?$('pl'+i).value:1)||1;} // 마지막(최신) 채운 값으로 덮어씀
     var as=num('p7'+i+'afterS-w'),ad=num('p7'+i+'afterDT-w'),bs=num('p7'+i+'beforeS-w'),bd=num('p7'+i+'beforeDT-w');
-    if(as!=null||ad!=null){p7Tests++;var tot=(as||0)+(ad||0);if(tot<p7best){p7best=tot;p7bestIdx=i;}}
-    if(pass(bs,as)===true&&pass(bd,ad)===true)hearts++;
+    if(as!=null||ad!=null){p7Tests++;rcw=(as||0)+(ad||0);rcl=Number($('plp7'+i)?$('plp7'+i).value:1)||1;zero=(as===0&&ad===0);hf.push(pass(bs,as)===true&&pass(bd,ad)===true);}
   }
-  var zero=false,rcl=1;
-  if(p7bestIdx>=0){zero=(num('p7'+p7bestIdx+'afterS-w')===0&&num('p7'+p7bestIdx+'afterDT-w')===0);rcl=Number($('plp7'+p7bestIdx)?$('plp7'+p7bestIdx).value:1)||1;}
-  return {lcw:bestLc===Infinity?null:bestLc, lcl:bestLcLv, rcw:p7best===Infinity?null:p7best, lcTests:lcTests, p7Tests:p7Tests, hearts:hearts, zero:zero, rcl:rcl};
+  return {lcw:lcw,lcl:lcl,rcw:rcw,rcl:rcl,zero:zero,lcTests:lcTests,p7Tests:p7Tests,improving:heartImproving(hf),hearts:hf.filter(Boolean).length};
 }
+// 쌍하트 "상승세" 판정: 후반부 쌍하트 비율이 전반부 이상이고 최근에 쌍하트가 있으면 개선 중
+function heartImproving(hf){if(hf.length===0)return false;var h=Math.floor(hf.length/2);var e=hf.slice(0,h),l=hf.slice(h);var er=e.length?e.filter(Boolean).length/e.length:0;var lr=l.length?l.filter(Boolean).length/l.length:0;return l.length>0&&lr>=er&&l.filter(Boolean).length>0;}
 function updateEstimate(){
   if(!$('estThis'))return;
   var d=deriveCalc();
@@ -357,11 +356,11 @@ function updateEstimate(){
   var base=lcp+rcp, W=[], stop=false;
   if(d.lcTests<3){W.push(['stop','전체 테스트 3개 미만 → 산정 불가']);stop=true;}
   if(d.p7Tests<=2){W.push(['stop','팟7 테스트 2개 이하 → 산정 불가']);stop=true;}
-  if(d.p7Tests>0&&d.hearts<Math.ceil(d.p7Tests/2)){W.push(['cond','팟7 쌍하트 과반 미달 → 원칙상 불가 (아쉽게 1~3개 차이면 "쌍하트 달성 시" 조건부)']);}
+  if(d.p7Tests>0&&!d.improving){W.push(['cond','팟7 쌍하트 상승세 아님(최근 테스트로 갈수록 안 늘어남) → 조건부, "쌍하트 달성 시" 안내']);}
   var r=estRange(base);
   if(r[2])W.push(['info','상승폭 +300 상한 적용']);
-  if(C==='up'&&d.p7Tests>0&&d.hearts<Math.ceil(d.p7Tests/2))W.push(['cond','퀄리티 저조 → 최소 +100 보장 후 하향조정 (매니저 판단)']);
-  if(base>=700&&base<800&&!(d.lcl>=2&&(d.p7Tests?d.hearts>=Math.ceil(d.p7Tests/2):false)))W.push(['cond','700점대는 LC레벨2 + 팟7 쌍하트 충족 필요 → "달성 시 700" 조건부']);
+  if(C==='up'&&d.p7Tests>0&&!d.improving)W.push(['cond','퀄리티 저조(쌍하트 상승세 X) → 최소 +100 보장 후 하향조정 (매니저 판단)']);
+  if(base>=700&&base<800&&!(d.lcl>=2&&d.improving))W.push(['cond','700점대는 LC레벨2 + 팟7 쌍하트 상승세 필요 → "달성 시 700" 조건부']);
   if(d.lcl>=3&&d.zero&&d.rcl>=2)W.push(['good','900 안내 조건 충족']);
   $('estThis').textContent = stop?'산정 불가':(r[0]+'~'+r[1]+'점');
   // 다음달
