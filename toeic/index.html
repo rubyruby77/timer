@@ -344,8 +344,8 @@ function deriveCalc(){
   }
   return {lcw:lcw,lcl:lcl,rcw:rcw,rcl:rcl,zero:zero,lcTests:lcTests,p7Tests:p7Tests,improving:heartImproving(hf),hearts:hf.filter(Boolean).length};
 }
-// 쌍하트 "상승세" 판정: 후반부 쌍하트 비율이 전반부 이상이고 최근에 쌍하트가 있으면 개선 중
-function heartImproving(hf){if(hf.length===0)return false;var h=Math.floor(hf.length/2);var e=hf.slice(0,h),l=hf.slice(h);var er=e.length?e.filter(Boolean).length/e.length:0;var lr=l.length?l.filter(Boolean).length/l.length:0;return l.length>0&&lr>=er&&l.filter(Boolean).length>0;}
+// 쌍하트 조건: 최신(마지막) 3개 팟7 테스트가 연속으로 전부 쌍하트
+function heartImproving(hf){if(hf.length<3)return false;var n=hf.length;return hf[n-1]===true&&hf[n-2]===true&&hf[n-3]===true;}
 function updateEstimate(){
   if(!$('estThis'))return;
   var d=deriveCalc();
@@ -355,14 +355,14 @@ function updateEstimate(){
   if(lcp==null||rcp==null){$('estThis').textContent='입력 대기';$('estNext').textContent='-';$('estNote').innerHTML='';return;}
   var base=lcp+rcp, W=[], stop=false;
   if(d.lcTests<3){W.push(['stop','전체 테스트 3개 미만 → 산정 불가']);stop=true;}
-  if(d.p7Tests<=2){W.push(['stop','팟7 테스트 2개 이하 → 산정 불가']);stop=true;}
-  if(d.p7Tests>0&&!d.improving){W.push(['cond','팟7 쌍하트 상승세 아님(최근 테스트로 갈수록 안 늘어남) → 조건부, "쌍하트 달성 시" 안내']);}
+  if(d.p7Tests<2){W.push(['stop','팟7 테스트 2개 미만 → 산정 불가']);stop=true;}
   var r=estRange(base);
   if(r[2])W.push(['info','상승폭 +300 상한 적용']);
-  if(C==='up'&&d.p7Tests>0&&!d.improving)W.push(['cond','퀄리티 저조(쌍하트 상승세 X) → 최소 +100 보장 후 하향조정 (매니저 판단)']);
-  if(base>=700&&base<800&&!(d.lcl>=2&&d.improving))W.push(['cond','700점대는 LC레벨2 + 팟7 쌍하트 상승세 필요 → "달성 시 700" 조건부']);
+  if(!stop&&!d.improving)W.push(['cond','최신 팟7 3개 연속 쌍하트 미달 → "3연속 쌍하트 달성 시" 조건부 안내']);
+  if(C==='up'&&!stop&&!d.improving)W.push(['cond','퀄리티(최신 3연속 쌍하트 X) → 최소 +100 보장 후 하향조정 (매니저 판단)']);
+  if(base>=700&&base<800&&!(d.lcl>=2&&d.improving))W.push(['cond','700점대는 LC레벨2 + 최신 3연속 쌍하트 필요 → "달성 시 700" 조건부']);
   if(d.lcl>=3&&d.zero&&d.rcl>=2)W.push(['good','900 안내 조건 충족']);
-  $('estThis').textContent = stop?'산정 불가':(r[0]+'~'+r[1]+'점');
+  $('estThis').textContent = stop?'산정 불가':((!d.improving?'(3연속 쌍하트 시) ':'')+r[0]+'~'+r[1]+'점');
   // 다음달
   var nextTxt='-';
   if(!stop){
