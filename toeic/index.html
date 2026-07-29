@@ -385,7 +385,7 @@ function updateEstimate(){
     else{
       var work=$('op_worktype')?$('op_worktype').value:'', hrs=num('op_weekly'), cur=num('op_curTot')!=null?num('op_curTot'):((num('op_curLC')||0)+(num('op_curRC')||0));
       var bump=(work==='full'||(hrs&&hrs>=50))?150:100; var nLo=r[0]+bump,nHi=r[1]+bump;
-      if(nHi>=900){var m; if(work==='full')m='8후반~900'; else if(cur&&cur>=850)m='900까지'; else if(hrs&&hrs>=50)m='850~8후반'; else if(hrs&&hrs>=40)m='850'; else m='850~900(공부량 확인)'; nextTxt=m;}
+      if(nHi>=900){ nextTxt = (r[1]>=800)?'8후반~900':'850~8후반'; } // 이번달 앞자리 8 아니면 900 언급 안 함
       else nextTxt=nLo+'~'+nHi+'점';
     }
   }

@@ -205,7 +205,7 @@ function estFromData(op,grid){
   res.thisText=(cond?'(조건부) ':'')+lo+'~'+hi;
   if(hi>=900){res.nextText='900↑(10~20점)';}
   else{var work=op.worktype||'',hrs=Number(op.weekly)||0;var bump=(work==='full'||hrs>=50)?150:100;var nlo=lo+bump,nhi=hi+bump;
-    if(nhi>=900){res.nextText=(work==='full')?'8후~900':(cur>=850?'900':(hrs>=50?'850~8후':(hrs>=40?'850':'850~900')));}
+    if(nhi>=900){res.nextText=(hi>=800)?'8후반~900':'850~8후반';}
     else res.nextText=nlo+'~'+nhi;}
   return res;
 }
