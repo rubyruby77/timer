@@ -47,6 +47,9 @@
   .colbtn:hover{border-color:var(--pp3)}
   .colpanel{display:none;position:absolute;right:0;top:48px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px -12px rgba(47,21,67,.32);padding:12px;width:210px;z-index:60;max-height:70vh;overflow:auto}
   .cp-t{font-size:11px;font-weight:800;color:var(--mut);padding:2px 6px 8px}
+  .cp-btns{display:flex;gap:6px;padding:0 4px 8px;border-bottom:1px solid var(--line);margin-bottom:6px}
+  .cp-btns button{flex:1;height:30px;border:1px solid var(--line);border-radius:8px;background:#faf8fc;font-family:inherit;font-size:12px;font-weight:700;color:var(--pp);cursor:pointer}
+  .cp-btns button:hover{background:var(--lavs);border-color:var(--pp3)}
   .cp-i{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer}
   .cp-i:hover{background:var(--lavs)} .cp-i input{width:16px;height:16px;accent-color:var(--pp)}
   .wrap{max-width:1320px;margin:0 auto;padding:24px}
@@ -146,7 +149,7 @@ window.google={script:{run:(function(){var s;var api={
     <span class="sp"></span>
     <select class="ctrl" id="fMgr" onchange="render()"><option value="">전체 매니저</option><option>문찬</option><option>해빛</option><option>데바</option><option>리올</option><option>라임</option></select>
     <div class="field"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8b84a0" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input class="ctrl search" id="fSearch" placeholder="이름 검색" oninput="render()"></div>
-    <div style="position:relative"><button class="colbtn" id="colBtn" onclick="togglePanel()">☰ 컬럼</button><div class="colpanel" id="colPanel"></div></div>
+    <div style="position:relative"><button class="colbtn" id="colBtn" onclick="togglePanel()">☰ 필터</button><div class="colpanel" id="colPanel"></div></div>
     <button class="logout" onclick="location.reload()">로그아웃</button>
   </div>
   <div class="wrap">
@@ -233,9 +236,12 @@ var VIS={};COLS.forEach(function(c){VIS[c.k]=true;});
 function thcls(g){return g==='lc'?' class="lc"':g==='p7'?' class="p7"':g==='est'?' class="est"':'';}
 function buildPicker(){
   var p=$('colPanel');if(!p)return;
-  p.innerHTML='<div class="cp-t">표시할 컬럼</div>'+COLS.map(function(c){return '<label class="cp-i"><input type="checkbox" data-c="'+c.k+'" '+(VIS[c.k]?'checked':'')+(c.always?' disabled':'')+'><span>'+c.pl+'</span></label>';}).join('');
+  p.innerHTML='<div class="cp-t">표시할 항목</div>'
+    +'<div class="cp-btns"><button onclick="selectAll(true)">전체선택</button><button onclick="selectAll(false)">전체해제</button></div>'
+    +COLS.map(function(c){return '<label class="cp-i"><input type="checkbox" data-c="'+c.k+'" '+(VIS[c.k]?'checked':'')+(c.always?' disabled':'')+'><span>'+c.pl+'</span></label>';}).join('');
   p.querySelectorAll('input').forEach(function(el){el.addEventListener('change',function(){VIS[el.getAttribute('data-c')]=el.checked;render();});});
 }
+function selectAll(v){COLS.forEach(function(c){if(!c.always)VIS[c.k]=v;});buildPicker();render();$('colPanel').style.display='block';}
 function togglePanel(){var p=$('colPanel');p.style.display=(p.style.display==='block')?'none':'block';}
 document.addEventListener('click',function(e){var p=$('colPanel');if(p&&p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='colBtn')p.style.display='none';});
 
