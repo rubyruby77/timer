@@ -386,7 +386,7 @@ function updateEstimate(){
     else{
       var work=$('op_worktype')?$('op_worktype').value:'', hrs=num('op_weekly'), cur=num('op_curTot')!=null?num('op_curTot'):((num('op_curLC')||0)+(num('op_curRC')||0));
       var bump=(work==='full'||(hrs&&hrs>=50))?150:100; var nLo=r[0]+bump,nHi=r[1]+bump;
-      if(nHi>=850){ nextTxt = nLo+'~8후반'; } // 상위만 8후반, 하위범위는 유지
+      if(nHi>=850){ nextTxt = (work==='full')?(nLo+'~8후반'):(nLo+'+'); } // 풀타임=8후반 도달가능, 파트=+로(과대평가 방지)
       else nextTxt=nLo+'~'+nHi+'점';
     }
   }
