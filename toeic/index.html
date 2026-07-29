@@ -141,10 +141,14 @@
 /* 미리보기용 가짜 서버 */
 var _grid={lc:[],p7:[]};
 for(var i=0;i<10;i++){_grid.lc.push({pl:'',p1:{},p2:{},p3:{},p4:{}});_grid.p7.push({beforeS:{},beforeDT:{},afterS:{},afterDT:{}});}
-_grid.lc[0]={pl:'2',p1:{date:'7/14',wrong:1},p2:{date:'7/14',wrong:0},p3:{date:'7/15',wrong:3},p4:{date:'7/15',wrong:2}};
-_grid.lc[1]={pl:'3',p1:{date:'7/16',wrong:0},p2:{date:'7/16',wrong:1},p3:{date:'7/17',wrong:2},p4:{date:'7/17',wrong:1}};
-_grid.p7[0]={pl:'2',beforeS:{date:'7/14',wrong:14},beforeDT:{date:'7/14',wrong:16},afterS:{date:'7/18',wrong:2},afterDT:{date:'7/18',wrong:4}};
-_grid.p7[1]={pl:'1',beforeS:{date:'7/16',wrong:8},beforeDT:{date:'7/16',wrong:10},afterS:{date:'7/19',wrong:1},afterDT:{date:'7/19',wrong:0}};
+_grid.lc[0]={pl:'1',p1:{date:'7/8',wrong:4},p2:{date:'7/8',wrong:4},p3:{date:'7/9',wrong:4},p4:{date:'7/9',wrong:4}};
+_grid.lc[1]={pl:'1',p1:{date:'7/12',wrong:3},p2:{date:'7/12',wrong:3},p3:{date:'7/13',wrong:3},p4:{date:'7/13',wrong:3}};
+_grid.lc[2]={pl:'1',p1:{date:'7/16',wrong:3},p2:{date:'7/16',wrong:3},p3:{date:'7/17',wrong:3},p4:{date:'7/17',wrong:3}};
+_grid.lc[3]={pl:'1',p1:{date:'7/20',wrong:3},p2:{date:'7/20',wrong:3},p3:{date:'7/21',wrong:3},p4:{date:'7/21',wrong:3}};
+_grid.p7[0]={pl:'2',beforeS:{date:'7/8',wrong:10},beforeDT:{date:'7/8',wrong:10},afterS:{date:'7/9',wrong:8},afterDT:{date:'7/9',wrong:8}};
+_grid.p7[1]={pl:'2',beforeS:{date:'7/12',wrong:14},beforeDT:{date:'7/12',wrong:16},afterS:{date:'7/13',wrong:2},afterDT:{date:'7/13',wrong:4}};
+_grid.p7[2]={pl:'2',beforeS:{date:'7/16',wrong:13},beforeDT:{date:'7/16',wrong:15},afterS:{date:'7/17',wrong:1},afterDT:{date:'7/17',wrong:3}};
+_grid.p7[3]={pl:'2',beforeS:{date:'7/20',wrong:12},beforeDT:{date:'7/20',wrong:14},afterS:{date:'7/21',wrong:1},afterDT:{date:'7/21',wrong:2}};
 var _sheet={id:'CS_demo',seq:1,lcBook:'파고다 실전 1000 LC',rcBook:'YBM 실전 RC',opening:{sb:12,sa:3,db:15,da:5,stype:'현재',worktype:'part',reason:'학교',curYm:'2026-07',tgtYm:'2026-12',weekly:42},grid:_grid,estimate:765,status:'작성중',week:2,feedback:'',recheck:''};
 var _student={code:'ash8131',name:'안세훈',className:'A-1',manager:'문찬',curLC:'350',curRC:'300',curTot:'650',tgtLC:'450',tgtRC:'450',tgtTot:'900',studyMonths:'3',weeklyHours:'20',workType:'풀타임(Only 토익)',partReason:'',approved:true,recheck:''};
 window.google={script:{run:(function(){var s;var api={
@@ -335,17 +339,19 @@ function estRange(base){/* 이번달 범위 */
   var lo2=Math.floor(base/50)*50;return [lo2,lo2+50,false];
 }
 function deriveCalc(){
-  var lcw=null,lcl=1,rcw=null,rcl=1,zero=false,lcTests=0,p7Tests=0,hf=[];
+  var lcw=null,lcl=1,rcw=null,rcl=1,zero=false,lcTests=0,p7Tests=0,hf=[],r55=[];
   for(var i=0;i<10;i++){
     var lc=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=num('lc'+i+p+'-w');if(w!=null){lc+=w;any=true;}});
     if(any){lcTests++;lcw=lc;lcl=Number($('pl'+i)?$('pl'+i).value:1)||1;} // 마지막(최신) 채운 값으로 덮어씀
     var as=num('p7'+i+'afterS-w'),ad=num('p7'+i+'afterDT-w'),bs=num('p7'+i+'beforeS-w'),bd=num('p7'+i+'beforeDT-w');
-    if(as!=null||ad!=null){p7Tests++;rcw=(as||0)+(ad||0);rcl=Number($('plp7'+i)?$('plp7'+i).value:1)||1;zero=(as===0&&ad===0);hf.push(pass(bs,as)===true&&pass(bd,ad)===true);}
+    if(as!=null||ad!=null){p7Tests++;rcw=(as||0)+(ad||0);rcl=Number($('plp7'+i)?$('plp7'+i).value:1)||1;zero=(as===0&&ad===0);
+      hf.push(pass(bs,as)===true&&pass(bd,ad)===true);
+      var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0); r55.push(bt>0&&(bt-at)/bt>=0.55);}
   }
-  return {lcw:lcw,lcl:lcl,rcw:rcw,rcl:rcl,zero:zero,lcTests:lcTests,p7Tests:p7Tests,improving:heartImproving(hf),hearts:hf.filter(Boolean).length};
+  return {lcw:lcw,lcl:lcl,rcw:rcw,rcl:rcl,zero:zero,lcTests:lcTests,p7Tests:p7Tests,improving:last3all(hf),reduce55:last3all(r55)};
 }
-// 쌍하트 조건: 최신(마지막) 3개 팟7 테스트가 연속으로 전부 쌍하트
-function heartImproving(hf){if(hf.length<3)return false;var n=hf.length;return hf[n-1]===true&&hf[n-2]===true&&hf[n-3]===true;}
+// 최신(마지막) 3개 팟7 테스트가 연속으로 전부 true인지
+function last3all(a){if(a.length<3)return false;var n=a.length;return a[n-1]===true&&a[n-2]===true&&a[n-3]===true;}
 function updateEstimate(){
   if(!$('estThis'))return;
   var d=deriveCalc();
@@ -353,16 +359,20 @@ function updateEstimate(){
   var lcp=lcScore(d.lcw,d.lcl), rcp=rcScore(d.rcw);
   $('estBase').textContent = (lcp!=null&&rcp!=null)?('기본계산 '+(lcp+rcp)+'점 (LC '+lcp+' + 팟7 '+rcp+') · 대표 LC오답 '+d.lcw+'(레벨'+d.lcl+'), 팟7오답 '+d.rcw+' 기준 자동'):'';
   if(lcp==null||rcp==null){$('estThis').textContent='입력 대기';$('estNext').textContent='-';$('estNote').innerHTML='';return;}
-  var base=lcp+rcp, W=[], stop=false;
-  if(d.lcTests<3){W.push(['stop','전체 테스트 3개 미만 → 산정 불가']);stop=true;}
-  if(d.p7Tests<2){W.push(['stop','팟7 테스트 2개 미만 → 산정 불가']);stop=true;}
+  var base=lcp+rcp, W=[], stop=false, cond=false;
+  var total=d.p7Tests;
+  if(total<=3){ stop=true; W.push(['stop','총 테스트 3개 이하 → 산정 불가']); }
+  else if(d.improving){ /* 최신 3연속 쌍하트 → 정상 산정 */ }
+  else if(d.reduce55){ cond=true; W.push(['cond','최신 3연속 쌍하트는 아니지만, 최신 3개 요약후가 55%↑ 감소 → 조건부 산정 (3연속 쌍하트 달성 시 확정)']); }
+  else { stop=true; W.push(['stop','최신 3연속 쌍하트·요약후 55% 감소 모두 미달 → 산정 불가']); }
   var r=estRange(base);
-  if(r[2])W.push(['info','상승폭 +300 상한 적용']);
-  if(!stop&&!d.improving)W.push(['cond','최신 팟7 3개 연속 쌍하트 미달 → "3연속 쌍하트 달성 시" 조건부 안내']);
-  if(C==='up'&&!stop&&!d.improving)W.push(['cond','퀄리티(최신 3연속 쌍하트 X) → 최소 +100 보장 후 하향조정 (매니저 판단)']);
-  if(base>=700&&base<800&&!(d.lcl>=2&&d.improving))W.push(['cond','700점대는 LC레벨2 + 최신 3연속 쌍하트 필요 → "달성 시 700" 조건부']);
-  if(d.lcl>=3&&d.zero&&d.rcl>=2)W.push(['good','900 안내 조건 충족']);
-  $('estThis').textContent = stop?'산정 불가':((!d.improving?'(3연속 쌍하트 시) ':'')+r[0]+'~'+r[1]+'점');
+  if(!stop){
+    if(r[2])W.push(['info','상승폭 +300 상한 적용']);
+    if(C==='up'&&cond)W.push(['cond','조건부 — 최소 +100 보장 후 하향조정 (매니저 판단)']);
+    if(base>=700&&base<800&&!(d.lcl>=2&&d.improving))W.push(['cond','700점대는 LC레벨2 + 최신 3연속 쌍하트 필요 → "달성 시 700"']);
+    if(d.lcl>=3&&d.zero&&d.rcl>=2)W.push(['good','900 안내 조건 충족']);
+  }
+  $('estThis').textContent = stop?'산정 불가':((cond?'(조건부) ':'')+r[0]+'~'+r[1]+'점');
   // 다음달
   var nextTxt='-';
   if(!stop){
