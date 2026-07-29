@@ -341,16 +341,19 @@ function estRange(base,d){/* 이번달 범위 */
   var lo2=Math.floor(base/50)*50;return [lo2,lo2+50,false,false];
 }
 function deriveCalc(){
-  var lcw=null,lcl=1,rcw=null,rcl=1,zero=false,lcTests=0,p7Tests=0,hf=[],r55=[];
+  var lcw=null,lcl=1,rcw=null,rcl=1,zero=false,lcTests=0,p7Tests=0,hf=[],r55=[],r55s=[],lastSingle=false;
   for(var i=0;i<10;i++){
     var lc=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=num('lc'+i+p+'-w');if(w!=null){lc+=w;any=true;}});
     if(any){lcTests++;lcw=lc;lcl=Number($('pl'+i)?$('pl'+i).value:1)||1;} // 마지막(최신) 채운 값으로 덮어씀
     var as=num('p7'+i+'afterS-w'),ad=num('p7'+i+'afterDT-w'),bs=num('p7'+i+'beforeS-w'),bd=num('p7'+i+'beforeDT-w');
     if(as!=null||ad!=null){p7Tests++;rcw=(bs||0)+(bd||0);rcl=Number($('plp7'+i)?$('plp7'+i).value:1)||1;zero=(as===0&&ad===0);
+      lastSingle=(bd==null||ad==null); // 최신 테스트가 Single만(D.T 미완성)인지
       hf.push(pass(bs,as)===true&&pass(bd,ad)===true);
-      var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0); r55.push(bt>0&&(bt-at)/bt>=0.55);}
+      var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0); r55.push(bt>0&&(bt-at)/bt>=0.55);
+      r55s.push((bs||0)>0&&((bs||0)-(as||0))/(bs||0)>=0.55);} // Single만 기준
   }
-  return {lcw:lcw,lcl:lcl,rcw:rcw,rcl:rcl,zero:zero,lcTests:lcTests,p7Tests:p7Tests,improving:last3all(hf),reduce55:last3all(r55)};
+  var reduce55 = lastSingle ? last3all(r55s) : last3all(r55); // 최신이 Single 미완성이면 Single 기준으로
+  return {lcw:lcw,lcl:lcl,rcw:rcw,rcl:rcl,zero:zero,lcTests:lcTests,p7Tests:p7Tests,improving:last3all(hf),reduce55:reduce55};
 }
 // 최신(마지막) 3개 팟7 테스트가 연속으로 전부 true인지
 function last3all(a){if(a.length<3)return false;var n=a.length;return a[n-1]===true&&a[n-2]===true&&a[n-3]===true;}

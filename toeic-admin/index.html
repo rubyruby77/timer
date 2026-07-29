@@ -184,10 +184,10 @@ function pass(b,a){if(b==null||a==null)return null;return b>11?(b-a>=11):(a<=1);
 function last3all(a){if(a.length<3)return false;var n=a.length;return a[n-1]===true&&a[n-2]===true&&a[n-3]===true;}
 function estFromData(op,grid){
   var lc=grid.lc||[],p7=grid.p7||[];
-  var lcw=null,lcl=1,rcw=null,lcTests=0,p7Tests=0,hf=[],r55=[];
+  var lcw=null,lcl=1,rcw=null,lcTests=0,p7Tests=0,hf=[],r55=[],r55s=[],lastSingle=false;
   for(var i=0;i<lc.length;i++){var t=lc[i]||{},s=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=numW(t[p]);if(w!=null){s+=w;any=true;}});if(any){lcTests++;lcw=s;lcl=Number(t.pl)||1;}}
-  for(var j=0;j<p7.length;j++){var q=p7[j]||{};var as=numW(q.afterS),ad=numW(q.afterDT),bs=numW(q.beforeS),bd=numW(q.beforeDT);if(as!=null||ad!=null){p7Tests++;rcw=(bs||0)+(bd||0);hf.push(pass(bs,as)===true&&pass(bd,ad)===true);var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0);r55.push(bt>0&&(bt-at)/bt>=0.55);}}
-  var improving=last3all(hf), reduce55=last3all(r55);
+  for(var j=0;j<p7.length;j++){var q=p7[j]||{};var as=numW(q.afterS),ad=numW(q.afterDT),bs=numW(q.beforeS),bd=numW(q.beforeDT);if(as!=null||ad!=null){p7Tests++;rcw=(bs||0)+(bd||0);lastSingle=(bd==null||ad==null);hf.push(pass(bs,as)===true&&pass(bd,ad)===true);var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0);r55.push(bt>0&&(bt-at)/bt>=0.55);r55s.push((bs||0)>0&&((bs||0)-(as||0))/(bs||0)>=0.55);}}
+  var improving=last3all(hf), reduce55=lastSingle?last3all(r55s):last3all(r55);
   var lcp=lcScore(lcw,lcl), rcp=rcScore(rcw);
   var res={lcw:lcw,lcl:lcl,rcw:rcw,lcp:lcp,rcp:rcp,base:null,thisText:'-',nextText:'-',flags:[]};
   if(lcp==null||rcp==null){res.thisText='입력부족';return res;}
