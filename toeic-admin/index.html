@@ -43,6 +43,12 @@
   .search{padding-left:34px;width:180px}
   .logout{cursor:pointer;color:var(--mut);font-size:13px;font-weight:700;background:none;border:none;padding:8px 10px;border-radius:9px}
   .logout:hover{background:var(--lavs);color:var(--pp)}
+  .colbtn{height:40px;border:1.5px solid var(--line);border-radius:11px;padding:0 14px;font-family:inherit;font-size:13.5px;font-weight:700;color:var(--pp);background:#faf8fc;cursor:pointer}
+  .colbtn:hover{border-color:var(--pp3)}
+  .colpanel{display:none;position:absolute;right:0;top:48px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px -12px rgba(47,21,67,.32);padding:12px;width:210px;z-index:60;max-height:70vh;overflow:auto}
+  .cp-t{font-size:11px;font-weight:800;color:var(--mut);padding:2px 6px 8px}
+  .cp-i{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer}
+  .cp-i:hover{background:var(--lavs)} .cp-i input{width:16px;height:16px;accent-color:var(--pp)}
   .wrap{max-width:1320px;margin:0 auto;padding:24px}
   /* 통계 */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
@@ -142,6 +148,7 @@ window.google={script:{run:(function(){var s;var api={
     <span class="sp"></span>
     <select class="ctrl" id="fMgr" onchange="render()"><option value="">전체 매니저</option><option>문찬</option><option>해빛</option><option>데바</option><option>리올</option><option>라임</option></select>
     <div class="field"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8b84a0" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input class="ctrl search" id="fSearch" placeholder="이름 검색" oninput="render()"></div>
+    <div style="position:relative"><button class="colbtn" id="colBtn" onclick="togglePanel()">☰ 컬럼</button><div class="colpanel" id="colPanel"></div></div>
     <button class="logout" onclick="location.reload()">로그아웃</button>
   </div>
   <div class="wrap">
@@ -201,48 +208,80 @@ function login(){var pw=$('pw').value,b=$('lbtn'),er=$('lerr');if(!pw){er.textCo
   b.disabled=true;b.textContent='확인 중...';er.textContent='';
   google.script.run.withSuccessHandler(function(res){b.disabled=false;b.textContent='입장하기';
     if(!res.ok){er.textContent=res.error;return;}
-    PW=pw;SUBS=res.submissions||[];$('login').style.display='none';$('app').style.display='block';render();
+    PW=pw;SUBS=res.submissions||[];$('login').style.display='none';$('app').style.display='block';buildPicker();render();
   }).withFailureHandler(function(e){b.disabled=false;b.textContent='입장하기';er.textContent='오류: '+e.message;}).adminAllSubmissions(pw,'');
 }
+var GORDER=['st','lc','p7','est','mg'];
+var GROUPS={st:['','g-st'],lc:['LC','g-lc'],p7:['팟7','g-p7'],est:['예상 점수','g-est'],mg:['','g-mg']};
+var COLS=[
+ {k:'date',g:'st',th:'제출일',pl:'제출일'},
+ {k:'name',g:'st',th:'이름',pl:'이름',always:true},
+ {k:'cls',g:'st',th:'반',pl:'반'},
+ {k:'course',g:'st',th:'구분',pl:'구분'},
+ {k:'week',g:'st',th:'주공부',pl:'주 공부시간'},
+ {k:'lcw',g:'lc',th:'오답',pl:'LC 오답'},
+ {k:'lcp',g:'lc',th:'점수',pl:'LC 점수'},
+ {k:'p7w',g:'p7',th:'오답',pl:'팟7 오답'},
+ {k:'p7p',g:'p7',th:'점수',pl:'팟7 점수'},
+ {k:'cur',g:'est',th:'현재',pl:'현재점수'},
+ {k:'tgt',g:'est',th:'목표',pl:'목표점수'},
+ {k:'calc',g:'est',th:'계산',pl:'계산'},
+ {k:'this',g:'est',th:'이번 달',pl:'이번달 예상'},
+ {k:'next',g:'est',th:'다음 달',pl:'다음달 예상'},
+ {k:'rechk',g:'mg',th:'재수강',pl:'재수강'},
+ {k:'note',g:'mg',th:'비고',pl:'비고'}
+];
+var VIS={};COLS.forEach(function(c){VIS[c.k]=true;});
+function thcls(g){return g==='lc'?' class="lc"':g==='p7'?' class="p7"':g==='est'?' class="est"':'';}
+function buildPicker(){
+  var p=$('colPanel');if(!p)return;
+  p.innerHTML='<div class="cp-t">표시할 컬럼</div>'+COLS.map(function(c){return '<label class="cp-i"><input type="checkbox" data-c="'+c.k+'" '+(VIS[c.k]?'checked':'')+(c.always?' disabled':'')+'><span>'+c.pl+'</span></label>';}).join('');
+  p.querySelectorAll('input').forEach(function(el){el.addEventListener('change',function(){VIS[el.getAttribute('data-c')]=el.checked;render();});});
+}
+function togglePanel(){var p=$('colPanel');p.style.display=(p.style.display==='block')?'none':'block';}
+document.addEventListener('click',function(e){var p=$('colPanel');if(p&&p.style.display==='block'&&!p.contains(e.target)&&e.target.id!=='colBtn')p.style.display='none';});
+
 function render(){
   var mgr=$('fMgr').value, q=($('fSearch').value||'').trim();
   var list=SUBS.filter(function(s){return (!mgr||s.manager===mgr)&&(!q||(s.name||'').indexOf(q)>=0);});
   $('cnt').textContent=list.length+'건';
   $('stats').innerHTML=stat('a','📄',list.length,'전체 제출')+stat('b','🟦',list.filter(function(s){return s.course==='up';}).length,'업반 (1회)')
     +stat('c','🟪',list.filter(function(s){return s.course==='pl';}).length,'플반 (2회)')+stat('d','🟣',list.filter(function(s){return s.course==='plpl';}).length,'플플반 (3회+)');
-  var h='<thead>'
-    +'<tr class="grp"><th class="g-st" colspan="5"></th><th class="g-lc" colspan="2">LC</th><th class="g-p7" colspan="2">팟7</th><th class="g-est" colspan="5">예상 점수</th><th class="g-mg" colspan="2"></th></tr>'
-    +'<tr class="col"><th>제출일</th><th>이름</th><th>반</th><th>구분</th><th>주공부</th>'
-    +'<th class="lc">오답</th><th class="lc">점수</th><th class="p7">오답</th><th class="p7">점수</th>'
-    +'<th class="est">현재</th><th class="est">목표</th><th class="est">계산</th><th class="est">이번 달</th><th class="est">다음 달</th>'
-    +'<th>재수강</th><th>비고</th></tr></thead><tbody>';
-  if(!list.length){$('tbl').innerHTML=h+'<tr><td colspan="16"><div class="empty"><div class="ic">🗂️</div><div class="t">제출한 학생이 없습니다</div></div></td></tr></tbody>';return;}
+  var vc=COLS.filter(function(c){return VIS[c.k];});
+  // 그룹 헤더
+  var gh='<tr class="grp">';
+  GORDER.forEach(function(g){var cs=vc.filter(function(c){return c.g===g;}).length;if(cs>0){gh+='<th class="'+GROUPS[g][1]+'" colspan="'+cs+'">'+GROUPS[g][0]+'</th>';}});
+  gh+='</tr>';
+  var ch='<tr class="col">'+vc.map(function(c){return '<th'+thcls(c.g)+'>'+c.th+'</th>';}).join('')+'</tr>';
+  var h='<thead>'+gh+ch+'</thead><tbody>';
+  if(!list.length){$('tbl').innerHTML=h+'<tr><td colspan="'+vc.length+'"><div class="empty"><div class="ic">🗂️</div><div class="t">제출한 학생이 없습니다</div></div></td></tr></tbody>';return;}
   list.forEach(function(s){
     var e=estFromData(s.opening||{}, s.grid||{});
     var cur=(Number(s.opening.curLC)||0)+(Number(s.opening.curRC)||0);
-    var cou=COU[s.course]||['-',''];
+    var tgt=(Number(s.opening.tgtLC)||0)+(Number(s.opening.tgtRC)||0);
+    var wk=s.opening.weekly, cou=COU[s.course]||['-',''];
     var flags=e.flags.length?'<div class="flags">'+e.flags.map(function(f){return '<span class="flag '+f[0]+'">'+f[1]+'</span>';}).join('')+'</div>':'';
     var thisV=s.over.thisEst||e.thisText, nextV=s.over.nextEst||e.nextText;
-    var tgt=(Number(s.opening.tgtLC)||0)+(Number(s.opening.tgtRC)||0);
-    var wk=s.opening.weekly;
-    h+='<tr>'
-      +'<td class="date">'+esc(s.submittedAt)+'</td>'
-      +'<td><div class="who"><div class="av">'+esc((s.name||'?').charAt(0))+'</div><div><div class="n">'+esc(s.name)+'</div><div class="m">'+esc(s.manager)+' 매니저</div></div></div></td>'
-      +'<td class="num">'+esc(s.className||'-')+'</td>'
-      +'<td><span class="badge '+cou[1]+'">'+cou[0]+'</span></td>'
-      +'<td class="num">'+(wk?esc(wk)+'h':'<span class=dim>-</span>')+'</td>'
-      +'<td class="num">'+(e.lcw==null?'<span class=dim>-</span>':e.lcw)+(e.lcl>=2?'<span class="lvtag">Lv'+e.lcl+'</span>':'')+'</td>'
-      +'<td class="num">'+(e.lcp==null?'<span class=dim>-</span>':e.lcp)+'</td>'
-      +'<td class="num">'+(e.rcw==null?'<span class=dim>-</span>':e.rcw)+'</td>'
-      +'<td class="num">'+(e.rcp==null?'<span class=dim>-</span>':e.rcp)+'</td>'
-      +'<td class="num">'+(cur||'<span class=dim>-</span>')+'</td>'
-      +'<td class="num">'+(tgt||'<span class=dim>-</span>')+'</td>'
-      +'<td><span class="calc">'+(e.base==null?'-':e.base)+'</span>'+flags+'</td>'
-      +'<td><input class="estin" data-id="'+esc(s.id)+'" data-k="thisEst" value="'+esc(thisV)+'">'+(s.over.thisEst?'<div class="autohint">자동 '+esc(e.thisText)+'</div>':'')+'</td>'
-      +'<td><input class="estin next" data-id="'+esc(s.id)+'" data-k="nextEst" value="'+esc(nextV)+'">'+(s.over.nextEst?'<div class="autohint">자동 '+esc(e.nextText)+'</div>':'')+'</td>'
-      +'<td class="rechk">'+(s.recheck?esc(s.recheck):'<span class=dim>-</span>')+'</td>'
-      +'<td><input class="notein" data-id="'+esc(s.id)+'" data-k="note" placeholder="비고 입력" value="'+esc(s.over.note||'')+'"></td>'
-      +'</tr>';
+    var dim='<span class=dim>-</span>';
+    var M={
+      date:'<td class="date">'+esc(s.submittedAt)+'</td>',
+      name:'<td><div class="who"><div class="av">'+esc((s.name||'?').charAt(0))+'</div><div><div class="n">'+esc(s.name)+'</div><div class="m">'+esc(s.manager)+' 매니저</div></div></div></td>',
+      cls:'<td class="num">'+esc(s.className||'-')+'</td>',
+      course:'<td><span class="badge '+cou[1]+'">'+cou[0]+'</span></td>',
+      week:'<td class="num">'+(wk?esc(wk)+'h':dim)+'</td>',
+      lcw:'<td class="num">'+(e.lcw==null?dim:e.lcw)+(e.lcl>=2?'<span class="lvtag">Lv'+e.lcl+'</span>':'')+'</td>',
+      lcp:'<td class="num">'+(e.lcp==null?dim:e.lcp)+'</td>',
+      p7w:'<td class="num">'+(e.rcw==null?dim:e.rcw)+'</td>',
+      p7p:'<td class="num">'+(e.rcp==null?dim:e.rcp)+'</td>',
+      cur:'<td class="num">'+(cur||dim)+'</td>',
+      tgt:'<td class="num">'+(tgt||dim)+'</td>',
+      calc:'<td><span class="calc">'+(e.base==null?'-':e.base)+'</span>'+flags+'</td>',
+      this:'<td><input class="estin" data-id="'+esc(s.id)+'" data-k="thisEst" value="'+esc(thisV)+'">'+(s.over.thisEst?'<div class="autohint">자동 '+esc(e.thisText)+'</div>':'')+'</td>',
+      next:'<td><input class="estin next" data-id="'+esc(s.id)+'" data-k="nextEst" value="'+esc(nextV)+'">'+(s.over.nextEst?'<div class="autohint">자동 '+esc(e.nextText)+'</div>':'')+'</td>',
+      rechk:'<td class="rechk">'+(s.recheck?esc(s.recheck):dim)+'</td>',
+      note:'<td><input class="notein" data-id="'+esc(s.id)+'" data-k="note" placeholder="비고 입력" value="'+esc(s.over.note||'')+'"></td>'
+    };
+    h+='<tr>'+vc.map(function(c){return M[c.k];}).join('')+'</tr>';
   });
   $('tbl').innerHTML=h+'</tbody>';
   document.querySelectorAll('.estin,.notein').forEach(function(el){el.addEventListener('change',function(){saveOver(el.getAttribute('data-id'));});});
