@@ -107,19 +107,19 @@ function p7T(pl,bs,bd,as,ad){return {pl:String(pl),beforeS:cell(bs),beforeDT:cel
 function op(o){return o;}
 var MOCK=[
  {id:'C1',code:'ash8131',name:'안세훈',manager:'문찬',className:'A-1',course:'up',submittedAt:'2026-07-22 17:10',recheck:'재수강 희망',over:{thisEst:'',nextEst:'',note:''},
-  opening:op({name:'안세훈',manager:'문찬',className:'A-1',course:'up',curLC:'350',curRC:'300',worktype:'part',weekly:'42'}),
+  opening:op({name:'안세훈',manager:'문찬',className:'A-1',course:'up',curLC:'350',curRC:'300',tgtLC:'450',tgtRC:'450',worktype:'part',weekly:'42'}),
   grid:{lc:[lcT(1,4,3,3,4),lcT(1,3,2,4,3),lcT(1,2,3,3,4)],
         p7:[p7T(2,14,16,2,4),p7T(2,12,14,1,3),p7T(2,10,12,1,2)]}},
  {id:'C2',code:'gjw7761',name:'김지원',manager:'문찬',className:'A-2',course:'pl',submittedAt:'2026-07-21 09:20',recheck:'',over:{thisEst:'',nextEst:'',note:''},
-  opening:op({name:'김지원',manager:'문찬',className:'A-2',course:'pl',curLC:'320',curRC:'300',worktype:'part',weekly:'52'}),
+  opening:op({name:'김지원',manager:'문찬',className:'A-2',course:'pl',curLC:'320',curRC:'300',tgtLC:'450',tgtRC:'450',worktype:'part',weekly:'52'}),
   grid:{lc:[lcT(2,2,1,2,1),lcT(2,3,2,1,2),lcT(2,1,1,2,2)],
         p7:[p7T(2,13,15,1,0),p7T(2,11,13,0,1),p7T(2,9,11,1,0)]}},
  {id:'C3',code:'bji2044',name:'박지은',manager:'리올',className:'B-1',course:'plpl',submittedAt:'2026-07-20 20:00',recheck:'',over:{thisEst:'820-850(레벨3시)',nextEst:'',note:'LC 레벨3 유지 시 850+'},
-  opening:op({name:'박지은',manager:'리올',className:'B-1',course:'plpl',curLC:'400',curRC:'420',worktype:'full',weekly:'60'}),
+  opening:op({name:'박지은',manager:'리올',className:'B-1',course:'plpl',curLC:'400',curRC:'420',tgtLC:'450',tgtRC:'450',worktype:'full',weekly:'60'}),
   grid:{lc:[lcT(3,1,0,1,1),lcT(3,0,1,1,0),lcT(2,1,1,2,1)],
         p7:[p7T(2,10,12,0,0),p7T(2,9,10,0,0),p7T(2,8,9,1,0)]}},
  {id:'C4',code:'lsm3390',name:'이수민',manager:'문찬',className:'A-1',course:'up',submittedAt:'2026-07-19 11:00',recheck:'',over:{thisEst:'',nextEst:'',note:''},
-  opening:op({name:'이수민',manager:'문찬',className:'A-1',course:'up',curLC:'300',curRC:'250',worktype:'part',weekly:'30'}),
+  opening:op({name:'이수민',manager:'문찬',className:'A-1',course:'up',curLC:'300',curRC:'250',tgtLC:'450',tgtRC:'450',worktype:'part',weekly:'30'}),
   grid:{lc:[lcT(1,5,4,6,5),lcT(1,6,5,5,6)],
         p7:[p7T(1,18,20,10,12),p7T(1,16,18,9,11)]}}
 ];
@@ -211,28 +211,32 @@ function render(){
   $('stats').innerHTML=stat('a','📄',list.length,'전체 제출')+stat('b','🟦',list.filter(function(s){return s.course==='up';}).length,'업반 (1회)')
     +stat('c','🟪',list.filter(function(s){return s.course==='pl';}).length,'플반 (2회)')+stat('d','🟣',list.filter(function(s){return s.course==='plpl';}).length,'플플반 (3회+)');
   var h='<thead>'
-    +'<tr class="grp"><th class="g-st" colspan="4"></th><th class="g-lc" colspan="2">LC</th><th class="g-p7" colspan="2">팟7</th><th class="g-est" colspan="4">예상 점수</th><th class="g-mg" colspan="2"></th></tr>'
-    +'<tr class="col"><th>제출일</th><th>이름</th><th>반</th><th>구분</th>'
+    +'<tr class="grp"><th class="g-st" colspan="5"></th><th class="g-lc" colspan="2">LC</th><th class="g-p7" colspan="2">팟7</th><th class="g-est" colspan="5">예상 점수</th><th class="g-mg" colspan="2"></th></tr>'
+    +'<tr class="col"><th>제출일</th><th>이름</th><th>반</th><th>구분</th><th>주공부</th>'
     +'<th class="lc">오답</th><th class="lc">점수</th><th class="p7">오답</th><th class="p7">점수</th>'
-    +'<th class="est">현재</th><th class="est">계산</th><th class="est">이번 달</th><th class="est">다음 달</th>'
+    +'<th class="est">현재</th><th class="est">목표</th><th class="est">계산</th><th class="est">이번 달</th><th class="est">다음 달</th>'
     +'<th>재수강</th><th>비고</th></tr></thead><tbody>';
-  if(!list.length){$('tbl').innerHTML=h+'<tr><td colspan="14"><div class="empty"><div class="ic">🗂️</div><div class="t">제출한 학생이 없습니다</div></div></td></tr></tbody>';return;}
+  if(!list.length){$('tbl').innerHTML=h+'<tr><td colspan="16"><div class="empty"><div class="ic">🗂️</div><div class="t">제출한 학생이 없습니다</div></div></td></tr></tbody>';return;}
   list.forEach(function(s){
     var e=estFromData(s.opening||{}, s.grid||{});
     var cur=(Number(s.opening.curLC)||0)+(Number(s.opening.curRC)||0);
     var cou=COU[s.course]||['-',''];
     var flags=e.flags.length?'<div class="flags">'+e.flags.map(function(f){return '<span class="flag '+f[0]+'">'+f[1]+'</span>';}).join('')+'</div>':'';
     var thisV=s.over.thisEst||e.thisText, nextV=s.over.nextEst||e.nextText;
+    var tgt=(Number(s.opening.tgtLC)||0)+(Number(s.opening.tgtRC)||0);
+    var wk=s.opening.weekly;
     h+='<tr>'
       +'<td class="date">'+esc(s.submittedAt)+'</td>'
       +'<td><div class="who"><div class="av">'+esc((s.name||'?').charAt(0))+'</div><div><div class="n">'+esc(s.name)+'</div><div class="m">'+esc(s.manager)+' 매니저</div></div></div></td>'
       +'<td class="num">'+esc(s.className||'-')+'</td>'
       +'<td><span class="badge '+cou[1]+'">'+cou[0]+'</span></td>'
+      +'<td class="num">'+(wk?esc(wk)+'h':'<span class=dim>-</span>')+'</td>'
       +'<td class="num">'+(e.lcw==null?'<span class=dim>-</span>':e.lcw)+(e.lcl>=2?'<span class="lvtag">Lv'+e.lcl+'</span>':'')+'</td>'
       +'<td class="num">'+(e.lcp==null?'<span class=dim>-</span>':e.lcp)+'</td>'
       +'<td class="num">'+(e.rcw==null?'<span class=dim>-</span>':e.rcw)+'</td>'
       +'<td class="num">'+(e.rcp==null?'<span class=dim>-</span>':e.rcp)+'</td>'
       +'<td class="num">'+(cur||'<span class=dim>-</span>')+'</td>'
+      +'<td class="num">'+(tgt||'<span class=dim>-</span>')+'</td>'
       +'<td><span class="calc">'+(e.base==null?'-':e.base)+'</span>'+flags+'</td>'
       +'<td><input class="estin" data-id="'+esc(s.id)+'" data-k="thisEst" value="'+esc(thisV)+'">'+(s.over.thisEst?'<div class="autohint">자동 '+esc(e.thisText)+'</div>':'')+'</td>'
       +'<td><input class="estin next" data-id="'+esc(s.id)+'" data-k="nextEst" value="'+esc(nextV)+'">'+(s.over.nextEst?'<div class="autohint">자동 '+esc(e.nextText)+'</div>':'')+'</td>'
