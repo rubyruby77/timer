@@ -77,10 +77,8 @@
   tbody td:last-child{border-right:none}
   tbody tr:last-child td{border-bottom:none}
   tbody tr:hover td{background:#faf7fd}
-  .who{display:flex;align-items:center;gap:10px;text-align:left;padding-left:16px!important}
-  .av{width:34px;height:34px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;
-    background:linear-gradient(135deg,var(--pp3),var(--pp))}
-  .who .n{font-weight:800;font-size:13.5px}.who .m{font-size:11px;color:var(--mut);margin-top:1px}
+  .whocell{text-align:left!important;padding-left:16px!important}
+  .whocell .n{font-weight:800;font-size:13.5px}.whocell .m{font-size:11px;color:var(--mut);margin-top:1px}
   .date{color:var(--mut);font-size:12px}
   .badge{font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px}
   .b-up{background:var(--lcbg);color:var(--lctx)}.b-pl{background:var(--p7bg);color:var(--p7tx)}.b-plpl{background:#e9dcff;color:var(--pp)}
@@ -265,7 +263,7 @@ function render(){
     var dim='<span class=dim>-</span>';
     var M={
       date:'<td class="date">'+esc(s.submittedAt)+'</td>',
-      name:'<td><div class="who"><div class="av">'+esc((s.name||'?').charAt(0))+'</div><div><div class="n">'+esc(s.name)+'</div><div class="m">'+esc(s.manager)+' 매니저</div></div></div></td>',
+      name:'<td class="whocell"><div class="n">'+esc(s.name)+'</div><div class="m">'+esc(s.manager)+' 매니저</div></td>',
       cls:'<td class="num">'+esc(s.className||'-')+'</td>',
       course:'<td><span class="badge '+cou[1]+'">'+cou[0]+'</span></td>',
       week:'<td class="num">'+(wk?esc(wk)+'h':dim)+'</td>',
