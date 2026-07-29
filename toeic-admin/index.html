@@ -198,14 +198,14 @@ function estFromData(op,grid){
   if(!improving){ if(reduce55){cond=true;res.flags.push(['f-cond','조건부(55%)']);} else {res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';res.nextText='-';return res;} }
   var lo,hi;
   if(course==='up'){var top=base;if(cur&&base-cur>300)top=cur+300;hi=top;lo=top-50;
-    if(lcTests>=4&&p7Tests>=3&&cur&&Math.floor(top/100)>Math.floor(cur/100)){var fl=Math.floor(top/100)*100;if(fl>lo){lo=fl;res.flags.push(['f-cond','앞자리↑']);}}}
+    if(lcTests>=4&&p7Tests>=3&&cur&&(top-cur)<100&&Math.floor(top/100)>Math.floor(cur/100)){var fl=Math.floor(top/100)*100;if(fl>lo){lo=fl;res.flags.push(['f-cond','앞자리↑']);}}}
   else if(base>=800){lo=800+Math.floor((base-800)/40)*40;hi=lo+40;}
   else{lo=Math.floor(base/50)*50;hi=lo+50;}
   if(base>=700&&base<800&&!(lcl>=2&&improving))res.flags.push(['f-cond','700조건']);
   res.thisText=(cond?'(조건부) ':'')+lo+'~'+hi;
   if(hi>=900){res.nextText='900↑(10~20점)';}
   else{var work=op.worktype||'',hrs=Number(op.weekly)||0;var bump=(work==='full'||hrs>=50)?150:100;var nlo=lo+bump,nhi=hi+bump;
-    if(nhi>=900){res.nextText=(hi>=800)?'8후반~900':'850~8후반';}
+    if(nhi>=850){res.nextText='8후반';}
     else res.nextText=nlo+'~'+nhi;}
   return res;
 }

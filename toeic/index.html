@@ -335,7 +335,7 @@ function estRange(base,d){/* 이번달 범위 */
   var C=$('hdrCourse')?$('hdrCourse').value:'up';
   var cur=num('op_curTot')!=null?num('op_curTot'):((num('op_curLC')||0)+(num('op_curRC')||0));
   if(C==='up'){ var top=base; if(cur&&base-cur>300)top=cur+300; var lo=top-50, boost=false;
-    if(d&&d.lcTests>=4&&d.p7Tests>=3&&cur&&Math.floor(top/100)>Math.floor(cur/100)){var fl=Math.floor(top/100)*100; if(fl>lo){lo=fl;boost=true;}}
+    if(d&&d.lcTests>=4&&d.p7Tests>=3&&cur&&(top-cur)<100&&Math.floor(top/100)>Math.floor(cur/100)){var fl=Math.floor(top/100)*100; if(fl>lo){lo=fl;boost=true;}}
     return [lo,top,top!==base,boost]; }
   if(base>=800){var l8=800+Math.floor((base-800)/40)*40;return [l8,l8+40,false,false];}
   var lo2=Math.floor(base/50)*50;return [lo2,lo2+50,false,false];
@@ -386,7 +386,7 @@ function updateEstimate(){
     else{
       var work=$('op_worktype')?$('op_worktype').value:'', hrs=num('op_weekly'), cur=num('op_curTot')!=null?num('op_curTot'):((num('op_curLC')||0)+(num('op_curRC')||0));
       var bump=(work==='full'||(hrs&&hrs>=50))?150:100; var nLo=r[0]+bump,nHi=r[1]+bump;
-      if(nHi>=900){ nextTxt = (r[1]>=800)?'8후반~900':'850~8후반'; } // 이번달 앞자리 8 아니면 900 언급 안 함
+      if(nHi>=850){ nextTxt = '8후반'; } // 850 이상은 점수대 특정 없이 8후반
       else nextTxt=nLo+'~'+nHi+'점';
     }
   }
