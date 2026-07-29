@@ -186,7 +186,7 @@ function estFromData(op,grid){
   var lc=grid.lc||[],p7=grid.p7||[];
   var lcw=null,lcl=1,rcw=null,lcTests=0,p7Tests=0,hf=[],r55=[];
   for(var i=0;i<lc.length;i++){var t=lc[i]||{},s=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=numW(t[p]);if(w!=null){s+=w;any=true;}});if(any){lcTests++;lcw=s;lcl=Number(t.pl)||1;}}
-  for(var j=0;j<p7.length;j++){var q=p7[j]||{};var as=numW(q.afterS),ad=numW(q.afterDT),bs=numW(q.beforeS),bd=numW(q.beforeDT);if(as!=null||ad!=null){p7Tests++;rcw=(as||0)+(ad||0);hf.push(pass(bs,as)===true&&pass(bd,ad)===true);var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0);r55.push(bt>0&&(bt-at)/bt>=0.55);}}
+  for(var j=0;j<p7.length;j++){var q=p7[j]||{};var as=numW(q.afterS),ad=numW(q.afterDT),bs=numW(q.beforeS),bd=numW(q.beforeDT);if(as!=null||ad!=null){p7Tests++;rcw=(bs||0)+(bd||0);hf.push(pass(bs,as)===true&&pass(bd,ad)===true);var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0);r55.push(bt>0&&(bt-at)/bt>=0.55);}}
   var improving=last3all(hf), reduce55=last3all(r55);
   var lcp=lcScore(lcw,lcl), rcp=rcScore(rcw);
   var res={lcw:lcw,lcl:lcl,rcw:rcw,lcp:lcp,rcp:rcp,base:null,thisText:'-',nextText:'-',flags:[]};
@@ -194,10 +194,11 @@ function estFromData(op,grid){
   var base=lcp+rcp;res.base=base;
   var course=op.course||'up', cur=(Number(op.curLC)||0)+(Number(op.curRC)||0);
   var cond=false;
-  if(p7Tests<=3){res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';res.nextText='-';return res;}
+  if(p7Tests<3){res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';res.nextText='-';return res;}
   if(!improving){ if(reduce55){cond=true;res.flags.push(['f-cond','조건부(55%)']);} else {res.flags.push(['f-stop','산정불가']);res.thisText='산정불가';res.nextText='-';return res;} }
   var lo,hi;
-  if(course==='up'){var top=base;if(cur&&base-cur>300)top=cur+300;hi=top;lo=top-50;}
+  if(course==='up'){var top=base;if(cur&&base-cur>300)top=cur+300;hi=top;lo=top-50;
+    if(lcTests>=4&&p7Tests>=3&&cur&&Math.floor(top/100)>Math.floor(cur/100)){var fl=Math.floor(top/100)*100;if(fl>lo){lo=fl;res.flags.push(['f-cond','앞자리↑']);}}}
   else if(base>=800){lo=800+Math.floor((base-800)/40)*40;hi=lo+40;}
   else{lo=Math.floor(base/50)*50;hi=lo+50;}
   if(base>=700&&base<800&&!(lcl>=2&&improving))res.flags.push(['f-cond','700조건']);
