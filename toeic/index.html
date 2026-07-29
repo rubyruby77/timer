@@ -346,8 +346,9 @@ function deriveCalc(){
     var lc=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=num('lc'+i+p+'-w');if(w!=null){lc+=w;any=true;}});
     if(any){lcTests++;lcw=lc;lcl=Number($('pl'+i)?$('pl'+i).value:1)||1;} // 마지막(최신) 채운 값으로 덮어씀
     var as=num('p7'+i+'afterS-w'),ad=num('p7'+i+'afterDT-w'),bs=num('p7'+i+'beforeS-w'),bd=num('p7'+i+'beforeDT-w');
-    if(as!=null||ad!=null){p7Tests++;rcw=(bs||0)+(bd||0);rcl=Number($('plp7'+i)?$('plp7'+i).value:1)||1;zero=(as===0&&ad===0);
+    if(as!=null||ad!=null){p7Tests++;rcl=Number($('plp7'+i)?$('plp7'+i).value:1)||1;zero=(as===0&&ad===0);
       lastSingle=(bd==null||ad==null); // 최신 테스트가 Single만(D.T 미완성)인지
+      if(bd!=null&&ad!=null)rcw=(bs||0)+(bd||0); // 점수 대표오답은 완성 테스트(D.T까지)만
       hf.push(pass(bs,as)===true&&pass(bd,ad)===true);
       var bt=(bs||0)+(bd||0),at=(as||0)+(ad||0); r55.push(bt>0&&(bt-at)/bt>=0.55);
       r55s.push((bs||0)>0&&((bs||0)-(as||0))/(bs||0)>=0.55);} // Single만 기준
