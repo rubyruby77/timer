@@ -249,8 +249,8 @@ function render(){
   var mgr=$('fMgr').value, q=($('fSearch').value||'').trim();
   var list=SUBS.filter(function(s){return (!mgr||s.manager===mgr)&&(!q||(s.name||'').indexOf(q)>=0);});
   $('cnt').textContent=list.length+'건';
-  $('stats').innerHTML=stat('a','📄',list.length,'전체 제출')+stat('b','🟦',list.filter(function(s){return s.course==='up';}).length,'업반 (1회)')
-    +stat('c','🟪',list.filter(function(s){return s.course==='pl';}).length,'플반 (2회)')+stat('d','🟣',list.filter(function(s){return s.course==='plpl';}).length,'플플반 (3회+)');
+  $('stats').innerHTML=stat('a','📄',list.length,'전체 제출')+stat('b','🟦',list.filter(function(s){return s.course==='up';}).length,'업반')
+    +stat('c','🟪',list.filter(function(s){return s.course==='pl';}).length,'플반')+stat('d','🟣',list.filter(function(s){return s.course==='plpl';}).length,'플플반');
   var vc=COLS.filter(function(c){return VIS[c.k];});
   // 그룹 헤더
   var gh='<tr class="grp">';
