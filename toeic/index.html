@@ -97,6 +97,16 @@
   .btn.submit{color:#fff;background:linear-gradient(135deg,var(--pp),var(--pp2));box-shadow:0 8px 20px -6px rgba(69,32,98,.5)}
   .btn:disabled{opacity:.45;cursor:not-allowed}
   .note{font-size:12px;color:var(--mut);text-align:center;margin-top:8px}
+  .estwrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+  .estcard{background:linear-gradient(135deg,var(--pp),var(--pp2));color:#fff;border-radius:16px;padding:18px 20px;box-shadow:0 8px 20px -8px rgba(69,32,98,.5)}
+  .estcard.alt{background:var(--lavs);color:var(--pp);box-shadow:none;border:1px solid var(--ln)}
+  .estcard .l{font-size:12.5px;font-weight:700;opacity:.85}.estcard.alt .l{color:var(--pp3);opacity:1}
+  .estcard .v{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:4px}
+  .estnote{margin-top:10px;font-size:13px;font-weight:600;line-height:1.6}
+  .estnote .w{display:block;padding:8px 12px;border-radius:9px;margin-top:6px}
+  .estnote .w.stop{background:#fdecea;color:var(--er)} .estnote .w.cond{background:#fbeede;color:var(--warn)} .estnote .w.good{background:#eafaf0;color:var(--ok)} .estnote .w.info{background:#eef2fb;color:#3a5a9a}
+  .estbase{margin-top:8px;font-size:12px;color:var(--mut);text-align:center}
+  @media(max-width:640px){.estwrap{grid-template-columns:1fr}}
   .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#1f8f4e;color:#fff;padding:13px 20px;border-radius:12px;font-weight:700;font-size:14px;z-index:99;display:none;max-width:90%}
   .toast.err{background:var(--er)}.toast.show{display:block;animation:rise .3s}
   .pending{background:#fff;border-radius:20px;padding:44px 28px;text-align:center;box-shadow:0 8px 30px rgba(53,22,63,.1)}
@@ -213,7 +223,9 @@ function renderSheet(){
   var mopt='<option value="">-</option>'+mgrs.map(function(m){return '<option'+(m===op.manager?' selected':'')+'>'+m+'</option>';}).join('');
   var cls=['A-1','A-2','A-3','A-4','B-1','B-2','B-3','B-4','B-5','B-6','D-1','D-2','D-3','D-4','F-1','F-2','F-3','F-4','F-5','F-6','F-7','G-1'];
   var copt='<option value="">-</option>'+cls.map(function(c){return '<option'+(c===op.className?' selected':'')+'>'+c+'</option>';}).join('');
-  h+='<div class="infoline"><span>담당 : <select id="hdrMgr" class="inlsel">'+mopt+'</select> 매니저</span><span>첨삭 : <select id="hdrClass" class="inlsel">'+copt+'</select> 반</span><span>이름 : <input id="hdrName" class="inlname" value="'+esc(op.name||'')+'"></span></div>';
+  var courses=[['up','업반'],['pl','플반'],['plpl','플플반']];
+  var couopt=courses.map(function(c){return '<option value="'+c[0]+'"'+(op.course===c[0]?' selected':'')+'>'+c[1]+'</option>';}).join('');
+  h+='<div class="infoline"><span>담당 : <select id="hdrMgr" class="inlsel">'+mopt+'</select> 매니저</span><span>첨삭 : <select id="hdrClass" class="inlsel">'+copt+'</select> 반</span><span>이름 : <input id="hdrName" class="inlname" value="'+esc(op.name||'')+'"></span><span>구분 : <select id="hdrCourse" class="inlsel">'+couopt+'</select></span></div>';
   h+='<div class="resetrow"><button class="resetbtn" onclick="resetForm()">↺ 초기화</button></div>';
 
   // 상단 표 (원본 병합구조)
@@ -271,6 +283,12 @@ function renderSheet(){
   }
   h+='</div>'; // paper end
 
+  // 예상점수 (자동계산)
+  h+='<div class="estwrap"><div class="estcard"><div class="l">📈 이번 달 예상 점수</div><div class="v" id="estThis">-</div></div>'
+    +'<div class="estcard alt"><div class="l">다음 달 예상 점수</div><div class="v" id="estNext">-</div></div></div>'
+    +'<div class="estnote" id="estNote"></div>'
+    +'<div class="estbase" id="estBase"></div>';
+
   // 버튼
   var open=SESS.submissionOpen;
   h+='<div class="bar"><button class="btn draft" onclick="doDraft()">임시 저장</button><button class="btn submit" id="subBtn" onclick="doSubmit()"'+(open?'':' disabled')+'>최종 제출</button></div>'
@@ -297,15 +315,76 @@ function recompute(){
   for(var j=0;j<10;j++){var bs=num('p7'+j+'beforeS-w'),bd=num('p7'+j+'beforeDT-w'),as=num('p7'+j+'afterS-w'),ad=num('p7'+j+'afterDT-w');
     var tot=(bs||0)+(bd||0);if($('p7tot'+j))$('p7tot'+j).textContent=(bs!=null||bd!=null)?tot:'-';
     setHeart('hs'+j,pass(bs,as));setHeart('hdt'+j,pass(bd,ad));}
+  updateEstimate();
 }
 function pass(b,a){if(b==null||a==null)return null;return b>11?(b-a>=11):(a<=1);}
+
+/* ===== 예상점수 엔진 (엑셀 DB 해독·검증완료) ===== */
+var LC1={},LC2={},RC1={};
+(function(){function R(a,b,v,o){for(var n=a;n<=b;n++)o[n]=v;}
+R(1,4,400,LC1);R(5,9,380,LC1);R(10,14,370,LC1);R(15,19,350,LC1);R(20,22,320,LC1);R(23,26,300,LC1);
+R(1,4,440,LC2);R(5,9,430,LC2);LC2[10]=420;LC2[11]=420;LC2[12]=400;LC2[13]=400;LC2[14]=400;R(15,26,380,LC2);
+RC1[8]=400;RC1[9]=400;RC1[10]=390;R(11,13,370,RC1);R(14,19,350,RC1);RC1[20]=320;R(21,26,300,RC1);R(27,29,290,RC1);RC1[30]=280;RC1[31]=270;R(32,38,250,RC1);RC1[39]=230;R(40,42,200,RC1);})();
+function lcScore(w,lv){if(w==null)return null;if(w<=0)return lv>=2?440:400;var t=(lv>=2)?LC2:LC1;var s=t[w];if(s==null)s=(w>26?(lv>=2?380:300):null);if(lv>=3&&s!=null)s+=50;return s;}
+function rcScore(w){if(w==null)return null;if(w<=7)return 400;var s=RC1[w];return s==null?(w>42?200:null):s;}
+function estRange(base){/* 이번달 범위 */
+  var C=$('hdrCourse')?$('hdrCourse').value:'up';
+  var cur=num('op_curTot')!=null?num('op_curTot'):((num('op_curLC')||0)+(num('op_curRC')||0));
+  if(C==='up'){ var top=base; if(cur&&base-cur>300)top=cur+300; return [top-50,top,top!==base]; }
+  if(base>=800){var lo=800+Math.floor((base-800)/40)*40;return [lo,lo+40,false];}
+  var lo2=Math.floor(base/50)*50;return [lo2,lo2+50,false];
+}
+function deriveCalc(){
+  var bestLc=Infinity,bestLcLv=1,lcTests=0,p7Tests=0,hearts=0,p7best=Infinity,p7bestIdx=-1;
+  for(var i=0;i<10;i++){
+    var lc=0,any=false;['p1','p2','p3','p4'].forEach(function(p){var w=num('lc'+i+p+'-w');if(w!=null){lc+=w;any=true;}});
+    if(any){lcTests++;if(lc<bestLc){bestLc=lc;bestLcLv=Number($('pl'+i)?$('pl'+i).value:1)||1;}}
+    var as=num('p7'+i+'afterS-w'),ad=num('p7'+i+'afterDT-w'),bs=num('p7'+i+'beforeS-w'),bd=num('p7'+i+'beforeDT-w');
+    if(as!=null||ad!=null){p7Tests++;var tot=(as||0)+(ad||0);if(tot<p7best){p7best=tot;p7bestIdx=i;}}
+    if(pass(bs,as)===true&&pass(bd,ad)===true)hearts++;
+  }
+  var zero=false,rcl=1;
+  if(p7bestIdx>=0){zero=(num('p7'+p7bestIdx+'afterS-w')===0&&num('p7'+p7bestIdx+'afterDT-w')===0);rcl=Number($('plp7'+p7bestIdx)?$('plp7'+p7bestIdx).value:1)||1;}
+  return {lcw:bestLc===Infinity?null:bestLc, lcl:bestLcLv, rcw:p7best===Infinity?null:p7best, lcTests:lcTests, p7Tests:p7Tests, hearts:hearts, zero:zero, rcl:rcl};
+}
+function updateEstimate(){
+  if(!$('estThis'))return;
+  var d=deriveCalc();
+  var C=$('hdrCourse')?$('hdrCourse').value:'up';
+  var lcp=lcScore(d.lcw,d.lcl), rcp=rcScore(d.rcw);
+  $('estBase').textContent = (lcp!=null&&rcp!=null)?('기본계산 '+(lcp+rcp)+'점 (LC '+lcp+' + 팟7 '+rcp+') · 대표 LC오답 '+d.lcw+'(레벨'+d.lcl+'), 팟7오답 '+d.rcw+' 기준 자동'):'';
+  if(lcp==null||rcp==null){$('estThis').textContent='입력 대기';$('estNext').textContent='-';$('estNote').innerHTML='';return;}
+  var base=lcp+rcp, W=[], stop=false;
+  if(d.lcTests<3){W.push(['stop','전체 테스트 3개 미만 → 산정 불가']);stop=true;}
+  if(d.p7Tests<=2){W.push(['stop','팟7 테스트 2개 이하 → 산정 불가']);stop=true;}
+  if(d.p7Tests>0&&d.hearts<Math.ceil(d.p7Tests/2)){W.push(['cond','팟7 쌍하트 과반 미달 → 원칙상 불가 (아쉽게 1~3개 차이면 "쌍하트 달성 시" 조건부)']);}
+  var r=estRange(base);
+  if(r[2])W.push(['info','상승폭 +300 상한 적용']);
+  if(C==='up'&&d.p7Tests>0&&d.hearts<Math.ceil(d.p7Tests/2))W.push(['cond','퀄리티 저조 → 최소 +100 보장 후 하향조정 (매니저 판단)']);
+  if(base>=700&&base<800&&!(d.lcl>=2&&(d.p7Tests?d.hearts>=Math.ceil(d.p7Tests/2):false)))W.push(['cond','700점대는 LC레벨2 + 팟7 쌍하트 충족 필요 → "달성 시 700" 조건부']);
+  if(d.lcl>=3&&d.zero&&d.rcl>=2)W.push(['good','900 안내 조건 충족']);
+  $('estThis').textContent = stop?'산정 불가':(r[0]+'~'+r[1]+'점');
+  // 다음달
+  var nextTxt='-';
+  if(!stop){
+    if(r[1]>=900){nextTxt='"900점부터는 10~20점 싸움"';}
+    else{
+      var work=$('op_worktype')?$('op_worktype').value:'', hrs=num('op_weekly'), cur=num('op_curTot')!=null?num('op_curTot'):((num('op_curLC')||0)+(num('op_curRC')||0));
+      var bump=(work==='full'||(hrs&&hrs>=50))?150:100; var nLo=r[0]+bump,nHi=r[1]+bump;
+      if(nHi>=900){var m; if(work==='full')m='8후반~900'; else if(cur&&cur>=850)m='900까지'; else if(hrs&&hrs>=50)m='850~8후반'; else if(hrs&&hrs>=40)m='850'; else m='850~900(공부량 확인)'; nextTxt=m;}
+      else nextTxt=nLo+'~'+nHi+'점';
+    }
+  }
+  $('estNext').textContent=nextTxt;
+  $('estNote').innerHTML=W.map(function(w){return '<span class="w '+w[0]+'">'+w[1]+'</span>';}).join('');
+}
 function setHeart(id,ok){var el=$(id);if(!el)return;var cell=el.parentNode;if(ok){cell.className='hcell on';}else{cell.className='hcell';}}
 
 function cellVal(p){var m=$(p+'-m'),dd=$(p+'-d'),w=$(p+'-w');var mm=m?m.value:'',dv=dd?dd.value:'';var date=(mm!==''||dv!=='')?(mm+'/'+dv):'';return {date:date,wrong:(w&&w.value!=='')?Number(w.value):''};}
 function gather(){var g={lc:[],p7:[]};
   for(var i=0;i<10;i++){g.lc.push({pl:$('pl'+i).value,p1:cellVal('lc'+i+'p1'),p2:cellVal('lc'+i+'p2'),p3:cellVal('lc'+i+'p3'),p4:cellVal('lc'+i+'p4')});}
   for(var j=0;j<10;j++){g.p7.push({pl:$('plp7'+j).value,beforeS:cellVal('p7'+j+'beforeS'),beforeDT:cellVal('p7'+j+'beforeDT'),afterS:cellVal('p7'+j+'afterS'),afterDT:cellVal('p7'+j+'afterDT')});}
-  return {lcBook:$('lcBook').value,rcBook:$('rcBook').value,opening:{manager:$('hdrMgr')?$('hdrMgr').value:'',className:$('hdrClass')?$('hdrClass').value:'',name:$('hdrName')?$('hdrName').value:'',worktype:$('op_worktype')?$('op_worktype').value:'',reason:$('op_reason')?$('op_reason').value:'',curLC:$('op_curLC').value,curRC:$('op_curRC').value,tgtLC:$('op_tgtLC').value,tgtRC:$('op_tgtRC').value,studyMonths:$('op_studyMonths').value,sb:$('op_sb').value,sa:$('op_sa').value,db:$('op_db').value,da:$('op_da').value,stype:$('op_stype')?$('op_stype').value:'',curYm:$('op_curYm').value,tgtYm:$('op_tgtYm').value,weekly:$('op_weekly')?$('op_weekly').value:''},grid:g,recheck:$('recheck')?$('recheck').value:''};
+  return {lcBook:$('lcBook').value,rcBook:$('rcBook').value,opening:{manager:$('hdrMgr')?$('hdrMgr').value:'',className:$('hdrClass')?$('hdrClass').value:'',name:$('hdrName')?$('hdrName').value:'',course:$('hdrCourse')?$('hdrCourse').value:'',worktype:$('op_worktype')?$('op_worktype').value:'',reason:$('op_reason')?$('op_reason').value:'',curLC:$('op_curLC').value,curRC:$('op_curRC').value,tgtLC:$('op_tgtLC').value,tgtRC:$('op_tgtRC').value,studyMonths:$('op_studyMonths').value,sb:$('op_sb').value,sa:$('op_sa').value,db:$('op_db').value,da:$('op_da').value,stype:$('op_stype')?$('op_stype').value:'',curYm:$('op_curYm').value,tgtYm:$('op_tgtYm').value,weekly:$('op_weekly')?$('op_weekly').value:''},grid:g,recheck:$('recheck')?$('recheck').value:''};
 }
 function doDraft(){var p=gather();toast('저장 중...');
   google.script.run.withSuccessHandler(function(res){if(!res.ok){toast(res.error,true);return;}toast('💾 임시저장 완료');}).withFailureHandler(function(e){toast('오류: '+e.message,true);}).saveDraft(CODE,SHEET.id,p);}
