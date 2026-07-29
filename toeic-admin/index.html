@@ -64,9 +64,11 @@
   thead .grp .g-st{color:var(--mut)} thead .grp .g-lc{color:var(--lctx);background:var(--lcbg)}
   thead .grp .g-p7{color:var(--p7tx);background:var(--p7bg)} thead .grp .g-est{color:var(--pp);background:var(--estbg)} thead .grp .g-mg{color:var(--mut)}
   thead .col th{font-size:11.5px;font-weight:700;color:#6a6280;padding:8px 10px;text-align:center;white-space:nowrap;
-    position:sticky;top:36px;background:#fbfafd;border-bottom:1px solid var(--line);z-index:2}
+    position:sticky;top:36px;background:#fbfafd;border-bottom:1px solid var(--line);border-right:1px dashed #e7dff2;z-index:2}
   thead .col th.lc{background:#f4f8fd}thead .col th.p7{background:#fdf5fa}thead .col th.est{background:#f7f2fb}
-  tbody td{padding:12px 10px;text-align:center;border-bottom:1px solid var(--line2);white-space:nowrap;vertical-align:middle}
+  thead .col th:last-child{border-right:none}
+  tbody td{padding:12px 10px;text-align:center;border-bottom:1px dashed #eee6f5;border-right:1px dashed #e7dff2;white-space:nowrap;vertical-align:middle}
+  tbody td:last-child{border-right:none}
   tbody tr:last-child td{border-bottom:none}
   tbody tr:hover td{background:#faf7fd}
   .who{display:flex;align-items:center;gap:10px;text-align:left;padding-left:16px!important}
